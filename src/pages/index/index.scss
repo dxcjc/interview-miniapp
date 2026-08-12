@@ -1,0 +1,268 @@
+/* ---------- 首页 ---------- */
+.home {
+  padding: 24px;
+  padding-bottom: 48px;
+}
+
+/* 顶部品牌 + 头像 */
+.hm-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 8px 0;
+}
+
+.hm-brand {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.hm-brand .dot {
+  color: #ff8a5c;
+  margin: 0 4px;
+}
+
+.hm-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fff0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.08);
+}
+
+/* 问候 */
+.hm-hello {
+  padding: 24px 8px 4px;
+}
+
+.hm-hello .hi {
+  font-size: 42px;
+  font-weight: 900;
+}
+
+.hm-hello .hi .em {
+  color: #ff7a45;
+}
+
+.hm-hello .date {
+  margin-top: 8px;
+  font-size: 24px;
+  color: #a89f92;
+}
+
+/* 倒计时环卡 */
+.hm-count {
+  margin-top: 24px;
+  background: linear-gradient(135deg, #fff0e8, #ffe3d3);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.25);
+}
+
+.hm-count .label {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ff7a45;
+}
+
+.hm-count .main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.hm-count .num {
+  font-size: 96px;
+  font-weight: 900;
+  color: #2d2a26;
+  font-family: 'Georgia', serif;
+}
+
+.hm-count .num .unit {
+  font-size: 34px;
+  font-weight: 800;
+  margin-left: 8px;
+  color: #4a453e;
+}
+
+.ring-v {
+  font-size: 40px;
+  font-weight: 900;
+  color: #ff7a45;
+}
+
+.ring-t {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 4px;
+}
+
+.hm-count .sub {
+  margin-top: 24px;
+  font-size: 24px;
+  color: #8a7f72;
+}
+
+.hm-count .jobs-link {
+  margin-top: 8px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ff7a45;
+}
+
+.hm-count .jobs-link .b {
+  font-size: 32px;
+}
+
+/* 今日任务 */
+.hm-task {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.hm-task .emoji {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #fff0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.hm-task .emoji.green {
+  background: #e8f6ee;
+}
+
+.hm-task .body {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.hm-task .name {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.hm-task .sub {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 4px;
+}
+
+.hm-task .arrow {
+  font-size: 32px;
+  color: #b4aa9c;
+}
+
+.hm-task .arrow.ok {
+  color: #4caf7d;
+}
+
+.hm-task.done .name {
+  color: #a89f92;
+  text-decoration: line-through;
+}
+
+.hm-task-empty {
+  padding: 48px 0;
+}
+
+/* 三统计 */
+.hm-stats {
+  display: flex;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 0;
+  box-shadow: 0 4px 16px rgba(93, 66, 42, 0.06);
+}
+
+.hm-stat {
+  flex: 1;
+  text-align: center;
+}
+
+.hm-stat .v {
+  font-size: 44px;
+  font-weight: 900;
+  font-family: 'Georgia', serif;
+}
+
+.hm-stat .v .sup {
+  font-size: 22px;
+  color: #a89f92;
+  margin-left: 4px;
+  font-weight: 600;
+}
+
+.hm-stat .k {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 4px;
+}
+
+/* 知识掌握度 */
+.hm-know-card {
+  padding-top: 8px;
+  padding-bottom: 12px;
+}
+
+.hm-krow {
+  margin-top: 20px;
+}
+
+.hm-krow .top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.hm-krow .n {
+  font-weight: 600;
+  color: #4a453e;
+}
+
+.hm-krow .p {
+  color: #a89f92;
+}
+
+.hm-krow .bar {
+  height: 16px;
+  background: #f3ede6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hm-krow .bar .fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.hm-krow .bar .fill.low {
+  background: #ff9f43;
+}
+
+.hm-krow .bar .fill.mid {
+  background: #ff8a5c;
+}
+
+.hm-krow .bar .fill.high {
+  background: #4caf7d;
+}
+
+.hm-know-empty {
+  text-align: center;
+  color: #a89f92;
+  font-size: 26px;
+  padding: 40px 0;
+}

@@ -1,0 +1,81 @@
+/* ============================================
+   AI 面试陪练 · 微信小程序全局样式
+   主题：暖米白 #FBF8F3 + 蜜橘 #FF8A5C（与 H5 一致）
+   ============================================ */
+
+/* 设计宽度 750，scss 中 1px 经 pxtransform 转 1rpx */
+page {
+  background: #fbf8f3;
+  color: #2d2a26;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+.page {
+  padding: 24px;
+  padding-bottom: 48px;
+}
+
+/* ---------- 通用卡片 ---------- */
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(93, 66, 42, 0.06);
+}
+
+/* ---------- 区块标题 ---------- */
+.sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30px 8px 18px;
+}
+
+.sec-head .label {
+  font-size: 30px;
+  font-weight: 800;
+  color: #2d2a26;
+}
+
+.sec-head .more {
+  font-size: 24px;
+  color: #a89f92;
+}
+
+/* ---------- 标签 ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 22px;
+  font-weight: 600;
+  margin-right: 12px;
+}
+
+.tag.easy {
+  background: #e8f6ee;
+  color: #4caf7d;
+}
+
+.tag.mid {
+  background: #fff3e0;
+  color: #ff9f43;
+}
+
+.tag.hard {
+  background: #ffe9e9;
+  color: #ff5d5d;
+}
+
+.tag.kp {
+  background: #fff0e8;
+  color: #ff7a45;
+}
+
+.tag.ai-gen {
+  background: #f0ebe3;
+  color: #a89f92;
+}

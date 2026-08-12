@@ -1,0 +1,72 @@
+.skeleton {
+  padding: 0 24px;
+}
+
+.sk-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+}
+
+.sk-line {
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f3ede6 25%, #fbf8f3 37%, #f3ede6 63%);
+  background-size: 400% 100%;
+  animation: sk-loading 1.4s ease infinite;
+}
+
+.sk-row {
+  display: flex;
+  margin-top: 20px;
+}
+
+.sk-tag {
+  width: 88px;
+  height: 30px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f3ede6 25%, #fbf8f3 37%, #f3ede6 63%);
+  background-size: 400% 100%;
+  animation: sk-loading 1.4s ease infinite;
+  margin-right: 12px;
+}
+
+@keyframes sk-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+}
+
+.state-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.state-text {
+  color: #a89f92;
+  font-size: 26px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.retry-btn {
+  margin-top: 30px;
+  padding: 16px 56px;
+  border-radius: 999px;
+  background: #ff8a5c;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+}
