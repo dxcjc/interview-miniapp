@@ -96,14 +96,14 @@ export default function Interview() {
     recordTimer.current = setInterval(() => {
       setRecordSec((s) => {
         if (s >= 59) {
-          stopRecord()
+          getRecorder().stop()
           return 0
         }
         return s + 1
       })
     }, 1000)
     getRecorder().start({ format: 'mp3', duration: 60000 })
-  }, [transcribing, thinking])
+  }, [transcribing, thinking, voiceSupported])
 
   const stopRecord = useCallback(() => {
     if (!recording) return
