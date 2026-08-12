@@ -1,8 +1,9 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { ScrollView, Text, Textarea, View } from '@tarojs/components'
 import { createMockSession, endMockSession } from '../../api/mock'
 import { postTurnChunked } from '../../utils/sse'
+import { getRecorder, transcribeAudio } from '../../utils/voice'
 import { ErrorRetry } from '../../components/Feedback'
 import './index.scss'
 
@@ -38,6 +39,76 @@ export default function Interview() {
   const [ending, setEnding] = useState(false)
   const [confirmEnd, setConfirmEnd] = useState(false)
   const streamRef = useRef<{ abort: () => void } | null>(null)
+  // 语音
+  const [recording, setRecording] = useState(false)
+  const [transcribing, setTranscribing] = useState(false)
+  const [recordSec, setRecordSec] = useState(0)
+  const recordTimer = useRef<ReturnType<typeof setInterval> | null>(null)
+  const voiceSupported = typeof Taro.getRecorderManager === 'function'
+
+  // 录音管理器事件（单次注册）
+  useEffect(() => {
+    if (!voiceSupported) return
+    const rec = getRecorder()
+    rec.onStop((res) => {
+      setRecording(false)
+      if (recordTimer.current) {
+        clearInterval(recordTimer.current)
+        recordTimer.current = null
+      }
+      if (res.tempFilePath) doTranscribe(res.tempFilePath)
+    })
+    rec.onError(() => {
+      setRecording(false)
+      if (recordTimer.current) {
+        clearInterval(recordTimer.current)
+        recordTimer.current = null
+      }
+      Taro.showToast({ title: '录音失败，请检查麦克风权限', icon: 'none' })
+    })
+    return () => {
+      rec.offStop()
+      rec.offError()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const doTranscribe = useCallback(async (path: string) => {
+    setTranscribing(true)
+    try {
+      const r = await transcribeAudio(path)
+      if (r.text) setInput((prev) => (prev ? prev + r.text : r.text))
+    } catch (e) {
+      Taro.showToast({ title: (e as Error).message || '转写失败', icon: 'none' })
+    } finally {
+      setTranscribing(false)
+    }
+  }, [])
+
+  const startRecord = useCallback(() => {
+    if (!voiceSupported) {
+      Taro.showToast({ title: '语音仅支持微信小程序', icon: 'none' })
+      return
+    }
+    if (transcribing || thinking) return
+    setRecording(true)
+    setRecordSec(0)
+    recordTimer.current = setInterval(() => {
+      setRecordSec((s) => {
+        if (s >= 59) {
+          stopRecord()
+          return 0
+        }
+        return s + 1
+      })
+    }, 1000)
+    getRecorder().start({ format: 'mp3', duration: 60000 })
+  }, [transcribing, thinking])
+
+  const stopRecord = useCallback(() => {
+    if (!recording) return
+    getRecorder().stop()
+  }, [recording])
 
   const startSession = useCallback(async () => {
     setStarting(true)
@@ -210,14 +281,34 @@ export default function Interview() {
       {turnError && <View className='turn-error'>{turnError}</View>}
 
       <View className='chat-input-bar'>
+        {recording && (
+          <View className='rec-indicator'>
+            <View className='rec-dot' />
+            录音中 {recordSec}s · 松开发送
+          </View>
+        )}
+        {transcribing && (
+          <View className='rec-indicator'>
+            <View className='rec-dot trans' />
+            语音转写中…
+          </View>
+        )}
+        <View
+          className={`chat-mic ${recording ? 'rec' : ''}`}
+          onTouchStart={startRecord}
+          onTouchEnd={stopRecord}
+          onTouchCancel={stopRecord}
+        >
+          {recording ? '⏹' : '🎤'}
+        </View>
         <Textarea
           className='chat-input'
           value={input}
           autoHeight
           maxlength={2000}
-          placeholder='输入你的回答…'
+          placeholder={transcribing ? '语音转写中…' : '输入或按住 🎤 语音回答'}
           placeholderStyle='color:#B4AA9C'
-          disabled={thinking}
+          disabled={thinking || transcribing}
           onInput={(e) => setInput(e.detail.value)}
           confirmType='send'
           onConfirm={() => send()}

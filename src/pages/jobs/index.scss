@@ -1,0 +1,168 @@
+/* ---------- 岗位雷达页 ---------- */
+.jobs {
+  padding-top: 8px;
+}
+
+.job-insight {
+  background: linear-gradient(140deg, #fff8f4, #fff);
+}
+
+.job-insight-title {
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.job-insight-summary {
+  font-size: 25px;
+  color: #6b645c;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
+.job-insight-hot {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.job-insight-dir {
+  display: flex;
+  align-items: center;
+  background: #fff0e8;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #4a453e;
+}
+
+.job-insight-dir-count {
+  color: #ff7a45;
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+.job-insight-dir-trend {
+  margin-left: 6px;
+  font-size: 20px;
+}
+
+.job-insight-dir-trend.up { color: #4caf7d; }
+.job-insight-dir-trend.down { color: #ff5d5d; }
+.job-insight-dir-trend.flat { color: #a89f92; }
+
+.job-insight-skills {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.job-skill {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+.job-skill.high { background: #e8f6ee; color: #4caf7d; }
+.job-skill.mid { background: #fff3e0; color: #ff9f43; }
+.job-skill.low { background: #f3ede6; color: #a89f92; }
+
+/* 筛选 */
+.job-dirs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 6px;
+}
+
+.job-dir-chip {
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 24px;
+  color: #a89f92;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
+}
+
+.job-dir-chip.on {
+  background: #ff8a5c;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.32);
+}
+
+.job-count {
+  font-size: 23px;
+  color: #a89f92;
+  padding: 16px 8px 6px;
+}
+
+.job-card {
+  margin-bottom: 16px;
+}
+
+.job-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.job-title {
+  flex: 1;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-right: 14px;
+}
+
+.job-company {
+  font-size: 26px;
+  color: #6b645c;
+  margin-top: 8px;
+}
+
+.job-meta {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.job-city {
+  font-size: 23px;
+  color: #a89f92;
+  margin-right: 8px;
+}
+
+.job-foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #f6f2ec;
+}
+
+.job-source,
+.job-posted {
+  font-size: 21px;
+  color: #b4aa9c;
+}
+
+.job-more {
+  text-align: center;
+  color: #ff7a45;
+  font-size: 26px;
+  font-weight: 700;
+  padding: 24px 0;
+}
+
+.job-insight-error {
+  font-size: 22px;
+  color: #a89f92;
+  text-align: center;
+  padding: 12px 0;
+}

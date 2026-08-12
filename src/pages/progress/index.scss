@@ -1,0 +1,102 @@
+/* ---------- 进步曲线页 ---------- */
+.progress {
+  padding-top: 8px;
+}
+
+.pg-stats {
+  display: flex;
+}
+
+.pg-stat {
+  flex: 1;
+  text-align: center;
+}
+
+.pg-v {
+  font-size: 44px;
+  font-weight: 900;
+  font-family: 'Georgia', serif;
+}
+
+.pg-k {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 4px;
+}
+
+/* 曲线 */
+.pg-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 280px;
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
+
+.pg-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.pg-col-v {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.pg-col-bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.pg-col-bar {
+  width: 60%;
+  min-height: 6px;
+  border-radius: 8px 8px 0 0;
+}
+
+.pg-col-bar.low { background: #ff9f43; }
+.pg-col-bar.mid { background: #ff8a5c; }
+.pg-col-bar.high { background: #4caf7d; }
+
+.pg-col-date {
+  font-size: 20px;
+  color: #b4aa9c;
+  margin-top: 8px;
+}
+
+/* 历史记录 */
+.pg-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.pg-item-type {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.pg-item-date {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 6px;
+}
+
+.pg-item-score {
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Georgia', serif;
+}
+
+.pg-item-score.low { color: #ff9f43; }
+.pg-item-score.mid { color: #ff7a45; }
+.pg-item-score.high { color: #4caf7d; }

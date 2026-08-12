@@ -1,0 +1,94 @@
+/* ---------- 知识图谱页 ---------- */
+.graph {
+  padding-top: 8px;
+}
+
+.graph-center {
+  background: linear-gradient(140deg, #fff8f4, #fff);
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.graph-center-name {
+  font-size: 38px;
+  font-weight: 900;
+}
+
+.graph-center-mastery {
+  font-size: 24px;
+  color: #a89f92;
+  margin-top: 10px;
+}
+
+.graph-center-bar {
+  height: 16px;
+  background: #f3ede6;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.graph-center-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.graph-node {
+  padding: 22px 4px;
+  border-bottom: 1px solid #f6f2ec;
+}
+
+.graph-node:last-child {
+  border-bottom: none;
+}
+
+.graph-node-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.graph-node-name {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.graph-node-pct {
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.graph-node-bar {
+  height: 14px;
+  background: #f3ede6;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.graph-node-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.graph-node-fill.low { background: #ff9f43; }
+.graph-node-fill.mid { background: #ff8a5c; }
+.graph-node-fill.high { background: #4caf7d; }
+
+.graph-node-level {
+  display: inline-block;
+  font-size: 22px;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.graph-node-level.low { color: #ff9f43; }
+.graph-node-level.mid { color: #ff7a45; }
+.graph-node-level.high { color: #4caf7d; }
+
+.graph-empty {
+  text-align: center;
+  color: #a89f92;
+  font-size: 26px;
+  padding: 40px 0;
+}

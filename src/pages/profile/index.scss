@@ -1,0 +1,73 @@
+/* ---------- 简历画像页 ---------- */
+.profile {
+  padding-top: 8px;
+}
+
+.pf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pf-name {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.pf-toggle {
+  font-size: 30px;
+  color: #a89f92;
+}
+
+.pf-tech {
+  margin-top: 14px;
+}
+
+.pf-body {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #f6f2ec;
+}
+
+.pf-story {
+  font-size: 26px;
+  color: #6b645c;
+  line-height: 1.7;
+}
+
+.pf-block {
+  margin-top: 20px;
+}
+
+.pf-block-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.pf-pain {
+  font-size: 25px;
+  color: #6b645c;
+  line-height: 1.7;
+  margin-top: 4px;
+}
+
+.pf-kp {
+  background: #fbf8f3;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 10px;
+}
+
+.pf-kp-k {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ff7a45;
+}
+
+.pf-kp-q {
+  font-size: 24px;
+  color: #6b645c;
+  line-height: 1.6;
+  margin-top: 8px;
+}

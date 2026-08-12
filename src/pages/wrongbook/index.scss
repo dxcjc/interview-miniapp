@@ -1,0 +1,61 @@
+/* ---------- 错题本页 ---------- */
+.wrongbook {
+  padding-top: 8px;
+}
+
+.wb-count {
+  font-size: 24px;
+  color: #a89f92;
+  padding: 8px 8px 18px;
+}
+
+.wb-count .b {
+  color: #ff7a45;
+  font-weight: 900;
+  font-size: 30px;
+}
+
+.wb-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.wb-title {
+  flex: 1;
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-right: 16px;
+}
+
+.wb-meta {
+  margin-top: 14px;
+}
+
+.wb-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f6f2ec;
+}
+
+.wb-wrong {
+  font-size: 22px;
+  color: #b4aa9c;
+}
+
+.wb-retest {
+  background: #ff8a5c;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 12px 28px;
+  border-radius: 999px;
+}
+
+.wb-retest.loading {
+  background: #f0d9cc;
+}

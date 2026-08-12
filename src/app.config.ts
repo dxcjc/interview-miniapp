@@ -6,6 +6,12 @@ export default defineAppConfig({
     'pages/plan/index',
     'pages/mine/index',
     'pages/review/index',
+    'pages/graph/index',
+    'pages/jobs/index',
+    'pages/wrongbook/index',
+    'pages/profile/index',
+    'pages/progress/index',
+    'pages/settings/index',
   ],
   window: {
     backgroundTextStyle: 'light',

@@ -1,0 +1,116 @@
+/* ---------- 我的页 ---------- */
+.mine {
+  padding-top: 8px;
+}
+
+.mi-user {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(140deg, #fff0e8, #ffe3d3);
+  border-radius: 28px;
+  padding: 36px 32px;
+  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.22);
+}
+
+.mi-avatar {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.1);
+}
+
+.mi-info {
+  margin-left: 24px;
+}
+
+.mi-name {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.mi-target {
+  font-size: 24px;
+  color: #8a7f72;
+  margin-top: 8px;
+}
+
+.mi-stats {
+  display: flex;
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px 0;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(93, 66, 42, 0.06);
+}
+
+.mi-stat {
+  flex: 1;
+  text-align: center;
+}
+
+.mi-v {
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Georgia', serif;
+}
+
+.mi-k {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 4px;
+}
+
+.mi-entries {
+  margin-top: 24px;
+}
+
+.mi-entry {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 26px 24px;
+}
+
+.mi-entry-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  background: #fff0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.mi-entry-body {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.mi-entry-name {
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.mi-entry-sub {
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 4px;
+}
+
+.mi-entry-arrow {
+  font-size: 34px;
+  color: #d8cfc2;
+}
+
+.mi-foot {
+  text-align: center;
+  font-size: 22px;
+  color: #c8beb0;
+  padding: 30px 0 10px;
+}

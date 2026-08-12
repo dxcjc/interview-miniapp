@@ -82,3 +82,130 @@ export interface ReviewSummary {
   total_score: number
   created_at: string
 }
+
+export interface PlanDay {
+  id: number
+  plan_id: number
+  week: number
+  day: number
+  topic: string
+  question_ids: number[]
+  session_type: string
+  done: boolean
+}
+
+export interface Plan {
+  id: number
+  title: string
+  total_days: number
+  start_date: string | null
+  end_date: string | null
+  direction: string
+  finished: boolean
+  created_at: string
+  days: PlanDay[]
+}
+
+export interface PlanProgress {
+  percent: number
+  done_count: number
+  total_days: number
+}
+
+export interface GraphNode {
+  id: number
+  name: string
+  mastery: number
+  color: string
+  center?: boolean
+}
+
+export interface GraphEdge {
+  from: number
+  to: number
+  rel: string
+}
+
+export interface Graph {
+  center: GraphNode
+  nodes: GraphNode[]
+  edges: GraphEdge[]
+}
+
+export interface WrongBookItem {
+  id: number
+  question_id: number
+  title: string
+  direction: string
+  difficulty: string
+  tags: string[]
+  wrong_count: number
+  last_wrong_at: string
+  my_answer: string | null
+}
+
+export interface WrongBookList {
+  items: WrongBookItem[]
+  total: number
+  page: number
+  size: number
+}
+
+export interface RetestOut {
+  question: Question
+  source: string
+}
+
+export interface KpMapItem {
+  kp: string
+  question: string
+  followup: string[]
+}
+
+export interface ProfileProject {
+  id: number
+  name: string
+  tech_stack: string[]
+  story: string
+  pain_points: string[]
+  kp_map: KpMapItem[]
+}
+
+export interface Job {
+  id: number
+  title: string
+  company: string
+  city: string
+  direction: string
+  experience: string
+  tags: string[]
+  source: string
+  url: string
+  posted_at: string | null
+}
+
+export interface JobList {
+  total: number
+  page: number
+  size: number
+  items: Job[]
+}
+
+export interface InsightDirection {
+  direction: string
+  count: number
+  trend: string
+}
+
+export interface InsightSkill {
+  skill: string
+  level: string
+  count: number
+}
+
+export interface JobInsight {
+  hot_directions: InsightDirection[]
+  skill_cloud: InsightSkill[]
+  summary: string
+  updated_at: string
+}

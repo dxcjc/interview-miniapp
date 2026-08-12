@@ -1,0 +1,184 @@
+/* ---------- 辅导计划页 ---------- */
+.plan {
+  padding-top: 8px;
+}
+
+.plan-prog-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plan-prog-title {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.plan-prog-dir {
+  font-size: 22px;
+  color: #ff7a45;
+  background: #fff0e8;
+  border-radius: 999px;
+  padding: 6px 20px;
+  font-weight: 700;
+}
+
+.plan-prog-mid {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.plan-prog-bar {
+  flex: 1;
+  height: 20px;
+  background: #f3ede6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.plan-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9a6c, #ff8a5c);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+.plan-prog-num {
+  font-size: 24px;
+  font-weight: 800;
+  color: #4a453e;
+  margin-left: 16px;
+  white-space: nowrap;
+}
+
+.plan-prog-date {
+  display: block;
+  font-size: 22px;
+  color: #a89f92;
+  margin-top: 14px;
+}
+
+/* 周切换 */
+.plan-weeks {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.plan-week-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16px 0;
+  border-radius: 14px;
+  background: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  color: #a89f92;
+  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
+}
+
+.plan-week-tab.on {
+  background: #ff8a5c;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.32);
+}
+
+/* 周网格 */
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.plan-cell {
+  aspect-ratio: 0.82;
+  background: #fbf8f3;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.plan-cell-day {
+  font-size: 22px;
+  font-weight: 800;
+  color: #4a453e;
+}
+
+.plan-cell-topic {
+  font-size: 26px;
+  margin-top: 8px;
+}
+
+.plan-cell-check {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 18px;
+  color: #4caf7d;
+  font-weight: 900;
+}
+
+.plan-cell.done {
+  background: #e8f6ee;
+  border-color: #cfe8d9;
+}
+
+.plan-cell.done .plan-cell-day {
+  color: #4caf7d;
+}
+
+/* 详情 */
+.plan-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.plan-detail-left {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.plan-detail-day {
+  font-size: 22px;
+  color: #a89f92;
+  font-weight: 700;
+}
+
+.plan-detail-topic {
+  font-size: 30px;
+  font-weight: 800;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.plan-detail-type {
+  font-size: 22px;
+  color: #ff7a45;
+  background: #fff0e8;
+  display: inline-block;
+  border-radius: 999px;
+  padding: 6px 18px;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.plan-detail-btn {
+  background: #ff8a5c;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 18px 26px;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.plan-detail.done .plan-detail-btn {
+  background: #4caf7d;
+}

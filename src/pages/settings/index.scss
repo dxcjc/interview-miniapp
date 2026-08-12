@@ -1,0 +1,51 @@
+/* ---------- 设置页 ---------- */
+.settings {
+  padding-top: 8px;
+}
+
+.set-group {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.set-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 8px;
+  border-bottom: 1px solid #f6f2ec;
+}
+
+.set-row:last-child {
+  border-bottom: none;
+}
+
+.set-label {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.set-value {
+  font-size: 26px;
+  color: #a89f92;
+}
+
+.set-arrow {
+  font-size: 30px;
+  color: #d8cfc2;
+}
+
+.set-api {
+  font-size: 22px;
+  color: #a89f92;
+  word-break: break-all;
+  line-height: 1.6;
+  padding: 8px 8px 20px;
+}
+
+.set-note {
+  font-size: 22px;
+  color: #b4aa9c;
+  line-height: 1.7;
+  padding: 20px 12px;
+}
