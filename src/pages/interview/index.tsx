@@ -44,7 +44,7 @@ export default function Interview() {
   const [transcribing, setTranscribing] = useState(false)
   const [recordSec, setRecordSec] = useState(0)
   const recordTimer = useRef<ReturnType<typeof setInterval> | null>(null)
-  const voiceSupported = typeof Taro.getRecorderManager === 'function'
+  const voiceSupported = process.env.TARO_ENV === 'weapp'
 
   // 录音管理器事件（单次注册）
   useEffect(() => {

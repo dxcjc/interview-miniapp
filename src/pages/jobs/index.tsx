@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { Text, View } from '@tarojs/components'
 import { fetchJobs, getInsight } from '../../api/jobs'
 import type { Job, JobInsight } from '../../api/types'
-import { Empty, Skeleton } from '../../components/Feedback'
+import { Empty, ErrorRetry, Skeleton } from '../../components/Feedback'
 import './index.scss'
 
 const TREND_TEXT: Record<string, string> = { up: '↑', flat: '→', down: '↓' }
@@ -15,6 +15,7 @@ export default function Jobs() {
   const [direction, setDirection] = useState('')
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [listError, setListError] = useState(false)
   const [insightError, setInsightError] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
   const reqSeq = useRef(0)
@@ -30,7 +31,12 @@ export default function Jobs() {
       setJobs((prev) => (append ? [...prev, ...(res.items || [])] : res.items || []))
     } catch {
       if (seq !== reqSeq.current) return
-      if (!append) setJobs([])
+      if (append) {
+        Taro.showToast({ title: '加载更多失败', icon: 'none' })
+      } else {
+        setListError(true)
+        setJobs([])
+      }
     } finally {
       if (seq === reqSeq.current) {
         setLoading(false)
@@ -124,6 +130,8 @@ export default function Jobs() {
 
       {loading ? (
         <Skeleton rows={3} />
+      ) : listError ? (
+        <ErrorRetry text='岗位列表加载失败' onRetry={() => load(direction, 1, false)} />
       ) : jobs.length === 0 ? (
         <Empty icon='💼' text='暂无匹配岗位' />
       ) : (

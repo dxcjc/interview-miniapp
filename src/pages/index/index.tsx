@@ -63,6 +63,11 @@ export default function Home() {
     load()
   }, [load])
 
+  Taro.usePullDownRefresh(async () => {
+    await load()
+    Taro.stopPullDownRefresh()
+  })
+
   const goTask = (t: TodayTask) => {
     const route = TASK_ROUTES[t.session_type]
     if (route) Taro.switchTab({ url: `/${route}` })
@@ -115,7 +120,7 @@ export default function Home() {
             </View>
             <View className='sub'>
               AI 应用开发工程师 · 深圳
-              <View className='jobs-link' onClick={() => Taro.switchTab({ url: '/pages/bank/index' })}>
+              <View className='jobs-link' onClick={() => Taro.navigateTo({ url: '/pages/jobs/index' })}>
                 已匹配 <Text className='b'>{overview?.matched_jobs ?? 0}</Text> 个岗位 ›
               </View>
             </View>
@@ -183,8 +188,8 @@ export default function Home() {
           <View className='sec'>
             <View className='sec-head'>
               <Text className='label'>知识掌握度</Text>
-              <Text className='more' onClick={() => Taro.switchTab({ url: '/pages/bank/index' })}>
-                查看题库 ›
+              <Text className='more' onClick={() => Taro.navigateTo({ url: '/pages/graph/index' })}>
+                查看图谱 ›
               </Text>
             </View>
             <View className='hm-know-card card'>
