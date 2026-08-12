@@ -5,6 +5,7 @@ export default defineAppConfig({
     'pages/interview/index',
     'pages/plan/index',
     'pages/mine/index',
+    'pages/review/index',
   ],
   window: {
     backgroundTextStyle: 'light',

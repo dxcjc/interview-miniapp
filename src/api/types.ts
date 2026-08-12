@@ -50,3 +50,35 @@ export interface QuestionList {
   size: number
   items: Question[]
 }
+
+export interface MockSession {
+  session_id: number
+  first_question: string
+}
+
+export interface PerQuestion {
+  q: string
+  score: number
+  status: string
+  comment: string
+}
+
+export interface Review {
+  id: number
+  session_id: number
+  total_score: number
+  dims: Record<string, number>
+  per_question: PerQuestion[]
+  expression: Record<string, number>
+  advice: string[]
+  created_at: string
+}
+
+export interface ReviewSummary {
+  id: number
+  session_id: number
+  session_type: string
+  direction: string | null
+  total_score: number
+  created_at: string
+}
