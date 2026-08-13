@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Taro from '@tarojs/taro'
-import { Image, Text, View } from '@tarojs/components'
-import { fetchJobs, getInsight } from '../../api/jobs'
+import { Image, ScrollView, Text, View } from '@tarojs/components'
+import { analyzeJobs, fetchJobs, getInsight, getJobDetail } from '../../api/jobs'
+import type { JobDetail } from '../../api/jobs'
 import type { Job, JobInsight } from '../../api/types'
 import './index.scss'
 
@@ -97,6 +98,10 @@ export default function Jobs() {
   const [experience, setExperience] = useState('')
   const [page, setPage] = useState(1)
   const [loadingMore, setLoadingMore] = useState(false)
+  // 岗位详情弹层（系统内展示，不做外链跳转）
+  const [detail, setDetail] = useState<JobDetail | null>(null)
+  const [detailLoading, setDetailLoading] = useState(false)
+  const [analyzing, setAnalyzing] = useState(false)
   // 防竞态：切筛选时请求序号递增，过期响应直接丢弃
   const reqSeq = useRef(0)
 
@@ -177,6 +182,46 @@ export default function Jobs() {
     setPage(next)
     load(city, direction, experience, next, true)
   }
+
+  // ---------- 岗位详情弹层 ----------
+  /** 打开详情：先用列表数据即时展示，再拉详情接口补 knowledge_count */
+  const openDetail = useCallback(async (job: Job) => {
+    setDetail({ ...job, knowledge_count: 0 })
+    setDetailLoading(true)
+    try {
+      const data = await getJobDetail(job.id)
+      setDetail(data)
+    } catch {
+      // 详情接口暂不可用时，用列表字段兜底展示（knowledge_count 视为 0）
+    } finally {
+      setDetailLoading(false)
+    }
+  }, [])
+
+  const closeDetail = useCallback(() => {
+    setDetail(null)
+    setAnalyzing(false)
+  }, [])
+
+  /** AI 分析入库：批量扫描未分析岗位；成功后刷新当前岗位收集状态 */
+  const handleAnalyze = useCallback(async () => {
+    if (!detail || analyzing) return
+    setAnalyzing(true)
+    try {
+      const res = await analyzeJobs()
+      Taro.showToast({ title: `已入库 ${res.processed ?? 0} 个岗位技能点`, icon: 'none' })
+      try {
+        const fresh = await getJobDetail(detail.id)
+        setDetail(fresh)
+      } catch {
+        // 刷新失败则保留当前状态
+      }
+    } catch {
+      // 请求封装已统一 toast 错误
+    } finally {
+      setAnalyzing(false)
+    }
+  }, [detail, analyzing])
 
   const items = jobs || []
   const skillNodes: string[] = [] // 本页不拉知识图谱 → 匹配卡/绶带不渲染
@@ -331,7 +376,7 @@ export default function Jobs() {
               <View
                 key={j.id}
                 className={`job-card card ${matched ? 'match-card' : ''}`}
-                onClick={() => j.url && Taro.setClipboardData({ data: j.url })}
+                onClick={() => openDetail(j)}
               >
                 {matched && <View className='job-ribbon'>已匹配 ✓</View>}
                 <View className='job-top'>
@@ -375,6 +420,84 @@ export default function Jobs() {
           </View>
         )}
       </View>
+
+      {/* 岗位详情弹层：系统内全字段展示（不做外链跳转）+ 知识库收集状态 + AI 分析入库 */}
+      {detail && (
+        <View className='jd-mask' catchMove onClick={closeDetail}>
+          <View className='jd-card' onClick={(e) => e.stopPropagation()}>
+            <ScrollView scrollY className='jd-body'>
+              <View className='jd-head'>
+                <View className='jd-title'>{detail.title || '未知岗位'}</View>
+                <View className='jd-close' onClick={closeDetail}>
+                  ×
+                </View>
+              </View>
+              <View className='jd-company'>{detail.company || '未知公司'}</View>
+
+              <View className='jd-meta'>
+                {detail.city && <Text className='jd-tag'>{detail.city}</Text>}
+                {detail.direction && (
+                  <Text className='jd-tag dir'>{DIR_LABELS[detail.direction] || detail.direction}</Text>
+                )}
+                {detail.experience && <Text className='jd-tag exp'>{detail.experience}</Text>}
+              </View>
+
+              {/* 全部技能标签（不再截断前 6 个） */}
+              {(detail.tags || []).length > 0 && (
+                <View className='jd-sec'>
+                  <View className='jd-sec-t'>技能要求</View>
+                  <View className='jd-req'>
+                    {(detail.tags || []).map((t) => (
+                      <Text key={t} className='jd-rq'>
+                        {t}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+              )}
+
+              {/* 来源 / 发布时间 / 原文链接（展示不跳转） */}
+              <View className='jd-sec'>
+                <View className='jd-row'>
+                  <Text className='jd-k'>来源</Text>
+                  <Text className='jd-v'>{detail.source || '未知'}</Text>
+                </View>
+                <View className='jd-row'>
+                  <Text className='jd-k'>发布时间</Text>
+                  <Text className='jd-v'>{formatTime(detail.posted_at)}</Text>
+                </View>
+                {detail.url && (
+                  <View className='jd-row'>
+                    <Text className='jd-k'>原文链接</Text>
+                    <Text className='jd-v link'>{detail.url}</Text>
+                  </View>
+                )}
+              </View>
+
+              {/* 知识库收集状态 */}
+              <View className='jd-sec'>
+                <View className={`jd-kb ${(detail.knowledge_count || 0) > 0 ? 'done' : 'todo'}`}>
+                  {(detail.knowledge_count || 0) > 0 ? (
+                    <Text>已收集 {detail.knowledge_count} 个技能点入知识库</Text>
+                  ) : (
+                    <Text>{detailLoading ? '正在同步收集状态…' : '待 AI 分析'}</Text>
+                  )}
+                </View>
+              </View>
+            </ScrollView>
+
+            {/* AI 分析入库按钮 */}
+            <View className='jd-foot'>
+              <View
+                className={`jd-analyze ${analyzing ? 'busy' : ''} ${(detail.knowledge_count || 0) > 0 ? 'done' : ''}`}
+                onClick={() => !analyzing && handleAnalyze()}
+              >
+                {analyzing ? 'AI 分析中…' : 'AI 分析入库'}
+              </View>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   )
 }

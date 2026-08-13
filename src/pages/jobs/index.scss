@@ -431,3 +431,198 @@
 .job-sk {
   padding: 40rpx;
 }
+
+/* ---------- 岗位详情弹层（系统内展示，不做外链跳转） ---------- */
+.jd-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: rgba(45, 42, 38, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+}
+
+.jd-card {
+  width: 100%;
+  max-height: 84vh;
+  background: $card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.jd-body {
+  flex: 1;
+  min-height: 0;
+  padding: 40rpx 40rpx 8rpx;
+}
+
+.jd-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20rpx;
+}
+
+.jd-title {
+  flex: 1;
+  font-size: 34rpx;
+  font-weight: 900;
+  color: $ink;
+  line-height: 1.45;
+}
+
+.jd-close {
+  flex-shrink: 0;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-full;
+  background: $accent-soft;
+  color: $accent-strong;
+  font-size: 34rpx;
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jd-company {
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  font-weight: 800;
+  color: $muted;
+}
+
+.jd-meta {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.jd-tag {
+  font-size: 19rpx;
+  font-weight: 800;
+  padding: 8rpx 20rpx;
+  border-radius: $radius-full;
+  background: #f5f1ea;
+  color: #8a8072;
+}
+
+.jd-tag.dir {
+  background: $accent-soft;
+  color: $accent-strong;
+}
+
+.jd-tag.exp {
+  background: $orange-soft;
+  color: $orange-warn;
+}
+
+/* 分区：技能要求 / 来源 / 发布时间 / 原文链接 / 收集状态 */
+.jd-sec {
+  margin-top: 28rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid $line;
+}
+
+.jd-sec-t {
+  font-size: 21rpx;
+  font-weight: 900;
+  color: $ink-sub;
+}
+
+.jd-req {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 16rpx;
+}
+
+.jd-rq {
+  font-size: 19rpx;
+  font-weight: 700;
+  background: #f5f1ea;
+  color: #8a8072;
+  padding: 8rpx 20rpx;
+  border-radius: $radius-full;
+}
+
+.jd-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-top: 12rpx;
+  font-size: 21rpx;
+  line-height: 1.6;
+}
+
+.jd-k {
+  flex-shrink: 0;
+  color: $muted;
+  font-weight: 700;
+}
+
+.jd-v {
+  flex: 1;
+  color: $ink-sub;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.jd-v.link {
+  color: $accent-strong;
+}
+
+/* 知识库收集状态：已收集（绿）/ 待分析（橘） */
+.jd-kb {
+  font-size: 21rpx;
+  font-weight: 800;
+  padding: 16rpx 24rpx;
+  border-radius: 24rpx;
+  line-height: 1.5;
+}
+
+.jd-kb.todo {
+  background: $orange-soft;
+  color: $orange-warn;
+}
+
+.jd-kb.done {
+  background: $green-soft;
+  color: $green;
+}
+
+/* AI 分析入库按钮 */
+.jd-foot {
+  flex-shrink: 0;
+  padding: 24rpx 40rpx 40rpx;
+}
+
+.jd-analyze {
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, $accent-deep, $accent);
+  padding: 24rpx 0;
+  border-radius: $radius-full;
+  box-shadow: $shadow-orange;
+}
+
+.jd-analyze.busy {
+  opacity: 0.6;
+}
+
+.jd-analyze.done {
+  background: linear-gradient(135deg, #6cc79a, $green);
+  box-shadow: 0 16rpx 48rpx rgba(76, 175, 125, 0.3);
+}
