@@ -1,6 +1,7 @@
 /* ---------- 岗位雷达页（对齐 H5 JobsPage / 08 岗位雷达页） ---------- */
 /* 换算：H5 375px 设计稿 ×2 = 小程序 rpx；水平内边距由全局 .page 提供（48rpx） */
 @import '../../styles/tokens';
+@import '../../components/Feedback.scss';
 
 /* 顶部标题区 + 城市切换 pill */
 .job-head {

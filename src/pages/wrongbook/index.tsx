@@ -3,7 +3,6 @@ import Taro from '@tarojs/taro'
 import { Image, Text, View } from '@tarojs/components'
 import { fetchWrongbook, retestWrongbook } from '../../api/wrongbook'
 import type { Question, WrongBookItem } from '../../api/types'
-import iconWrongbook from '../../assets/h5/icon-wrongbook.png'
 import './index.scss'
 
 // 难度 → 文案
@@ -32,6 +31,7 @@ interface RetestDialog {
   question?: Question
 }
 
+/** 09 错题本页：答得差的题自动归档 + 一键复测（对照 H5 WrongbookPage） */
 export default function Wrongbook() {
   const [items, setItems] = useState<WrongBookItem[]>([])
   const [total, setTotal] = useState(0)
@@ -82,6 +82,7 @@ export default function Wrongbook() {
     }
   }
 
+  // 顶部标题区（H5 .page-head：标题 + 装饰图标）
   const head = (
     <View className='page-head'>
       <View>
@@ -91,12 +92,12 @@ export default function Wrongbook() {
         </View>
       </View>
       <View className='head-icon-btn deco'>
-        <Image src={iconWrongbook} />
+        <Image src={require('../../assets/h5/icon-wrongbook.png')} />
       </View>
     </View>
   )
 
-  // 骨架屏
+  // 骨架屏（H5 .skeleton ×3）
   if (loading) {
     return (
       <View className='page'>
@@ -114,13 +115,16 @@ export default function Wrongbook() {
     )
   }
 
-  // 错误态
+  // 错误态（H5 .state-box：图标 + 文案 + 重试）
   if (error) {
     return (
       <View className='page'>
         {head}
         <View className='sec'>
           <View className='state-box'>
+            <View className='state-icon'>
+              <Image src={require('../../assets/h5/icon-wrongbook.png')} />
+            </View>
             <Text>错题本加载失败，请检查后端服务是否已启动（端口 8900）</Text>
             <View className='retry-btn' onClick={load}>
               重试
@@ -135,9 +139,13 @@ export default function Wrongbook() {
     <View className='page'>
       {head}
 
+      {/* 错题列表（H5 .sec.wb-list） */}
       <View className='sec wb-list'>
         {items.length === 0 ? (
           <View className='state-box'>
+            <View className='state-icon'>
+              <Image src={require('../../assets/h5/icon-wrongbook.png')} />
+            </View>
             <Text>暂无错题，继续保持！</Text>
           </View>
         ) : (
@@ -166,7 +174,7 @@ export default function Wrongbook() {
         )}
       </View>
 
-      {/* 复测结果弹层 */}
+      {/* 复测结果弹层（H5 .wb-mask / .wb-dialog） */}
       {dialog && (
         <View className='wb-mask' onClick={() => setDialog(null)}>
           <View className='wb-dialog' onClick={(e) => e.stopPropagation()}>
@@ -194,7 +202,7 @@ export default function Wrongbook() {
         </View>
       )}
 
-      {/* 失败轻提示 */}
+      {/* 失败轻提示（H5 .wb-toast） */}
       {toast && <View className='wb-toast'>{toast}</View>}
     </View>
   )

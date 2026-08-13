@@ -3,7 +3,6 @@ import Taro from '@tarojs/taro'
 import { Image, Text, View } from '@tarojs/components'
 import { fetchJobs, getInsight } from '../../api/jobs'
 import type { Job, JobInsight } from '../../api/types'
-import iconSearch from '../../assets/h5/icon-search.png'
 import './index.scss'
 
 // ---------- 常量（对齐 H5 JobsPage） ----------
@@ -39,7 +38,7 @@ const SKILL_LEVELS: Record<string, string> = { high: 'high', mid: 'mid', low: 'l
 function formatTime(postedAt?: string | null): string {
   const s = String(postedAt || '').trim()
   if (!s) return '发布时间未知'
-  const m = s.match(/(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/)
+  const m = s.match(/(\d{4})[-/. ](\d{1,2})[-/. ](\d{1,2})/)
   if (m) return `${m[2]}-${m[3]} 发布`
   return s
 }
@@ -184,7 +183,7 @@ export default function Jobs() {
 
   return (
     <View className='page'>
-      {/* 顶部标题区 + 城市切换 pill */}
+      {/* 顶部标题区 + 城市切换 pill（H5 .job-head / .job-city-pill） */}
       <View className='job-head'>
         <View className='jh-txt'>
           <View className='job-title'>岗位雷达</View>
@@ -203,7 +202,7 @@ export default function Jobs() {
         </View>
       </View>
 
-      {/* AI 岗位画像卡 */}
+      {/* AI 岗位画像卡（H5 .sec.job-insight-sec） */}
       <View className='sec job-insight-sec'>
         {insightState === 'loading' && (
           <View className='skeleton job-sk'>
@@ -230,14 +229,14 @@ export default function Jobs() {
           <View className='job-insight'>
             <View className='ji-head'>
               <View className='ji-badge'>
-                <Image src={iconSearch} /> AI 岗位画像
+                <Image src={require('../../assets/h5/icon-search.png')} /> AI 岗位画像
               </View>
               {insight.updated_at && (
                 <View className='ji-upd'>更新 {formatTime(insight.updated_at).replace(' 发布', '')}</View>
               )}
             </View>
 
-            {/* 热门方向 3 条横排小卡 */}
+            {/* 热门方向 3 条横排小卡（H5 .ji-hot / .ji-hotcard） */}
             {(insight.hot_directions || []).length > 0 && (
               <View className='ji-hot'>
                 {(insight.hot_directions || []).slice(0, 3).map((h) => (
@@ -252,7 +251,7 @@ export default function Jobs() {
               </View>
             )}
 
-            {/* 技能标签云：high 蜜橘实心 / mid 蜜橘描边 / low 灰描边，最多 12 个 */}
+            {/* 技能标签云：high 蜜橘实心 / mid 蜜橘描边 / low 灰描边，最多 12 个（H5 .ji-cloud） */}
             {(insight.skill_cloud || []).length > 0 && (
               <View className='ji-cloud'>
                 {(insight.skill_cloud || []).slice(0, 12).map((s) => (
@@ -263,13 +262,13 @@ export default function Jobs() {
               </View>
             )}
 
-            {/* 一句话总结 */}
+            {/* 一句话总结（H5 .ji-summary） */}
             {insight.summary && <View className='ji-summary'>{insight.summary}</View>}
           </View>
         )}
       </View>
 
-      {/* 筛选条：方向 + 经验 */}
+      {/* 筛选条：方向 + 经验（H5 .job-filters / .job-f-row / .job-chip） */}
       <View className='job-filters'>
         <View className='job-f-row'>
           {DIRECTIONS.map((d) => (
@@ -295,12 +294,15 @@ export default function Jobs() {
         </View>
       </View>
 
-      {/* 岗位卡列表 */}
+      {/* 岗位卡列表（H5 .sec.job-list） */}
       <View className='sec job-list'>
         {jobsState === 'loading' && <JobsSkeleton />}
 
         {jobsState === 'error' && (
           <View className='state-box'>
+            <View className='state-icon'>
+              <Image src={require('../../assets/h5/icon-search.png')} />
+            </View>
             <Text>岗位列表加载失败，请检查后端服务是否已启动（端口 8900）</Text>
             <View className='retry-btn' onClick={() => load(city, direction, experience, 1, false)}>
               重试
@@ -310,6 +312,9 @@ export default function Jobs() {
 
         {jobsState === 'ok' && items.length === 0 && (
           <View className='state-box'>
+            <View className='state-icon'>
+              <Image src={require('../../assets/h5/icon-target.png')} />
+            </View>
             <Text>暂无岗位数据</Text>
             <View className='job-empty-hint'>数据来自公开源每日更新，请稍后再来或切换筛选条件</View>
           </View>

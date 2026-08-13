@@ -1,11 +1,11 @@
+/* eslint-disable import/no-commonjs -- 图标按任务规范用 require 引用本地 PNG */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Image, Text, View } from '@tarojs/components'
 import { fetchProfile } from '../../api/profile'
 import type { ProfileProject } from '../../api/types'
-import iconResume from '../../assets/h5/icon-resume.png'
 import './index.scss'
 
-/** 11 简历画像：个人项目卡（名称/技术栈/描述）+ 技能画像标签云 */
+/** 11 简历画像：个人项目卡（名称/技术栈/描述）+ 技能画像标签云（结构对齐 H5 ProfilePage.jsx） */
 export default function Profile() {
   const [projects, setProjects] = useState<ProfileProject[]>([])
   const [loading, setLoading] = useState(true)
@@ -44,8 +44,8 @@ export default function Profile() {
         <View className='page-title'>简历画像</View>
         <View className='page-sub'>个人简历与技能画像</View>
       </View>
-      <View className='head-icon-btn'>
-        <Image src={iconResume} />
+      <View className='head-icon-btn deco'>
+        <Image src={require('../../assets/h5/icon-resume.png')} />
       </View>
     </View>
   )

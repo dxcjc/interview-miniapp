@@ -1,7 +1,7 @@
+/* eslint-disable import/no-commonjs -- 图标按任务规范用 require 引用本地 PNG */
 import { useState } from 'react'
 import Taro from '@tarojs/taro'
 import { Image, Text, View } from '@tarojs/components'
-import iconSettings from '../../assets/h5/icon-settings.png'
 import './index.scss'
 
 // 面试默认方向三选一
@@ -25,7 +25,7 @@ function save(key: string, value: string) {
   }
 }
 
-/** 13 设置：面试偏好（默认方向）+ 通知开关 + 关于 */
+/** 13 设置：面试偏好（默认方向）+ 通知开关 + 关于（结构对齐 H5 SettingsPage.jsx） */
 export default function Settings() {
   const [direction, setDirection] = useState(() => load('settings.defaultDirection', 'RAG'))
   const [notify, setNotify] = useState(() => load('settings.notify', 'on') === 'on')
@@ -49,7 +49,7 @@ export default function Settings() {
         <View className='page-sub'>账号 · 偏好 · 关于</View>
       </View>
       <View className='head-icon-btn deco'>
-        <Image src={iconSettings} />
+        <Image src={require('../../assets/h5/icon-settings.png')} />
       </View>
     </View>
   )
