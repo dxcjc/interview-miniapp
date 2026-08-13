@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "interview-miniapp",
   "description": "AI面试陪练微信小程序",
-  "appid": "touristappid",
+  "appid": "wx22317e7d3c123fa1",
   "setting": {
     "urlCheck": false,
     "es6": false,
