@@ -1,61 +1,87 @@
-/* ---------- 错题本页 ---------- */
+/* ---------- 错题本页（对齐 H5 WrongbookPage） ---------- */
+@import '../../styles/tokens';
+
 .wrongbook {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
 .wb-count {
-  font-size: 24px;
-  color: #a89f92;
-  padding: 8px 8px 18px;
+  font-size: 22rpx;
+  color: $muted;
+  padding: 8rpx 0 24rpx;
 }
 
 .wb-count .b {
-  color: #ff7a45;
+  color: $accent-strong;
   font-weight: 900;
-  font-size: 30px;
+  font-size: 30rpx;
+  font-family: $font-num;
+}
+
+.wb-card {
+  padding: 30rpx 32rpx;
+  margin-bottom: 20rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
 }
 
 .wb-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 16rpx;
 }
 
 .wb-title {
   flex: 1;
-  font-size: 29px;
-  font-weight: 700;
-  line-height: 1.5;
-  margin-right: 16px;
+  font-size: 26rpx;
+  font-weight: 800;
+  line-height: 1.55;
+  color: $ink;
 }
 
 .wb-meta {
-  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 18rpx;
+  flex-wrap: wrap;
+}
+
+.wb-meta .tag {
+  margin-right: 0;
 }
 
 .wb-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #f6f2ec;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid $line;
 }
 
 .wb-wrong {
-  font-size: 22px;
-  color: #b4aa9c;
+  font-size: 20rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  background: $accent-soft;
+  padding: 8rpx 20rpx;
+  border-radius: $radius-full;
 }
 
 .wb-retest {
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  font-size: 24px;
+  font-size: 22rpx;
   font-weight: 800;
-  padding: 12px 28px;
-  border-radius: 999px;
+  padding: 16rpx 32rpx;
+  border-radius: $radius-full;
+  box-shadow: $shadow-orange-soft;
 }
 
 .wb-retest.loading {
-  background: #f0d9cc;
+  background: #e8e0d6;
+  box-shadow: none;
 }

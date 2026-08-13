@@ -1,116 +1,183 @@
-/* ---------- 我的页 ---------- */
+/* ---------- 我的页（对齐 H5 MePage） ---------- */
+@import '../../styles/tokens';
+
 .mine {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
+/* 用户卡（橙渐变） */
 .mi-user {
   display: flex;
   align-items: center;
-  background: linear-gradient(140deg, #fff0e8, #ffe3d3);
-  border-radius: 28px;
-  padding: 36px 32px;
-  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.22);
+  gap: 32rpx;
+  background: linear-gradient(145deg, #fff6ef, #ffefe3);
+  border-radius: 52rpx;
+  padding: 40rpx;
+  box-shadow: 0 24rpx 72rpx rgba(255, 138, 92, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.mi-user::before,
+.mi-user::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 138, 92, 0.12);
+}
+
+.mi-user::before {
+  width: 180rpx;
+  height: 180rpx;
+  right: -50rpx;
+  top: -50rpx;
+}
+
+.mi-user::after {
+  width: 100rpx;
+  height: 100rpx;
+  right: 60rpx;
+  bottom: -36rpx;
+  background: rgba(255, 138, 92, 0.08);
 }
 
 .mi-avatar {
-  width: 108px;
-  height: 108px;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 56px;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.1);
+  font-size: 56rpx;
+  box-shadow: 0 16rpx 48rpx rgba(255, 138, 92, 0.35);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .mi-info {
-  margin-left: 24px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .mi-name {
-  font-size: 40px;
+  font-size: 38rpx;
   font-weight: 900;
+  font-family: $font-serif;
+  color: $ink;
 }
 
 .mi-target {
-  font-size: 24px;
-  color: #8a7f72;
-  margin-top: 8px;
+  font-size: 22rpx;
+  color: $muted;
+  margin-top: 10rpx;
+  font-weight: 600;
 }
 
+/* 三统计 */
 .mi-stats {
   display: flex;
-  background: #fff;
-  border-radius: 20px;
-  padding: 26px 0;
-  margin-top: 20px;
-  box-shadow: 0 4px 16px rgba(93, 66, 42, 0.06);
+  background: $card;
+  border-radius: 44rpx;
+  padding: 32rpx 0;
+  margin-top: 28rpx;
+  box-shadow: $shadow;
+  overflow: hidden;
 }
 
 .mi-stat {
   flex: 1;
   text-align: center;
+  position: relative;
+}
+
+.mi-stat + .mi-stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 28%;
+  bottom: 28%;
+  width: 1rpx;
+  background: $line-strong;
 }
 
 .mi-v {
-  font-size: 40px;
+  font-family: $font-num;
+  font-size: 48rpx;
   font-weight: 900;
-  font-family: 'Georgia', serif;
+  color: $accent-strong;
+  line-height: 1;
 }
 
 .mi-k {
-  font-size: 22px;
-  color: #a89f92;
-  margin-top: 4px;
+  font-size: 21rpx;
+  color: #6b635a;
+  margin-top: 10rpx;
+  font-weight: 700;
 }
 
+/* 功能入口 */
 .mi-entries {
-  margin-top: 24px;
+  margin-top: 28rpx;
 }
 
 .mi-entry {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
-  padding: 26px 24px;
+  gap: 24rpx;
+  margin-bottom: 16rpx;
+  padding: 22rpx 32rpx;
+  background: $card;
+  border-radius: 36rpx;
+  box-shadow: $shadow;
 }
 
 .mi-entry-icon {
-  width: 68px;
-  height: 68px;
-  border-radius: 16px;
-  background: #fff0e8;
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 26rpx;
+  background: $accent-soft;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 36rpx;
+  flex-shrink: 0;
 }
+
+/* H5 菜单图标分色：orange/green/lav/blue/yellow */
+.mi-entry:nth-child(2n + 1) .mi-entry-icon { background: $accent-soft; }
+.mi-entry:nth-child(2n) .mi-entry-icon { background: $green-soft; }
 
 .mi-entry-body {
   flex: 1;
-  margin-left: 20px;
+  min-width: 0;
 }
 
 .mi-entry-name {
-  font-size: 29px;
-  font-weight: 800;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: $ink;
 }
 
 .mi-entry-sub {
-  font-size: 22px;
-  color: #a89f92;
-  margin-top: 4px;
+  font-size: 20rpx;
+  color: $muted-2;
+  margin-top: 4rpx;
 }
 
 .mi-entry-arrow {
-  font-size: 34px;
-  color: #d8cfc2;
+  font-size: 32rpx;
+  color: #d5cdc2;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .mi-foot {
   text-align: center;
-  font-size: 22px;
+  font-size: 22rpx;
   color: #c8beb0;
-  padding: 30px 0 10px;
+  padding: 40rpx 0 10rpx;
 }

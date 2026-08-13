@@ -1,149 +1,140 @@
-/* ---------- 题库页 ---------- */
+/* ---------- 题库页（对齐 H5 BankPage） ---------- */
+@import '../../styles/tokens';
+
 .bank {
-  padding: 24px;
-  padding-bottom: 48px;
+  padding: 28rpx 48rpx 96rpx;
 }
 
 .bank-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 8px 0;
+  padding: 8rpx 0 0;
 }
 
-.page-title {
-  font-size: 40px;
-  font-weight: 900;
-}
-
-.page-sub {
-  font-size: 24px;
-  color: #a89f92;
-  margin-top: 6px;
-}
-
-/* 方向 chips */
+/* 岗位方向选择（一行胶囊，横向滚动） */
 .dir-row {
   display: flex;
-  gap: 16px;
-  margin: 28px 0 20px;
+  gap: 16rpx;
+  margin: 28rpx 0 20rpx;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .dir {
-  flex: 1;
+  flex: 0 0 auto;
   text-align: center;
-  padding: 18px 0;
-  border-radius: 16px;
-  background: #fff;
-  font-size: 26px;
+  padding: 18rpx 36rpx;
+  border-radius: $radius-full;
+  background: $card;
+  font-size: 22rpx;
   font-weight: 700;
-  color: #a89f92;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
+  color: #8a8072;
+  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
 }
 
 .dir.on {
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.32);
+  box-shadow: 0 8rpx 28rpx rgba(255, 138, 92, 0.4);
 }
 
 /* 搜索 */
 .search {
   display: flex;
   align-items: center;
-  background: #fff;
-  border-radius: 999px;
-  padding: 18px 24px;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
+  gap: 20rpx;
+  background: $card;
+  border-radius: $radius-full;
+  padding: 26rpx 36rpx;
+  box-shadow: $shadow;
 }
 
 .search .ico {
-  font-size: 28px;
-  margin-right: 12px;
+  font-size: 28rpx;
+  opacity: 0.45;
 }
 
 .search-input {
   flex: 1;
-  font-size: 26px;
+  font-size: 26rpx;
+  color: $ink;
 }
 
-/* 标签 chips */
+/* 标签筛选 */
 .chips {
-  display: flex;
-  gap: 14px;
-  margin: 20px 0;
-  flex-wrap: wrap;
-}
-
-.chip {
-  padding: 10px 26px;
-  border-radius: 999px;
-  background: #fff;
-  font-size: 24px;
-  color: #a89f92;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
-}
-
-.chip.on {
-  background: #fff0e8;
-  color: #ff7a45;
+  margin: 24rpx 0 28rpx;
 }
 
 /* 题卡 */
 .q-list {
-  margin-top: 8px;
+  padding-top: 4rpx;
 }
 
 .q-card {
-  margin-bottom: 18px;
+  padding: 32rpx 36rpx;
+  margin-bottom: 20rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
 }
 
 .qrow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 20rpx;
 }
 
 .qrow .q {
   flex: 1;
-  font-size: 29px;
+  font-size: 27rpx;
   font-weight: 700;
-  line-height: 1.5;
-  margin-right: 16px;
+  line-height: 1.6;
+  color: $ink;
 }
 
 .proj-badge {
   display: inline-flex;
-  font-size: 20px;
-  font-weight: 800;
-  color: #ff7a45;
-  background: #fff0e8;
-  border-radius: 8px;
-  padding: 4px 12px;
-  margin-right: 8px;
-  vertical-align: 2px;
+  font-size: 17rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  background: $accent-soft;
+  border: 1rpx solid #ffb28f;
+  border-radius: $radius-full;
+  padding: 4rpx 16rpx;
+  margin-right: 12rpx;
+  vertical-align: 4rpx;
 }
 
 .meta {
-  margin-top: 16px;
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.meta .tag {
+  margin-right: 0;
 }
 
 .foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid #f6f2ec;
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid $line;
 }
 
 .foot .hot {
-  font-size: 22px;
-  color: #b4aa9c;
+  font-size: 20rpx;
+  color: $muted-2;
+  font-weight: 600;
 }
 
 .foot .chev {
-  font-size: 32px;
-  color: #d8cfc2;
+  font-size: 28rpx;
+  color: #d5cdc2;
+  font-weight: 700;
 }

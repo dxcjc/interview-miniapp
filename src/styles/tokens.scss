@@ -1,0 +1,42 @@
+/* ============================================
+   AI 面试陪练 · 设计令牌（对齐 H5 tokens.css）
+   换算：H5 375px 设计稿 ×2 = 小程序 750rpx（scss 1px = 1rpx）
+   ============================================ */
+
+// ── 基础色板 ──
+$bg: #fbf8f3;             /* 暖米白底 */
+$accent: #ff8a5c;         /* 蜜橘主色 */
+$accent-strong: #ff7a45;  /* 强调橘（文字/高亮） */
+$accent-deep: #ff9a6c;    /* 渐变亮橘 */
+$accent-soft: #fff0e8;    /* 橘色浅底 */
+$ink: #2d2a26;            /* 主文字 */
+$ink-sub: #4a453e;        /* 次级文字 */
+$muted: #a89f92;          /* 弱文字 */
+$muted-2: #b4aa9c;        /* 更弱文字 */
+$card: #ffffff;
+$green: #4caf7d;
+$green-soft: #e8f6ee;
+$orange-warn: #ff9f43;
+$orange-soft: #fff3e0;
+$red: #ff5d5d;
+$red-soft: #ffe9e9;
+$line: #f6f2ec;           /* 分隔线 */
+$line-strong: #f0ebe3;
+
+// ── 圆角与阴影 ──
+$radius: 40rpx;           /* 20px */
+$radius-lg: 48rpx;        /* 24px */
+$radius-full: 9999rpx;
+$shadow: 0 8rpx 32rpx rgba(93, 66, 42, 0.06);
+$shadow-md: 0 12rpx 40rpx rgba(93, 66, 42, 0.1);
+$shadow-lg: 0 24rpx 80rpx rgba(93, 66, 42, 0.18);
+$shadow-orange: 0 24rpx 64rpx rgba(255, 122, 69, 0.28);
+$shadow-orange-soft: 0 16rpx 48rpx rgba(255, 138, 92, 0.25);
+
+// ── 字体栈 ──
+// 小程序无法外链 Google Fonts：Nunito/Noto Serif 用系统近似替代（iOS 优先 PingFang/Songti）
+$font-sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC',
+  'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+$font-serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+$font-num: 'Nunito', -apple-system, BlinkMacSystemFont, 'PingFang SC',
+  'Helvetica Neue', 'Microsoft YaHei', sans-serif;

@@ -1,37 +1,61 @@
-/* ---------- 进步曲线页 ---------- */
+/* ---------- 进步曲线页（对齐 H5 ProgressPage） ---------- */
+@import '../../styles/tokens';
+
 .progress {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
+/* 统计卡 */
 .pg-stats {
   display: flex;
+  background: $card;
+  border-radius: 44rpx;
+  box-shadow: $shadow;
+  overflow: hidden;
 }
 
 .pg-stat {
   flex: 1;
   text-align: center;
+  padding: 32rpx 8rpx;
+  position: relative;
+}
+
+.pg-stat + .pg-stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 24%;
+  bottom: 24%;
+  width: 1rpx;
+  background: $line-strong;
 }
 
 .pg-v {
-  font-size: 44px;
+  font-family: $font-num;
+  font-size: 44rpx;
   font-weight: 900;
-  font-family: 'Georgia', serif;
+  color: $accent-strong;
+  line-height: 1;
 }
 
 .pg-k {
-  font-size: 22px;
-  color: #a89f92;
-  margin-top: 4px;
+  font-size: 20rpx;
+  color: $muted;
+  margin-top: 12rpx;
+  font-weight: 700;
 }
 
-/* 曲线 */
+/* 成绩曲线 */
 .pg-chart {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
-  height: 280px;
-  padding-top: 40px;
-  padding-bottom: 30px;
+  gap: 16rpx;
+  height: 420rpx;
+  padding: 80rpx 24rpx 60rpx;
+  background: $card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow;
 }
 
 .pg-col {
@@ -43,9 +67,11 @@
 }
 
 .pg-col-v {
-  font-size: 20px;
+  font-family: $font-num;
+  font-size: 20rpx;
   font-weight: 800;
-  margin-bottom: 8px;
+  color: $ink-sub;
+  margin-bottom: 8rpx;
 }
 
 .pg-col-bar-wrap {
@@ -58,45 +84,57 @@
 
 .pg-col-bar {
   width: 60%;
-  min-height: 6px;
-  border-radius: 8px 8px 0 0;
+  min-height: 6rpx;
+  border-radius: 16rpx 16rpx 0 0;
 }
 
-.pg-col-bar.low { background: #ff9f43; }
-.pg-col-bar.mid { background: #ff8a5c; }
-.pg-col-bar.high { background: #4caf7d; }
+.pg-col-bar.low { background: linear-gradient(180deg, #ffb28f, #ff9f43); }
+.pg-col-bar.mid { background: linear-gradient(180deg, #ffb28f, #ff8a5c); }
+.pg-col-bar.high { background: linear-gradient(180deg, #7bc69b, #4caf7d); }
 
 .pg-col-date {
-  font-size: 20px;
-  color: #b4aa9c;
-  margin-top: 8px;
+  font-size: 20rpx;
+  color: $muted-2;
+  margin-top: 12rpx;
 }
 
-/* 历史记录 */
+/* 历史复盘 */
 .pg-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  gap: 20rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 20rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
+}
+
+.pg-item-left {
+  flex: 1;
+  min-width: 0;
 }
 
 .pg-item-type {
-  font-size: 27px;
-  font-weight: 700;
+  font-size: 26rpx;
+  font-weight: 800;
+  color: $ink;
 }
 
 .pg-item-date {
-  font-size: 22px;
-  color: #a89f92;
-  margin-top: 6px;
+  font-size: 20rpx;
+  color: $muted;
+  margin-top: 6rpx;
 }
 
 .pg-item-score {
-  font-size: 40px;
+  font-family: $font-num;
+  font-size: 36rpx;
   font-weight: 900;
-  font-family: 'Georgia', serif;
+  flex-shrink: 0;
 }
 
-.pg-item-score.low { color: #ff9f43; }
-.pg-item-score.mid { color: #ff7a45; }
-.pg-item-score.high { color: #4caf7d; }
+.pg-item-score.low { color: $orange-warn; }
+.pg-item-score.mid { color: $accent-strong; }
+.pg-item-score.high { color: $green; }

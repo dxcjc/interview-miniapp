@@ -93,6 +93,7 @@ export default function Review() {
 
       {/* 四维 */}
       <View className='sec-head'>
+        <Text className='bar' />
         <Text className='label'>能力维度</Text>
       </View>
       <View className='rv-dims card'>
@@ -120,6 +121,7 @@ export default function Review() {
 
       {/* 逐题点评 */}
       <View className='sec-head'>
+        <Text className='bar' />
         <Text className='label'>逐题点评</Text>
       </View>
       <View className='rv-questions'>
@@ -142,6 +144,7 @@ export default function Review() {
 
       {/* 建议 */}
       <View className='sec-head'>
+        <Text className='bar' />
         <Text className='label'>改进建议</Text>
       </View>
       <View className='rv-advice card'>

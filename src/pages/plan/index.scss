@@ -1,184 +1,203 @@
-/* ---------- 辅导计划页 ---------- */
+/* ---------- 辅导计划页（对齐 H5 PlanPage 视觉语言） ---------- */
+@import '../../styles/tokens';
+
 .plan {
-  padding-top: 8px;
+  padding-top: 0;
+}
+
+/* 整体进度卡（橙渐变） */
+.plan-prog {
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+  border-radius: 48rpx;
+  padding: 44rpx 48rpx;
+  box-shadow: 0 24rpx 80rpx rgba(255, 138, 92, 0.18);
 }
 
 .plan-prog-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16rpx;
 }
 
 .plan-prog-title {
-  font-size: 32px;
+  font-size: 32rpx;
   font-weight: 900;
+  font-family: $font-serif;
+  color: $ink;
 }
 
 .plan-prog-dir {
-  font-size: 22px;
-  color: #ff7a45;
-  background: #fff0e8;
-  border-radius: 999px;
-  padding: 6px 20px;
+  font-size: 20rpx;
+  color: #c98a68;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: $radius-full;
+  padding: 8rpx 24rpx;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .plan-prog-mid {
   display: flex;
   align-items: center;
-  margin-top: 24px;
+  margin-top: 28rpx;
 }
 
 .plan-prog-bar {
   flex: 1;
-  height: 20px;
-  background: #f3ede6;
-  border-radius: 999px;
+  height: 20rpx;
+  background: #ffe3d3;
+  border-radius: 16rpx;
   overflow: hidden;
 }
 
 .plan-prog-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff9a6c, #ff8a5c);
-  border-radius: 999px;
+  background: linear-gradient(90deg, #ffb28f, #ff8a5c);
+  border-radius: 16rpx;
   transition: width 0.3s;
 }
 
 .plan-prog-num {
-  font-size: 24px;
+  font-family: $font-num;
+  font-size: 24rpx;
   font-weight: 800;
-  color: #4a453e;
-  margin-left: 16px;
+  color: #ff9a6c;
+  margin-left: 24rpx;
   white-space: nowrap;
 }
 
 .plan-prog-date {
   display: block;
-  font-size: 22px;
-  color: #a89f92;
-  margin-top: 14px;
+  font-size: 22rpx;
+  color: #b08d74;
+  margin-top: 20rpx;
+  font-weight: 600;
 }
 
 /* 周切换 */
 .plan-weeks {
   display: flex;
-  gap: 12px;
-  margin: 20px 0;
+  gap: 16rpx;
+  margin: 32rpx 0;
 }
 
 .plan-week-tab {
   flex: 1;
   text-align: center;
-  padding: 16px 0;
-  border-radius: 14px;
-  background: #fff;
-  font-size: 24px;
+  padding: 20rpx 0;
+  border-radius: $radius-full;
+  background: $card;
+  font-size: 22rpx;
   font-weight: 700;
-  color: #a89f92;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
+  color: #8a8072;
+  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
 }
 
 .plan-week-tab.on {
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.32);
+  box-shadow: 0 8rpx 28rpx rgba(255, 138, 92, 0.4);
 }
 
-/* 周网格 */
+/* 7 天网格 */
 .plan-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 12px;
+  padding: 24rpx 24rpx;
 }
 
 .plan-cell {
-  aspect-ratio: 0.82;
+  height: 156rpx;
   background: #fbf8f3;
-  border-radius: 14px;
+  border-radius: 26rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 2px solid transparent;
 }
 
 .plan-cell-day {
-  font-size: 22px;
+  font-size: 20rpx;
   font-weight: 800;
-  color: #4a453e;
+  color: #6b635a;
 }
 
 .plan-cell-topic {
-  font-size: 26px;
-  margin-top: 8px;
+  font-size: 28rpx;
+  margin-top: 12rpx;
 }
 
 .plan-cell-check {
   position: absolute;
-  top: 6px;
-  right: 8px;
-  font-size: 18px;
-  color: #4caf7d;
+  top: 12rpx;
+  right: 16rpx;
+  font-size: 22rpx;
+  color: $green;
   font-weight: 900;
 }
 
 .plan-cell.done {
-  background: #e8f6ee;
-  border-color: #cfe8d9;
+  background: #f0faf4;
 }
 
 .plan-cell.done .plan-cell-day {
-  color: #4caf7d;
+  color: $green;
 }
 
-/* 详情 */
+/* 选中天详情 */
 .plan-detail {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 32rpx;
+  padding: 32rpx 36rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
 }
 
 .plan-detail-left {
   flex: 1;
-  margin-right: 16px;
+  margin-right: 24rpx;
+  min-width: 0;
 }
 
 .plan-detail-day {
-  font-size: 22px;
-  color: #a89f92;
+  font-size: 22rpx;
+  color: $muted;
   font-weight: 700;
 }
 
 .plan-detail-topic {
-  font-size: 30px;
+  font-size: 30rpx;
   font-weight: 800;
-  margin-top: 8px;
+  color: $ink;
+  margin-top: 12rpx;
   line-height: 1.5;
 }
 
 .plan-detail-type {
-  font-size: 22px;
-  color: #ff7a45;
-  background: #fff0e8;
+  font-size: 20rpx;
+  color: $accent-strong;
+  background: $accent-soft;
   display: inline-block;
-  border-radius: 999px;
-  padding: 6px 18px;
-  margin-top: 10px;
+  border-radius: $radius-full;
+  padding: 8rpx 22rpx;
+  margin-top: 14rpx;
   font-weight: 700;
 }
 
 .plan-detail-btn {
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  font-size: 24px;
+  font-size: 24rpx;
   font-weight: 800;
-  padding: 18px 26px;
-  border-radius: 14px;
+  padding: 22rpx 30rpx;
+  border-radius: 28rpx;
   flex-shrink: 0;
+  box-shadow: $shadow-orange-soft;
 }
 
 .plan-detail.done .plan-detail-btn {
-  background: #4caf7d;
+  background: $green;
 }

@@ -1,41 +1,58 @@
-/* ---------- 知识图谱页 ---------- */
+/* ---------- 知识图谱页（对齐 H5 GraphPage 视觉语言） ---------- */
+@import '../../styles/tokens';
+
 .graph {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
+/* 中心岗位卡（橙渐变薄弱点卡） */
 .graph-center {
-  background: linear-gradient(140deg, #fff8f4, #fff);
-  text-align: center;
-  padding: 40px 24px;
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+  border-radius: 44rpx;
+  padding: 36rpx 40rpx;
+  box-shadow: 0 16rpx 48rpx rgba(255, 138, 92, 0.15);
+  position: relative;
+  overflow: hidden;
 }
 
 .graph-center-name {
-  font-size: 38px;
+  font-size: 28rpx;
   font-weight: 900;
+  color: $ink;
 }
 
 .graph-center-mastery {
-  font-size: 24px;
-  color: #a89f92;
-  margin-top: 10px;
+  font-size: 21rpx;
+  color: #b08d74;
+  margin-top: 8rpx;
+  font-weight: 700;
 }
 
 .graph-center-bar {
-  height: 16px;
-  background: #f3ede6;
-  border-radius: 999px;
+  height: 12rpx;
+  background: #ffe3d3;
+  border-radius: 10rpx;
   overflow: hidden;
-  margin-top: 16px;
+  margin-top: 20rpx;
 }
 
 .graph-center-fill {
   height: 100%;
-  border-radius: 999px;
+  border-radius: 10rpx;
+  background: linear-gradient(90deg, #ffb28f, #ff8a5c);
+}
+
+/* 掌握度列表 */
+.graph-nodes {
+  padding: 8rpx 32rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
 }
 
 .graph-node {
-  padding: 22px 4px;
-  border-bottom: 1px solid #f6f2ec;
+  padding: 36rpx 8rpx;
+  border-bottom: 1rpx dashed $line-strong;
 }
 
 .graph-node:last-child {
@@ -49,46 +66,57 @@
 }
 
 .graph-node-name {
-  font-size: 28px;
+  font-size: 28rpx;
   font-weight: 800;
+  color: $ink;
 }
 
 .graph-node-pct {
-  font-size: 26px;
+  font-family: $font-num;
+  font-size: 26rpx;
   font-weight: 900;
+  color: $accent-strong;
 }
 
 .graph-node-bar {
-  height: 14px;
-  background: #f3ede6;
-  border-radius: 999px;
+  height: 12rpx;
+  background: #f5f1ea;
+  border-radius: 12rpx;
   overflow: hidden;
-  margin-top: 12px;
+  margin-top: 16rpx;
 }
 
 .graph-node-fill {
   height: 100%;
-  border-radius: 999px;
+  border-radius: 12rpx;
 }
 
-.graph-node-fill.low { background: #ff9f43; }
-.graph-node-fill.mid { background: #ff8a5c; }
-.graph-node-fill.high { background: #4caf7d; }
+.graph-node-fill.low {
+  background: linear-gradient(90deg, #ff8a7a, #ff5d5d);
+}
+
+.graph-node-fill.mid {
+  background: linear-gradient(90deg, #ffb28f, #ff9f43);
+}
+
+.graph-node-fill.high {
+  background: linear-gradient(90deg, #7bc69b, #4caf7d);
+}
 
 .graph-node-level {
   display: inline-block;
-  font-size: 22px;
-  margin-top: 10px;
+  font-size: 22rpx;
+  margin-top: 16rpx;
   font-weight: 700;
 }
 
-.graph-node-level.low { color: #ff9f43; }
-.graph-node-level.mid { color: #ff7a45; }
-.graph-node-level.high { color: #4caf7d; }
+.graph-node-level.low { color: $orange-warn; }
+.graph-node-level.mid { color: $accent-strong; }
+.graph-node-level.high { color: $green; }
 
 .graph-empty {
   text-align: center;
-  color: #a89f92;
-  font-size: 26px;
-  padding: 40px 0;
+  color: $muted;
+  font-size: 22rpx;
+  padding: 40rpx 0;
 }

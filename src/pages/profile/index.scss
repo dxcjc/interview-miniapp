@@ -1,6 +1,16 @@
-/* ---------- 简历画像页 ---------- */
+/* ---------- 简历画像页（对齐 H5 ProfilePage/KpMap 视觉语言） ---------- */
+@import '../../styles/tokens';
+
 .profile {
-  padding-top: 8px;
+  padding-top: 0;
+}
+
+.pf-card {
+  padding: 32rpx 36rpx;
+  margin-bottom: 20rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
 }
 
 .pf-head {
@@ -10,64 +20,73 @@
 }
 
 .pf-name {
-  font-size: 32px;
+  font-size: 28rpx;
   font-weight: 900;
+  color: $ink;
+  line-height: 1.5;
 }
 
 .pf-toggle {
-  font-size: 30px;
-  color: #a89f92;
+  font-size: 30rpx;
+  color: $muted-2;
+  flex-shrink: 0;
 }
 
 .pf-tech {
-  margin-top: 14px;
+  margin-top: 14rpx;
+}
+
+.pf-tech .tag {
+  margin-right: 12rpx;
 }
 
 .pf-body {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid #f6f2ec;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx dashed $line-strong;
 }
 
 .pf-story {
-  font-size: 26px;
-  color: #6b645c;
-  line-height: 1.7;
+  font-size: 22rpx;
+  color: #8a8072;
+  line-height: 1.8;
 }
 
 .pf-block {
-  margin-top: 20px;
+  margin-top: 28rpx;
 }
 
 .pf-block-title {
-  font-size: 26px;
+  font-size: 26rpx;
   font-weight: 800;
-  margin-bottom: 10px;
+  color: $ink;
+  margin-bottom: 14rpx;
 }
 
 .pf-pain {
-  font-size: 25px;
-  color: #6b645c;
+  font-size: 22rpx;
+  color: #8a8072;
   line-height: 1.7;
-  margin-top: 4px;
+  margin-top: 6rpx;
 }
 
 .pf-kp {
-  background: #fbf8f3;
-  border-radius: 14px;
-  padding: 16px;
-  margin-top: 10px;
+  background: $bg;
+  border-radius: 28rpx;
+  padding: 24rpx 28rpx;
+  margin-top: 16rpx;
 }
 
 .pf-kp-k {
-  font-size: 26px;
-  font-weight: 800;
-  color: #ff7a45;
+  font-size: 26rpx;
+  font-weight: 900;
+  color: $accent-strong;
 }
 
 .pf-kp-q {
-  font-size: 24px;
-  color: #6b645c;
-  line-height: 1.6;
-  margin-top: 8px;
+  font-size: 24rpx;
+  color: #8a8072;
+  line-height: 1.7;
+  margin-top: 10rpx;
+  font-weight: 700;
 }

@@ -1,19 +1,25 @@
-/* ---------- 设置页 ---------- */
+/* ---------- 设置页（对齐 H5 SettingsPage） ---------- */
+@import '../../styles/tokens';
+
 .settings {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
 .set-group {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  overflow: hidden;
+  margin-bottom: 32rpx;
 }
 
 .set-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 8px;
-  border-bottom: 1px solid #f6f2ec;
+  gap: 24rpx;
+  padding: 32rpx 36rpx;
+  border-bottom: 1rpx dashed $line-strong;
 }
 
 .set-row:last-child {
@@ -21,31 +27,33 @@
 }
 
 .set-label {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 26rpx;
+  font-weight: 800;
+  color: $ink;
 }
 
 .set-value {
-  font-size: 26px;
-  color: #a89f92;
+  font-size: 24rpx;
+  color: $muted-2;
 }
 
 .set-arrow {
-  font-size: 30px;
-  color: #d8cfc2;
+  font-size: 30rpx;
+  color: #d5cdc2;
+  font-weight: 700;
 }
 
 .set-api {
-  font-size: 22px;
-  color: #a89f92;
+  font-size: 22rpx;
+  color: $muted-2;
   word-break: break-all;
   line-height: 1.6;
-  padding: 8px 8px 20px;
+  padding: 8rpx 36rpx 32rpx;
 }
 
 .set-note {
-  font-size: 22px;
-  color: #b4aa9c;
+  font-size: 22rpx;
+  color: $muted-2;
   line-height: 1.7;
-  padding: 20px 12px;
+  padding: 20rpx 12rpx;
 }

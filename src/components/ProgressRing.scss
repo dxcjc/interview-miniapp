@@ -1,3 +1,5 @@
+@import '../styles/tokens';
+
 .ring {
   border-radius: 50%;
   display: flex;
@@ -5,8 +7,9 @@
   justify-content: center;
 }
 
+/* 内圈挖空：透明露出卡片橙渐变背景（对齐 H5 SVG 环） */
 .ring-inner {
-  background: #fbf8f3;
+  background: transparent;
   border-radius: 50%;
   display: flex;
   flex-direction: column;

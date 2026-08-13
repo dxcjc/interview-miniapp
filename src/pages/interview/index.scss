@@ -1,171 +1,183 @@
-/* ---------- 模拟面试 ---------- */
+/* ---------- 模拟面试（对齐 H5 CallPage：模式选择 + 通话对话） ---------- */
+@import '../../styles/tokens';
+
+/* ── 模式选择 ── */
 .interview {
-  padding: 24px;
-  padding-bottom: 48px;
+  padding: 28rpx 48rpx 96rpx;
 }
 
 .iv-title {
-  font-size: 40px;
+  font-size: 40rpx;
   font-weight: 900;
-  padding: 8px 8px 0;
+  font-family: $font-serif;
+  color: $ink;
+  padding: 8rpx 0 0;
 }
 
 .iv-sub {
-  font-size: 24px;
-  color: #a89f92;
-  padding: 8px 8px 0;
+  font-size: 22rpx;
+  color: $muted;
+  padding: 8rpx 0 0;
 }
 
 .iv-modes {
-  margin-top: 28px;
+  margin-top: 28rpx;
 }
 
 .iv-mode {
   display: flex;
   align-items: center;
-  padding: 24px;
-  margin-bottom: 16px;
-  border: 2px solid transparent;
+  gap: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  background: $card;
+  border-radius: 44rpx;
+  box-shadow: $shadow;
 }
 
 .iv-mode.on {
-  border-color: #ff8a5c;
-  background: #fff8f4;
-  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.18);
+  background: $accent-soft;
+  border: 2rpx solid $accent;
 }
 
 .iv-mode-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  background: #fff0e8;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 24rpx;
+  background: $accent;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 36rpx;
+  flex-shrink: 0;
 }
 
 .iv-mode-body {
   flex: 1;
-  margin-left: 20px;
+  min-width: 0;
 }
 
 .iv-mode-name {
-  font-size: 30px;
+  font-size: 26rpx;
   font-weight: 800;
+  color: $ink;
 }
 
 .iv-mode-sub {
-  font-size: 23px;
-  color: #a89f92;
-  margin-top: 6px;
+  font-size: 19rpx;
+  color: $muted;
+  margin-top: 4rpx;
 }
 
 .iv-mode-check {
-  font-size: 34px;
-  color: #ff8a5c;
+  font-size: 32rpx;
+  color: $accent-strong;
   font-weight: 900;
+  flex-shrink: 0;
 }
 
 .iv-dir-label {
-  font-size: 28px;
+  font-size: 28rpx;
   font-weight: 800;
-  margin: 24px 8px 14px;
+  color: $ink;
+  margin: 32rpx 0 16rpx;
 }
 
 .iv-dirs {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  padding: 0 8px;
+  gap: 16rpx;
 }
 
 .iv-dir {
-  padding: 14px 34px;
-  border-radius: 999px;
-  background: #fff;
-  font-size: 26px;
-  color: #a89f92;
+  padding: 18rpx 34rpx;
+  border-radius: $radius-full;
+  background: $card;
+  font-size: 22rpx;
+  color: #8a8072;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.05);
+  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
 }
 
 .iv-dir.on {
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  box-shadow: 0 8px 24px rgba(255, 138, 92, 0.32);
+  box-shadow: 0 8rpx 28rpx rgba(255, 138, 92, 0.4);
 }
 
 .iv-start {
-  margin-top: 48px;
-  background: #ff8a5c;
+  margin-top: 48rpx;
+  background: $accent;
   color: #fff;
-  font-size: 30px;
-  font-weight: 800;
-  border-radius: 999px;
-  height: 88px;
-  line-height: 88px;
+  font-size: 28rpx;
+  font-weight: 900;
+  border-radius: $radius-full;
+  height: 112rpx;
+  line-height: 112rpx;
   text-align: center;
-  box-shadow: 0 12px 32px rgba(255, 122, 69, 0.28);
+  box-shadow: $shadow-orange;
 }
 
 .iv-start.loading {
-  background: #f0d9cc;
+  background: #e8e0d6;
   box-shadow: none;
 }
 
 .iv-session-error {
-  margin-top: 20px;
+  margin-top: 20rpx;
 }
 
-/* ---------- 对话 ---------- */
+/* ── 对话 ── */
 .chat {
   display: flex;
   flex-direction: column;
   height: 100vh;
   box-sizing: border-box;
+  background: linear-gradient(180deg, #fbf8f3, #f5efe7);
 }
 
 .chat-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
-  background: #fbf8f3;
+  padding: 28rpx 48rpx 8rpx;
 }
 
 .chat-mode {
-  font-size: 26px;
+  font-size: 22rpx;
   font-weight: 800;
+  color: $accent-strong;
+  letter-spacing: 2rpx;
 }
 
 .chat-end {
-  font-size: 24px;
-  color: #ff5d5d;
+  font-size: 22rpx;
+  color: $red;
   font-weight: 700;
-  padding: 8px 20px;
-  border-radius: 999px;
-  background: #ffe9e9;
+  padding: 10rpx 26rpx;
+  border-radius: $radius-full;
+  background: $red-soft;
 }
 
 .chat-body {
   flex: 1;
-  padding: 0 24px;
+  padding: 0 48rpx;
   height: 0;
   box-sizing: border-box;
 }
 
 .chat-tip {
-  font-size: 22px;
-  color: #b4aa9c;
+  font-size: 22rpx;
+  color: $muted-2;
   text-align: center;
-  padding: 12px 0 20px;
+  padding: 24rpx 0 40rpx;
 }
 
 .msg-row {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 24px;
+  align-items: flex-end;
+  gap: 16rpx;
+  margin-bottom: 28rpx;
 }
 
 .msg-row.mine {
@@ -173,54 +185,52 @@
 }
 
 .msg-avatar {
-  width: 64px;
-  height: 64px;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
-  background: #fff0e8;
+  background: $accent-soft;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 30rpx;
   flex-shrink: 0;
 }
 
 .msg-row.mine .msg-avatar {
-  background: #fff3e0;
+  background: #ffe9e0;
 }
 
 .msg-bubble {
-  max-width: 76%;
-  margin: 0 16px;
-  padding: 20px 24px;
-  background: #fff;
-  border-radius: 20px;
-  border-top-left-radius: 6px;
-  font-size: 28px;
-  line-height: 1.6;
-  color: #2d2a26;
+  max-width: 78%;
+  padding: 22rpx 28rpx;
+  background: $card;
+  border-radius: 12rpx 36rpx 36rpx 36rpx;
+  font-size: 25rpx;
+  line-height: 1.7;
+  color: $ink;
   word-break: break-all;
-  box-shadow: 0 4px 12px rgba(93, 66, 42, 0.06);
+  box-shadow: $shadow;
 }
 
 .msg-row.mine .msg-bubble {
-  background: #ff8a5c;
+  background: linear-gradient(145deg, #ff9a6c, #ff7a45);
   color: #fff;
-  border-radius: 20px;
-  border-top-right-radius: 6px;
+  border-radius: 36rpx 12rpx 36rpx 36rpx;
+  box-shadow: $shadow-orange-soft;
 }
 
 .msg-bubble.thinking {
-  color: #a89f92;
-  font-size: 26px;
+  color: $muted;
+  font-size: 24rpx;
 }
 
 .caret {
   display: inline-block;
-  width: 3px;
-  height: 26px;
-  background: #ff8a5c;
-  vertical-align: -3px;
-  margin-left: 4px;
+  width: 4rpx;
+  height: 24rpx;
+  background: $accent-strong;
+  vertical-align: -2rpx;
+  margin-left: 4rpx;
   animation: blink 0.8s infinite;
 }
 
@@ -229,36 +239,40 @@
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .turn-error {
   text-align: center;
-  font-size: 22px;
-  color: #ff5d5d;
-  padding: 8px 0;
+  font-size: 21rpx;
+  color: $red;
+  padding: 8rpx 0;
+  font-weight: 700;
 }
 
 .chat-input-bar {
   display: flex;
   align-items: flex-end;
-  padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
-  background: #fff;
-  border-top: 1px solid #f6f2ec;
+  gap: 20rpx;
+  padding: 16rpx 48rpx calc(16rpx + env(safe-area-inset-bottom));
   position: relative;
 }
 
 .rec-indicator {
   position: absolute;
-  top: -68px;
+  top: -136rpx;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(45, 42, 38, 0.85);
   color: #fff;
-  font-size: 24px;
-  padding: 14px 30px;
-  border-radius: 999px;
+  font-size: 22rpx;
+  padding: 20rpx 36rpx;
+  border-radius: $radius-full;
   display: flex;
   align-items: center;
   white-space: nowrap;
@@ -266,59 +280,62 @@
 }
 
 .rec-dot {
-  width: 16px;
-  height: 16px;
+  width: 16rpx;
+  height: 16rpx;
   border-radius: 50%;
-  background: #ff5d5d;
-  margin-right: 12px;
+  background: $red;
+  margin-right: 12rpx;
   animation: blink 0.8s infinite;
 }
 
 .rec-dot.trans {
-  background: #ff8a5c;
+  background: $accent;
 }
 
 .chat-mic {
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
-  background: #fff0e8;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: $card;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 34px;
-  margin-right: 14px;
+  font-size: 34rpx;
   flex-shrink: 0;
+  box-shadow: $shadow;
 }
 
 .chat-mic.rec {
-  background: #ffe9e9;
-  box-shadow: 0 0 0 6px rgba(255, 93, 93, 0.12);
+  background: $accent-soft;
+  box-shadow: 0 0 0 6rpx rgba(255, 93, 93, 0.12);
 }
 
 .chat-input {
   flex: 1;
-  min-height: 72px;
-  max-height: 200px;
-  background: #f6f2ec;
-  border-radius: 16px;
-  padding: 16px 20px;
-  font-size: 28px;
+  min-height: 88rpx;
+  max-height: 200rpx;
+  background: $card;
+  border-radius: $radius-full;
+  padding: 24rpx 32rpx;
+  font-size: 26rpx;
   box-sizing: border-box;
+  box-shadow: $shadow;
 }
 
 .chat-send {
-  margin-left: 16px;
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  font-size: 26px;
-  font-weight: 800;
-  padding: 20px 28px;
-  border-radius: 14px;
+  font-size: 24rpx;
+  font-weight: 900;
+  padding: 20rpx 28rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: $shadow-orange-soft;
 }
 
 .chat-send.disabled {
-  background: #f0d9cc;
+  background: #e8e0d6;
+  box-shadow: none;
 }
 
 /* 弹层 */
@@ -330,48 +347,53 @@
   align-items: center;
   justify-content: center;
   z-index: 99;
+  padding: 48rpx;
 }
 
 .modal {
-  width: 80%;
-  background: #fff;
-  border-radius: 24px;
-  padding: 40px 32px 32px;
+  width: 100%;
+  max-width: 560rpx;
+  background: $card;
+  border-radius: 44rpx;
+  padding: 44rpx 40rpx 36rpx;
   text-align: center;
+  box-shadow: $shadow-lg;
 }
 
 .modal-title {
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 30rpx;
+  font-weight: 900;
+  color: $ink;
 }
 
 .modal-sub {
-  font-size: 24px;
-  color: #a89f92;
-  margin-top: 10px;
+  font-size: 22rpx;
+  color: $muted;
+  margin-top: 12rpx;
 }
 
 .modal-actions {
   display: flex;
-  gap: 16px;
-  margin-top: 32px;
+  gap: 20rpx;
+  margin-top: 32rpx;
 }
 
 .modal-btn {
   flex: 1;
-  padding: 20px 0;
-  border-radius: 999px;
-  font-size: 28px;
-  font-weight: 700;
+  padding: 20rpx 0;
+  border-radius: $radius-full;
+  font-size: 24rpx;
+  font-weight: 800;
   text-align: center;
 }
 
 .modal-btn.ghost {
-  background: #f6f2ec;
-  color: #4a453e;
+  background: #f5f1ea;
+  color: #8a8072;
 }
 
 .modal-btn.solid {
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
+  box-shadow: $shadow-orange-soft;
 }

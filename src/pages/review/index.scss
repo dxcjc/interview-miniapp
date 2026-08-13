@@ -1,41 +1,49 @@
-/* ---------- 复盘页 ---------- */
+/* ---------- 复盘页（对齐 H5 ReviewPage） ---------- */
+@import '../../styles/tokens';
+
 .review {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
+/* 总分卡（橙渐变） */
 .rv-score {
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+  border-radius: 56rpx;
+  padding: 44rpx 48rpx;
+  box-shadow: 0 24rpx 80rpx rgba(255, 138, 92, 0.18);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 44px 24px 36px;
-  background: linear-gradient(160deg, #fff8f4, #fff);
 }
 
 .rv-score-num {
-  font-size: 72px;
+  font-family: $font-num;
+  font-size: 64rpx;
   font-weight: 900;
-  color: #ff7a45;
-  font-family: 'Georgia', serif;
+  color: $accent-strong;
+  line-height: 1;
 }
 
 .rv-score-label {
-  font-size: 22px;
-  color: #a89f92;
-  margin-top: 6px;
+  font-size: 18rpx;
+  color: #c9a48c;
+  font-weight: 700;
+  margin-top: 4rpx;
 }
 
 .rv-score-grade {
-  font-size: 30px;
-  font-weight: 800;
-  margin-top: 24px;
+  font-size: 26rpx;
+  font-weight: 900;
+  color: $ink;
+  margin-top: 28rpx;
 }
 
 .rv-score-expr {
   display: flex;
-  gap: 24px;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #f6f2ec;
+  gap: 48rpx;
+  margin-top: 28rpx;
+  padding-top: 28rpx;
+  border-top: 1rpx solid rgba(255, 138, 92, 0.2);
   width: 100%;
   justify-content: center;
 }
@@ -45,165 +53,182 @@
 }
 
 .rv-expr-k {
-  font-size: 22px;
-  color: #a89f92;
+  font-size: 20rpx;
+  color: #b08d74;
 }
 
 .rv-expr-v {
-  font-size: 28px;
+  font-size: 28rpx;
   font-weight: 800;
-  margin-top: 6px;
+  color: $accent-strong;
+  margin-top: 6rpx;
 }
 
-/* 维度 */
+/* 能力维度 */
 .rv-dims {
-  padding-top: 16px;
-  padding-bottom: 24px;
+  padding: 36rpx 40rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
 }
 
 .rv-dim {
-  margin-top: 22px;
+  padding: 20rpx 0;
+}
+
+.rv-dim + .rv-dim {
+  border-top: 1rpx dashed $line-strong;
 }
 
 .rv-dim-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 14rpx;
 }
 
 .rv-dim-name {
-  font-size: 27px;
+  font-size: 26rpx;
   font-weight: 700;
+  color: $ink;
 }
 
 .rv-dim-score {
-  font-size: 27px;
+  font-family: $font-num;
+  font-size: 26rpx;
   font-weight: 900;
+  color: $accent-strong;
 }
 
-.rv-dim-score.low { color: #ff9f43; }
-.rv-dim-score.mid { color: #ff7a45; }
-.rv-dim-score.high { color: #4caf7d; }
-
 .rv-dim-bar {
-  height: 16px;
-  background: #f3ede6;
-  border-radius: 999px;
+  height: 12rpx;
+  background: #f5f1ea;
+  border-radius: 10rpx;
   overflow: hidden;
 }
 
 .rv-dim-fill {
   height: 100%;
-  border-radius: 999px;
+  border-radius: 10rpx;
+  background: linear-gradient(90deg, #ffb28f, #ff8a5c);
 }
 
-.rv-dim-fill.low { background: #ff9f43; }
-.rv-dim-fill.mid { background: #ff8a5c; }
-.rv-dim-fill.high { background: #4caf7d; }
+/* 逐题点评 */
+.rv-q {
+  padding: 28rpx 32rpx;
+  margin-bottom: 20rpx;
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
+}
 
-/* 逐题 */
 .rv-q-head {
   display: flex;
   align-items: flex-start;
+  gap: 16rpx;
 }
 
 .rv-q-idx {
-  font-size: 22px;
+  font-size: 20rpx;
   font-weight: 900;
-  color: #ff7a45;
-  background: #fff0e8;
-  border-radius: 8px;
-  padding: 4px 12px;
-  margin-right: 12px;
+  color: $accent-strong;
+  background: $accent-soft;
+  border-radius: 16rpx;
+  padding: 6rpx 20rpx;
   flex-shrink: 0;
 }
 
 .rv-q-text {
   flex: 1;
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 25rpx;
+  font-weight: 800;
   line-height: 1.5;
+  color: $ink;
 }
 
 .rv-q-score {
-  font-size: 30px;
+  font-family: $font-num;
+  font-size: 30rpx;
   font-weight: 900;
-  margin-left: 12px;
+  margin-left: 12rpx;
   flex-shrink: 0;
 }
 
-.rv-q-score.low { color: #ff9f43; }
-.rv-q-score.mid { color: #ff7a45; }
-.rv-q-score.high { color: #4caf7d; }
+.rv-q-score.low { color: $orange-warn; }
+.rv-q-score.mid { color: $accent-strong; }
+.rv-q-score.high { color: $green; }
 
 .rv-q-status {
   display: inline-block;
-  margin-top: 14px;
-  font-size: 22px;
-  font-weight: 700;
-  color: #ff7a45;
-  background: #fff0e8;
-  border-radius: 999px;
-  padding: 6px 20px;
+  margin-top: 14rpx;
+  font-size: 20rpx;
+  font-weight: 800;
+  color: $accent-strong;
+  background: $accent-soft;
+  border-radius: $radius-full;
+  padding: 8rpx 22rpx;
 }
 
 .rv-q-comment {
-  font-size: 25px;
-  color: #6b645c;
-  line-height: 1.6;
-  margin-top: 12px;
+  font-size: 22rpx;
+  color: #8a8072;
+  line-height: 1.7;
+  margin-top: 16rpx;
 }
 
-/* 建议 */
+/* 改进建议（米色卡） */
 .rv-advice {
-  padding-top: 16px;
-  padding-bottom: 24px;
+  padding: 36rpx 40rpx;
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+  border-radius: $radius;
+  box-shadow: 0 16rpx 48rpx rgba(255, 138, 92, 0.12);
 }
 
 .rv-advice-item {
   display: flex;
   align-items: flex-start;
-  margin-top: 20px;
+  gap: 16rpx;
+  padding: 12rpx 0;
 }
 
 .rv-advice-num {
-  width: 40px;
-  height: 40px;
+  width: 40rpx;
+  height: 40rpx;
   border-radius: 50%;
-  background: #ff8a5c;
+  background: $accent;
   color: #fff;
-  font-size: 22px;
+  font-size: 20rpx;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 16px;
   flex-shrink: 0;
+  margin-top: 4rpx;
 }
 
 .rv-advice-text {
   flex: 1;
-  font-size: 26px;
-  color: #4a453e;
-  line-height: 1.6;
+  font-size: 23rpx;
+  color: #8a8072;
+  line-height: 1.9;
 }
 
 .rv-empty {
   text-align: center;
-  color: #a89f92;
-  font-size: 26px;
-  padding: 30px 0;
+  color: $muted;
+  font-size: 22rpx;
+  padding: 40rpx 0;
 }
 
+/* 底部操作 */
 .rv-back {
-  margin: 30px 0 20px;
-  background: #ff8a5c;
+  margin: 60rpx 0 40rpx;
+  background: $accent;
   color: #fff;
-  font-size: 30px;
+  font-size: 26rpx;
   font-weight: 800;
   text-align: center;
-  border-radius: 999px;
-  padding: 24px 0;
-  box-shadow: 0 12px 32px rgba(255, 122, 69, 0.28);
+  border-radius: $radius-full;
+  padding: 28rpx 0;
+  box-shadow: $shadow-orange-soft;
 }
