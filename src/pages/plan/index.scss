@@ -1,5 +1,6 @@
 /* ---------- 辅导计划页（对齐 H5 PlanPage #page-plan，1px = 2rpx） ---------- */
 @import '../../styles/tokens';
+@import '../../components/Feedback.scss';
 
 /* 整体进度卡（橙渐变，大数字 Nunito 观感 900 字重） */
 .plan-top {

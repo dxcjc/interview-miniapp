@@ -1,5 +1,6 @@
 /* ---------- 知识图谱页（对齐 H5 GraphPage #page-graph，1px = 2rpx） ---------- */
 @import '../../styles/tokens';
+@import '../../components/Feedback.scss';
 
 /* 薄弱点卡（橙渐变，左图标 + 掌握度 + 进度条 + 右下装饰） */
 .weak-card {
