@@ -331,3 +331,134 @@
   border: 3rpx solid #ffb28f;
   background: linear-gradient(180deg, #fffdfa, #fff6ef);
 }
+
+/* ---------- 题目详情弹层（复用 bank-mask/bank-dialog，暖米白 + 大圆角） ---------- */
+.detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.detail-head .tag {
+  font-size: 20rpx;
+  padding: 10rpx 28rpx;
+}
+
+.detail-close {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #f5f1ea;
+  color: #8a8072;
+  font-size: 34rpx;
+  font-weight: 700;
+  line-height: 56rpx;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.detail-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  line-height: 1.6;
+  color: $ink;
+}
+
+.detail-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 24rpx;
+}
+
+.detail-block {
+  margin-top: 28rpx;
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  font-size: 21rpx;
+  font-weight: 800;
+  color: $muted;
+  margin-bottom: 12rpx;
+}
+
+.detail-label::before {
+  content: '';
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: $accent;
+  margin-right: 10rpx;
+}
+
+.detail-body {
+  font-size: 25rpx;
+  line-height: 1.7;
+  color: $ink-sub;
+  background: #faf7f2;
+  border-radius: 24rpx;
+  padding: 22rpx 26rpx;
+}
+
+.detail-followup {
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+  background: #faf7f2;
+  border-radius: 24rpx;
+  padding: 20rpx 26rpx;
+  margin-bottom: 14rpx;
+  font-size: 25rpx;
+  line-height: 1.6;
+  color: $ink-sub;
+}
+
+.detail-followup:last-child {
+  margin-bottom: 0;
+}
+
+.detail-no {
+  flex-shrink: 0;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: $accent;
+  color: #fff;
+  font-size: 19rpx;
+  font-weight: 800;
+  text-align: center;
+  line-height: 36rpx;
+  margin-top: 4rpx;
+}
+
+.detail-ft {
+  flex: 1;
+}
+
+.detail-foot {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 28rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid $line;
+}
+
+.detail-actions {
+  margin-top: 32rpx;
+}
+
+.detail-actions .primary {
+  width: 100%;
+  padding: 22rpx 0;
+  border-radius: $radius-full;
+  font-size: 24rpx;
+  font-weight: 800;
+  text-align: center;
+  background: $accent;
+  color: #fff;
+  box-shadow: $shadow-orange-soft;
+}

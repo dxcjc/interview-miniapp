@@ -44,6 +44,7 @@ export default function Bank() {
   const [total, setTotal] = useState<number | null>(null)
   const [totalLoading, setTotalLoading] = useState(true)
   const [showAdd, setShowAdd] = useState(false)
+  const [detail, setDetail] = useState<Question | null>(null)
   const [addTitle, setAddTitle] = useState('')
   const [addDiff, setAddDiff] = useState(DIFF_OPTIONS[1])
   const [addTags, setAddTags] = useState('')
@@ -273,7 +274,11 @@ export default function Bank() {
             )
           ) : (
             filtered.map((q, i) => (
-              <View className={`q-card card ${i === 0 ? 'hl' : ''}`} key={q.id ?? i}>
+              <View
+                className={`q-card card ${i === 0 ? 'hl' : ''}`}
+                key={q.id ?? i}
+                onClick={() => setDetail(q)}
+              >
                 <View className='qrow'>
                   <View className='q'>
                     {i === 0 && <Text className='proj-badge'>项目深挖</Text>}
@@ -353,6 +358,64 @@ export default function Bank() {
               </View>
               <View className={`primary${submitting ? ' disabled' : ''}`} onClick={() => handleAdd()}>
                 {submitting ? '保存中…' : '保存'}
+              </View>
+            </View>
+          </View>
+        </View>
+      )}
+
+      {/* 题目详情弹层（复用 bank-mask/bank-dialog，暖米白 + 大圆角） */}
+      {detail && (
+        <View className='bank-mask' catchMove onClick={() => setDetail(null)}>
+          <View className='bank-dialog' onClick={(e) => e.stopPropagation()}>
+            <View className='detail-head'>
+              <Text className={`tag ${DIFF_MAP[detail.difficulty] ? detail.difficulty : 'mid'}`}>
+                {DIFF_MAP[detail.difficulty] || detail.difficulty || '中等'}
+              </Text>
+              <View className='detail-close' onClick={() => setDetail(null)}>
+                ×
+              </View>
+            </View>
+
+            <View className='detail-title'>{detail.title}</View>
+
+            {(detail.tags || []).length > 0 && (
+              <View className='detail-chips'>
+                {(detail.tags || []).map((t) => (
+                  <Text className='tag kp' key={t}>
+                    {t}
+                  </Text>
+                ))}
+              </View>
+            )}
+
+            {detail.kp ? (
+              <View className='detail-block'>
+                <View className='detail-label'>考察点</View>
+                <View className='detail-body'>{detail.kp}</View>
+              </View>
+            ) : null}
+
+            {(detail.followup_chain || []).length > 0 && (
+              <View className='detail-block'>
+                <View className='detail-label'>追问链</View>
+                {(detail.followup_chain || []).map((f, i) => (
+                  <View className='detail-followup' key={i}>
+                    <Text className='detail-no'>{i + 1}</Text>
+                    <Text className='detail-ft'>{f}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            <View className='detail-foot'>
+              <Text className='tag src'>{sourceLabelOf(detail)}</Text>
+              {detail.generated_by_ai && <Text className='tag ai-gen'>AI 生成</Text>}
+            </View>
+
+            <View className='detail-actions'>
+              <View className='primary' onClick={() => setDetail(null)}>
+                知道了
               </View>
             </View>
           </View>
