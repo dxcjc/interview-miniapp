@@ -1,63 +1,30 @@
 /* ---------- 进步曲线页（对齐 H5 ProgressPage） ---------- */
 @import '../../styles/tokens';
+@import '../../components/Feedback.scss';
 
-.progress {
-  padding-top: 0;
+/* 骨架屏（H5 .pg-sk） */
+.pg-sk {
+  padding: 32rpx;
 }
 
-/* 统计卡 */
-.pg-stats {
-  display: flex;
-  background: $card;
-  border-radius: 44rpx;
-  box-shadow: $shadow;
-  overflow: hidden;
-}
-
-.pg-stat {
-  flex: 1;
-  text-align: center;
-  padding: 32rpx 8rpx;
-  position: relative;
-}
-
-.pg-stat + .pg-stat::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 24%;
-  bottom: 24%;
-  width: 1rpx;
-  background: $line-strong;
-}
-
-.pg-v {
-  font-family: $font-num;
-  font-size: 44rpx;
-  font-weight: 900;
-  color: $accent-strong;
-  line-height: 1;
-}
-
-.pg-k {
-  font-size: 20rpx;
-  color: $muted;
-  margin-top: 12rpx;
-  font-weight: 700;
-}
-
-/* 成绩曲线 */
-.pg-chart {
-  display: flex;
-  align-items: flex-end;
-  gap: 16rpx;
-  height: 420rpx;
-  padding: 80rpx 24rpx 60rpx;
+/* 曲线卡（H5 .pg-card） */
+.pg-card {
+  padding: 28rpx;
   background: $card;
   border-radius: $radius-lg;
   box-shadow: $shadow;
 }
 
+/* 图表区（H5 .pg-chart：echarts 折线 → 小程序纯 CSS 条形图） */
+.pg-chart {
+  width: 100%;
+  height: 520rpx;
+  display: flex;
+  align-items: flex-end;
+  gap: 16rpx;
+}
+
+/* 每根柱子（保留小程序原有条形图逻辑） */
 .pg-col {
   flex: 1;
   display: flex;
@@ -98,43 +65,55 @@
   margin-top: 12rpx;
 }
 
-/* 历史复盘 */
-.pg-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20rpx;
-  padding: 28rpx 32rpx;
-  margin-bottom: 20rpx;
+/* 统计四格（H5 .pg-stats / .pg-stat / .v / .k） */
+.pg-stats {
   background: $card;
-  border-radius: $radius;
+  border-radius: 44rpx;
   box-shadow: $shadow;
+  display: flex;
+  overflow: hidden;
 }
 
-.pg-item-left {
+.pg-stat {
   flex: 1;
-  min-width: 0;
+  padding: 32rpx 8rpx;
+  text-align: center;
+  position: relative;
 }
 
-.pg-item-type {
-  font-size: 26rpx;
-  font-weight: 800;
-  color: $ink;
+.pg-stat + .pg-stat::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 24%;
+  bottom: 24%;
+  width: 2rpx;
+  background: $line-strong;
 }
 
-.pg-item-date {
+.pg-stat .v {
+  font-family: $font-num;
+  font-size: 44rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  line-height: 1;
+}
+
+.pg-stat .v .small {
+  font-size: 20rpx;
+  color: $muted-2;
+  font-weight: 700;
+  margin-left: 2rpx;
+}
+
+.pg-stat .v.sub {
+  color: $ink-sub;
+  font-size: 36rpx;
+}
+
+.pg-stat .k {
   font-size: 20rpx;
   color: $muted;
-  margin-top: 6rpx;
+  margin-top: 12rpx;
+  font-weight: 700;
 }
-
-.pg-item-score {
-  font-family: $font-num;
-  font-size: 36rpx;
-  font-weight: 900;
-  flex-shrink: 0;
-}
-
-.pg-item-score.low { color: $orange-warn; }
-.pg-item-score.mid { color: $accent-strong; }
-.pg-item-score.high { color: $green; }

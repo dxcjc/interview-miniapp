@@ -1,59 +1,104 @@
-/* ---------- 设置页（对齐 H5 SettingsPage） ---------- */
+/* ---------- 设置页（对齐 H5 SettingsPage / 13 设置） ---------- */
 @import '../../styles/tokens';
 
-.settings {
-  padding-top: 0;
-}
-
-.set-group {
+/* 设置卡片 */
+.st-card {
   background: $card;
   border-radius: $radius;
   box-shadow: $shadow;
   overflow: hidden;
-  margin-bottom: 32rpx;
 }
 
-.set-row {
+.st-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 24rpx;
-  padding: 32rpx 36rpx;
-  border-bottom: 1rpx dashed $line-strong;
+  padding: 32rpx;
 }
 
-.set-row:last-child {
-  border-bottom: none;
+.st-row + .st-row {
+  border-top: 2rpx dashed $line-strong;
 }
 
-.set-label {
+.st-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.st-info .k {
   font-size: 26rpx;
   font-weight: 800;
   color: $ink;
 }
 
-.set-value {
-  font-size: 24rpx;
+.st-info .s {
+  font-size: 20rpx;
   color: $muted-2;
+  margin-top: 6rpx;
+  font-weight: 600;
 }
 
-.set-arrow {
-  font-size: 30rpx;
-  color: #d5cdc2;
-  font-weight: 700;
+/* 三选一胶囊 */
+.st-seg {
+  display: flex;
+  gap: 8rpx;
+  background: #f5f1ea;
+  padding: 6rpx;
+  border-radius: $radius-full;
+  flex-shrink: 0;
 }
 
-.set-api {
-  font-size: 22rpx;
-  color: $muted-2;
-  word-break: break-all;
-  line-height: 1.6;
-  padding: 8rpx 36rpx 32rpx;
+.st-seg view {
+  font-size: 21rpx;
+  font-weight: 800;
+  color: #8a8072;
+  padding: 14rpx 26rpx;
+  border-radius: $radius-full;
+  transition: all 0.2s;
 }
 
-.set-note {
-  font-size: 22rpx;
+.st-seg view.on {
+  background: $accent;
+  color: #fff;
+  box-shadow: 0 8rpx 24rpx rgba(255, 138, 92, 0.35);
+}
+
+/* 开关 */
+.st-switch {
+  width: 92rpx;
+  height: 54rpx;
+  border-radius: $radius-full;
+  background: #e0d9ce;
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.st-switch .knob {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(93, 66, 42, 0.25);
+  transition: left 0.2s;
+}
+
+.st-switch.on {
+  background: $accent;
+}
+
+.st-switch.on .knob {
+  left: 44rpx;
+}
+
+/* 版本号 */
+.st-ver {
+  font-family: $font-num;
+  font-size: 26rpx;
+  font-weight: 900;
   color: $muted-2;
-  line-height: 1.7;
-  padding: 20rpx 12rpx;
+  flex-shrink: 0;
 }

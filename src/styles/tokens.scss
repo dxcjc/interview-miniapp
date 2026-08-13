@@ -35,8 +35,9 @@ $shadow-orange-soft: 0 16rpx 48rpx rgba(255, 138, 92, 0.25);
 
 // ── 字体栈 ──
 // 小程序无法外链 Google Fonts：Nunito/Noto Serif 用系统近似替代（iOS 优先 PingFang/Songti）
+// Nunito 观感优先 DIN Alternate / Arial Rounded MT Bold / Arial（iOS/安卓自带，数字大标题最接近）
 $font-sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC',
   'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 $font-serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
-$font-num: 'Nunito', -apple-system, BlinkMacSystemFont, 'PingFang SC',
-  'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+$font-num: 'DIN Alternate', 'Arial Rounded MT Bold', 'Arial', -apple-system,
+  BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;

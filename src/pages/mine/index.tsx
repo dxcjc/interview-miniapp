@@ -1,16 +1,24 @@
 import { useCallback, useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import { fetchOverview } from '../../api/home'
+import brand from '../../assets/h5/brand.png'
+import iconTarget from '../../assets/h5/icon-target.png'
+import iconResume from '../../assets/h5/icon-resume.png'
+import iconMap from '../../assets/h5/icon-map.png'
+import iconWrongbook from '../../assets/h5/icon-wrongbook.png'
+import iconProgress from '../../assets/h5/icon-progress.png'
+import iconSettings from '../../assets/h5/icon-settings.png'
 import './index.scss'
 
-const ENTRIES = [
-  { url: '/pages/profile/index', icon: '📄', name: '简历画像', sub: '项目经历与考点映射' },
-  { url: '/pages/graph/index', icon: '🕸️', name: '知识图谱', sub: '掌握度与薄弱点' },
-  { url: '/pages/wrongbook/index', icon: '📕', name: '错题本', sub: '薄弱题巩固复测' },
-  { url: '/pages/progress/index', icon: '📈', name: '进步曲线', sub: '面试成绩趋势' },
-  { url: '/pages/jobs/index', icon: '💼', name: '岗位雷达', sub: 'AI 岗位市场洞察' },
-  { url: '/pages/settings/index', icon: '⚙️', name: '设置', sub: '接口地址与后端检测' },
+// 菜单 6 项：图标色块 + 点击跳转对应真实页
+const MENU = [
+  { t: '简历画像', icon: iconResume, cls: 'mi-green', url: '/pages/profile/index' },
+  { t: '项目考点映射', icon: iconMap, cls: 'mi-orange', url: '/pages/graph/index' },
+  { t: '错题本', icon: iconWrongbook, cls: 'mi-green', url: '/pages/wrongbook/index' },
+  { t: '进步曲线', icon: iconProgress, cls: 'mi-orange', url: '/pages/progress/index' },
+  { t: '岗位雷达', icon: iconTarget, cls: 'mi-orange', url: '/pages/jobs/index' },
+  { t: '设置', icon: iconSettings, cls: 'mi-green', url: '/pages/settings/index' },
 ]
 
 export default function Mine() {
@@ -19,6 +27,7 @@ export default function Mine() {
     mock: 0,
     avg: 0,
   })
+  const [loading, setLoading] = useState(true)
 
   const load = useCallback(async () => {
     try {
@@ -30,6 +39,8 @@ export default function Mine() {
       })
     } catch {
       // 保留默认值，不影响页面展示
+    } finally {
+      setLoading(false)
     }
   }, [])
 
@@ -39,48 +50,60 @@ export default function Mine() {
 
   return (
     <View className='page mine'>
-      {/* 用户卡 */}
-      <View className='mi-user'>
-        <View className='mi-avatar'>👨‍💻</View>
-        <View className='mi-info'>
-          <View className='mi-name'>阿豪</View>
-          <View className='mi-target'>AI 应用开发工程师 · 深圳</View>
+      {/* 用户卡（米黄渐变） */}
+      <View className='me-hero'>
+        <View className='me-avatar'>
+          <Image src={brand} />
+        </View>
+        <View className='me-info'>
+          <View className='me-name'>阿豪</View>
+          <View className='me-title'>
+            AI 应用开发工程师<Text className='dotsep'>·</Text>求职中
+          </View>
+          <View className='me-badge'>
+            <Image src={iconTarget} /> 目标：深圳 · AI 应用岗
+          </View>
+        </View>
+        <View className='go'>›</View>
+      </View>
+
+      {/* 三栏统计（细竖线分隔） */}
+      <View className='me-stats'>
+        <View className='me-stat'>
+          <View className={`v ${loading ? 'loading' : ''}`}>
+            {stats.days != null ? stats.days : '--'}
+            {stats.days != null && <Text className='small'>天</Text>}
+          </View>
+          <View className='k'>冲刺天数</View>
+        </View>
+        <View className='me-stat'>
+          <View className={`v ${loading ? 'loading' : ''}`}>
+            {stats.mock}
+            <Text className='small'>场</Text>
+          </View>
+          <View className='k'>模拟面试</View>
+        </View>
+        <View className='me-stat'>
+          <View className={`v ${loading ? 'loading' : ''}`}>
+            {stats.avg}
+            <Text className='small'>分</Text>
+          </View>
+          <View className='k'>平均成绩</View>
         </View>
       </View>
 
-      <View className='mi-stats'>
-        <View className='mi-stat'>
-          <View className='mi-v'>{stats.days ?? '--'}</View>
-          <View className='mi-k'>冲刺天数</View>
-        </View>
-        <View className='mi-stat'>
-          <View className='mi-v'>{stats.mock}</View>
-          <View className='mi-k'>模拟场次</View>
-        </View>
-        <View className='mi-stat'>
-          <View className='mi-v'>{stats.avg}</View>
-          <View className='mi-k'>平均分</View>
-        </View>
-      </View>
-
-      <View className='mi-entries'>
-        {ENTRIES.map((e) => (
-          <View
-            className='mi-entry card'
-            key={e.url}
-            onClick={() => Taro.navigateTo({ url: e.url })}
-          >
-            <View className='mi-entry-icon'>{e.icon}</View>
-            <View className='mi-entry-body'>
-              <View className='mi-entry-name'>{e.name}</View>
-              <View className='mi-entry-sub'>{e.sub}</View>
+      {/* 菜单 6 项 */}
+      <View className='menu'>
+        {MENU.map((m) => (
+          <View className='menu-item' key={m.t} onClick={() => Taro.navigateTo({ url: m.url })}>
+            <View className={`ico ${m.cls}`}>
+              <Image src={m.icon} />
             </View>
-            <View className='mi-entry-arrow'>›</View>
+            <View className='t'>{m.t}</View>
+            <View className='arrow'>›</View>
           </View>
         ))}
       </View>
-
-      <View className='mi-foot'>面霸·陪练 · AI 面试全流程陪练</View>
     </View>
   )
 }

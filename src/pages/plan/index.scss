@@ -1,203 +1,271 @@
-/* ---------- 辅导计划页（对齐 H5 PlanPage 视觉语言） ---------- */
+/* ---------- 辅导计划页（对齐 H5 PlanPage #page-plan，1px = 2rpx） ---------- */
 @import '../../styles/tokens';
 
-.plan {
-  padding-top: 0;
-}
-
-/* 整体进度卡（橙渐变） */
-.plan-prog {
-  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+/* 整体进度卡（橙渐变，大数字 Nunito 观感 900 字重） */
+.plan-top {
+  margin: 32rpx 0 0;
   border-radius: 48rpx;
   padding: 44rpx 48rpx;
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
   box-shadow: 0 24rpx 80rpx rgba(255, 138, 92, 0.18);
 }
 
-.plan-prog-top {
+.plan-top .row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 16rpx;
+  align-items: baseline;
 }
 
-.plan-prog-title {
-  font-size: 32rpx;
-  font-weight: 900;
-  font-family: $font-serif;
-  color: $ink;
-}
-
-.plan-prog-dir {
-  font-size: 20rpx;
-  color: #c98a68;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: $radius-full;
-  padding: 8rpx 24rpx;
+.plan-top .p {
+  font-size: 24rpx;
   font-weight: 700;
-  white-space: nowrap;
+  color: #c98a68;
+  letter-spacing: 2rpx;
 }
 
-.plan-prog-mid {
-  display: flex;
-  align-items: center;
-  margin-top: 28rpx;
+.plan-top .num {
+  font-family: $font-num;
+  font-size: 84rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  line-height: 1;
 }
 
-.plan-prog-bar {
-  flex: 1;
+.plan-top .sub {
+  font-size: 23rpx;
+  color: #ff9a6c;
+  font-weight: 800;
+}
+
+.plan-top .bar {
   height: 20rpx;
   background: #ffe3d3;
   border-radius: 16rpx;
   overflow: hidden;
+  margin-top: 28rpx;
 }
 
-.plan-prog-fill {
+.plan-top .bar > view {
+  display: block;
   height: 100%;
   background: linear-gradient(90deg, #ffb28f, #ff8a5c);
   border-radius: 16rpx;
   transition: width 0.3s;
 }
 
-.plan-prog-num {
-  font-family: $font-num;
-  font-size: 24rpx;
-  font-weight: 800;
-  color: #ff9a6c;
-  margin-left: 24rpx;
-  white-space: nowrap;
-}
-
-.plan-prog-date {
-  display: block;
+.plan-top .desc {
   font-size: 22rpx;
   color: #b08d74;
-  margin-top: 20rpx;
-  font-weight: 600;
+  margin-top: 24rpx;
+  font-weight: 500;
 }
 
-/* 周切换 */
-.plan-weeks {
-  display: flex;
-  gap: 16rpx;
-  margin: 32rpx 0;
-}
-
-.plan-week-tab {
-  flex: 1;
-  text-align: center;
-  padding: 20rpx 0;
-  border-radius: $radius-full;
-  background: $card;
-  font-size: 22rpx;
-  font-weight: 700;
-  color: #8a8072;
-  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
-}
-
-.plan-week-tab.on {
-  background: $accent;
-  color: #fff;
-  box-shadow: 0 8rpx 28rpx rgba(255, 138, 92, 0.4);
-}
-
-/* 7 天网格 */
-.plan-grid {
-  padding: 24rpx 24rpx;
-}
-
-.plan-cell {
-  height: 156rpx;
-  background: #fbf8f3;
-  border-radius: 26rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+/* 周时间轴：左侧圆点 + 虚线连接 */
+.plan-timeline {
   position: relative;
+  padding: 52rpx 0 0;
 }
 
-.plan-cell-day {
-  font-size: 20rpx;
-  font-weight: 800;
-  color: #6b635a;
-}
-
-.plan-cell-topic {
-  font-size: 28rpx;
-  margin-top: 12rpx;
-}
-
-.plan-cell-check {
+.plan-timeline::before {
+  content: '';
   position: absolute;
-  top: 12rpx;
-  right: 16rpx;
-  font-size: 22rpx;
-  color: $green;
-  font-weight: 900;
+  left: 94rpx;
+  top: 68rpx;
+  bottom: 68rpx;
+  width: 4rpx;
+  background: repeating-linear-gradient(180deg, #e8e0d6 0 8rpx, transparent 8rpx 16rpx);
 }
 
-.plan-cell.done {
-  background: #f0faf4;
-}
-
-.plan-cell.done .plan-cell-day {
-  color: $green;
-}
-
-/* 选中天详情 */
-.plan-detail {
+.week-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 32rpx;
-  padding: 32rpx 36rpx;
-  background: $card;
-  border-radius: $radius;
-  box-shadow: $shadow;
-}
-
-.plan-detail-left {
-  flex: 1;
-  margin-right: 24rpx;
+  gap: 24rpx;
+  margin-bottom: 48rpx;
+  position: relative;
   min-width: 0;
 }
 
-.plan-detail-day {
-  font-size: 22rpx;
-  color: $muted;
-  font-weight: 700;
+.week-node {
+  width: 76rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.plan-detail-topic {
-  font-size: 30rpx;
-  font-weight: 800;
-  color: $ink;
-  margin-top: 12rpx;
-  line-height: 1.5;
-}
-
-.plan-detail-type {
-  font-size: 20rpx;
-  color: $accent-strong;
-  background: $accent-soft;
-  display: inline-block;
-  border-radius: $radius-full;
-  padding: 8rpx 22rpx;
-  margin-top: 14rpx;
-  font-weight: 700;
-}
-
-.plan-detail-btn {
+.week-node .dot {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
   background: $accent;
   color: #fff;
-  font-size: 24rpx;
-  font-weight: 800;
-  padding: 22rpx 30rpx;
-  border-radius: 28rpx;
-  flex-shrink: 0;
-  box-shadow: $shadow-orange-soft;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: 900;
+  box-shadow: 0 8rpx 24rpx rgba(255, 138, 92, 0.35);
 }
 
-.plan-detail.done .plan-detail-btn {
+.week-node .dot.done {
   background: $green;
+  box-shadow: 0 8rpx 24rpx rgba(76, 175, 125, 0.3);
+}
+
+.week-node .dot.wait {
+  background: #e8e0d6;
+  color: #a89f92;
+  box-shadow: none;
+}
+
+/* 右侧周卡 */
+.week-card {
+  flex: 1;
+  min-width: 0;
+  background: $card;
+  border-radius: 44rpx;
+  padding: 36rpx;
+  box-shadow: $shadow;
+}
+
+.week-card.cur {
+  border: 3rpx solid #ffb28f;
+}
+
+.week-card .w-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28rpx;
+}
+
+.week-card .w-name {
+  font-size: 28rpx;
+  font-weight: 900;
+}
+
+.week-card .w-date {
+  font-size: 20rpx;
+  color: $muted-2;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.week-card .w-date .arr {
+  margin-left: 8rpx;
+  font-size: 18rpx;
+}
+
+/* 7 天网格：每格固定 156rpx（78px），横向滚动 */
+.week-grid {
+  display: flex;
+  gap: 16rpx;
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 10rpx;
+}
+
+.week-day {
+  flex: 0 0 156rpx;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx 8rpx;
+  border-radius: 26rpx;
+  background: #fbf8f3;
+  position: relative;
+  transition: transform 0.15s;
+}
+
+.week-day:active {
+  transform: scale(0.96);
+}
+
+.week-day .d {
+  font-size: 20rpx;
+  font-weight: 800;
+  color: $muted-2;
+}
+
+.week-day .n {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #6b635a;
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
+  min-height: 32rpx;
+  display: block;
+}
+
+.week-day .st {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 3rpx solid #d5cdc2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.week-day.done {
+  background: #f0faf4;
+}
+
+.week-day.done .st {
+  background: $green;
+  border-color: $green;
+}
+
+.week-day.today {
+  background: #fff7f1;
+  border: 3rpx solid #ff8a5c;
+}
+
+.week-day.today .st {
+  border-color: $accent;
+  background: $accent;
+}
+
+.week-day.today .n {
+  color: $accent-strong;
+  font-weight: 900;
+}
+
+.week-day.today .today-tag {
+  position: absolute;
+  top: -14rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14rpx;
+  font-weight: 900;
+  color: #fff;
+  background: $accent;
+  padding: 3rpx 14rpx;
+  border-radius: $radius-full;
+  white-space: nowrap;
+}
+
+/* 勾选同步失败轻提示 */
+.plan-flash {
+  margin: 24rpx 0 0;
+  font-size: 21rpx;
+  color: $red;
+  background: $red-soft;
+  border-radius: 24rpx;
+  padding: 20rpx 28rpx;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* 计划页骨架屏 */
+.plan-top-sk {
+  padding: 44rpx 48rpx;
+}
+
+.week-sk {
+  padding: 36rpx;
 }

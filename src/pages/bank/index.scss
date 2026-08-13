@@ -1,35 +1,36 @@
-/* ---------- 题库页（对齐 H5 BankPage） ---------- */
+/* ---------- 题库页（对齐 H5 index.css「02 题库页」段） ---------- */
 @import '../../styles/tokens';
 
-.bank {
-  padding: 28rpx 48rpx 96rpx;
-}
-
+/* 页头：标题 + 错题本入口（H5 .bank-head：14px 24px 0，左右 24px 由 .page 承担） */
 .bank-head {
+  padding: 28rpx 0 0;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 8rpx 0 0;
+  align-items: center;
 }
 
-/* 岗位方向选择（一行胶囊，横向滚动） */
+/* 岗位方向选择器（H5 .dir-row：一行胶囊，横向滚动） */
 .dir-row {
   display: flex;
   gap: 16rpx;
-  margin: 28rpx 0 20rpx;
+  padding: 28rpx 0 0;
   flex-wrap: nowrap;
   overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dir-row::-webkit-scrollbar {
+  display: none;
 }
 
 .dir {
   flex: 0 0 auto;
-  text-align: center;
-  padding: 18rpx 36rpx;
-  border-radius: $radius-full;
-  background: $card;
   font-size: 22rpx;
   font-weight: 700;
   color: #8a8072;
+  background: $card;
+  padding: 18rpx 36rpx;
+  border-radius: $radius-full;
   box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
 }
 
@@ -39,8 +40,9 @@
   box-shadow: 0 8rpx 28rpx rgba(255, 138, 92, 0.4);
 }
 
-/* 搜索 */
+/* 搜索条（H5 .search：胶囊白卡 + 左侧图标） */
 .search {
+  margin-top: 28rpx;
   display: flex;
   align-items: center;
   gap: 20rpx;
@@ -50,91 +52,148 @@
   box-shadow: $shadow;
 }
 
+.search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 26rpx;
+  font-family: inherit;
+  color: $ink;
+  background: none;
+}
+
 .search .ico {
-  font-size: 28rpx;
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search .ico image {
+  width: 100%;
+  height: 100%;
   opacity: 0.45;
 }
 
-.search-input {
-  flex: 1;
-  font-size: 26rpx;
-  color: $ink;
+/* 精选横幅（H5 .bank-banner：橙渐变 + 装饰插图） */
+.bank-banner {
+  margin-top: 32rpx;
+  border-radius: 44rpx;
+  padding: 40rpx;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, $accent-deep 0%, $accent-strong 100%);
+  box-shadow: $shadow-orange;
 }
 
-/* 标签筛选 */
-.chips {
-  margin: 24rpx 0 28rpx;
+.bank-banner .bt {
+  font-size: 34rpx;
+  font-weight: 900;
+  color: #fff;
+  font-family: $font-serif;
 }
 
-/* 题卡 */
-.q-list {
-  padding-top: 4rpx;
+.bank-banner .bs {
+  font-size: 21rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 8rpx;
+  font-weight: 500;
 }
 
+.bank-banner .feat {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 28rpx;
+}
+
+.bank-banner .feat text {
+  font-size: 19rpx;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 10rpx 22rpx;
+  border-radius: $radius-full;
+}
+
+.bank-banner .illus {
+  position: absolute;
+  right: -36rpx;
+  top: -36rpx;
+  width: 220rpx;
+  height: 220rpx;
+  opacity: 0.2;
+  transform: rotate(12deg);
+}
+
+.bank-banner .illus image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 题卡（H5 .q-card：配合全局 .card 白卡 + 暖阴影） */
 .q-card {
   padding: 32rpx 36rpx;
   margin-bottom: 20rpx;
-  background: $card;
-  border-radius: $radius;
-  box-shadow: $shadow;
 }
 
-.qrow {
+.q-card .qrow {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 20rpx;
 }
 
-.qrow .q {
-  flex: 1;
+.q-card .q {
   font-size: 27rpx;
   font-weight: 700;
   line-height: 1.6;
-  color: $ink;
+  flex: 1;
 }
 
-.proj-badge {
-  display: inline-flex;
+.q-card .q .proj-badge {
+  display: inline-block;
   font-size: 17rpx;
   font-weight: 900;
   color: $accent-strong;
   background: $accent-soft;
-  border: 1rpx solid #ffb28f;
-  border-radius: $radius-full;
+  border: 2rpx solid #ffb28f;
   padding: 4rpx 16rpx;
+  border-radius: $radius-full;
   margin-right: 12rpx;
   vertical-align: 4rpx;
 }
 
-.meta {
+.q-card .meta {
   display: flex;
   gap: 12rpx;
-  flex-wrap: wrap;
   margin-top: 20rpx;
-}
-
-.meta .tag {
-  margin-right: 0;
-}
-
-.foot {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+}
+
+.q-card .foot {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid $line;
+  border-top: 2rpx solid $line;
 }
 
-.foot .hot {
+.q-card .foot .hot {
   font-size: 20rpx;
   color: $muted-2;
   font-weight: 600;
 }
 
-.foot .chev {
+.q-card .foot .chev {
   font-size: 28rpx;
   color: #d5cdc2;
   font-weight: 700;
+}
+
+.q-card.hl {
+  border: 3rpx solid #ffb28f;
+  background: linear-gradient(180deg, #fffdfa, #fff6ef);
 }

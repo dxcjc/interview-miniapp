@@ -1,21 +1,102 @@
-/* ---------- 岗位雷达页（对齐 H5 JobsPage） ---------- */
+/* ---------- 岗位雷达页（对齐 H5 JobsPage / 08 岗位雷达页） ---------- */
+/* 换算：H5 375px 设计稿 ×2 = 小程序 rpx；水平内边距由全局 .page 提供（48rpx） */
 @import '../../styles/tokens';
 
-.jobs {
-  padding-top: 0;
+/* 顶部标题区 + 城市切换 pill */
+.job-head {
+  padding-top: 28rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20rpx;
 }
 
-/* AI 岗位画像卡（橙渐变） */
+.job-head .jh-txt {
+  min-width: 0;
+}
+
+.job-title {
+  font-size: 40rpx;
+  font-weight: 900;
+  font-family: $font-serif;
+  color: $ink;
+}
+
+.job-sub {
+  font-size: 22rpx;
+  color: $muted;
+  margin-top: 6rpx;
+}
+
+.job-city-pill {
+  display: flex;
+  gap: 8rpx;
+  background: $card;
+  padding: 6rpx;
+  border-radius: $radius-full;
+  box-shadow: $shadow;
+  flex-shrink: 0;
+}
+
+.job-city-pill .jcp {
+  font-size: 21rpx;
+  font-weight: 800;
+  color: #8a8072;
+  padding: 12rpx 28rpx;
+  border-radius: $radius-full;
+}
+
+.job-city-pill .jcp.on {
+  background: $accent;
+  color: #fff;
+  box-shadow: 0 8rpx 24rpx rgba(255, 138, 92, 0.35);
+}
+
+/* AI 岗位画像卡 */
+.job-insight-sec {
+  padding-top: 32rpx;
+}
+
 .job-insight {
-  background: linear-gradient(145deg, #fff9f2, #ffefe3);
   border-radius: 44rpx;
   padding: 32rpx 36rpx;
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
   box-shadow: 0 16rpx 48rpx rgba(255, 138, 92, 0.15);
 }
 
-.job-insight-title {
+.job-insight--err {
+  background: $card;
+  box-shadow: $shadow;
+}
+
+.ji-err {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 22rpx;
+  color: $muted;
+  font-weight: 700;
+}
+
+.ji-retry {
+  font-size: 21rpx;
+  font-weight: 800;
+  color: #fff;
+  background: $accent;
+  padding: 12rpx 32rpx;
+  border-radius: $radius-full;
+}
+
+.ji-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ji-badge {
   display: inline-flex;
   align-items: center;
+  gap: 10rpx;
   font-size: 18rpx;
   font-weight: 900;
   color: #fff;
@@ -24,62 +105,64 @@
   border-radius: $radius-full;
 }
 
-.job-insight-summary {
-  font-size: 21rpx;
-  color: #9a7b5c;
-  line-height: 1.7;
-  margin-top: 20rpx;
-  background: #fbf4e8;
-  border-radius: 28rpx;
-  padding: 20rpx 24rpx;
+.ji-badge image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.ji-upd {
+  font-size: 18rpx;
+  color: #b08d74;
   font-weight: 700;
 }
 
-.job-insight-hot {
-  margin-top: 24rpx;
+/* 热门方向 3 条横排小卡 */
+.ji-hot {
   display: flex;
-  flex-wrap: wrap;
   gap: 16rpx;
+  margin-top: 24rpx;
 }
 
-.job-insight-dir {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
+.ji-hotcard {
+  flex: 1;
+  min-width: 0;
   background: #fff;
-  border-radius: $radius-full;
-  padding: 12rpx 24rpx;
+  border-radius: 28rpx;
+  padding: 20rpx 24rpx;
   box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.06);
+  text-align: center;
 }
 
-.job-insight-dir-name {
+.ji-hotcard .jh-name {
   font-size: 19rpx;
   font-weight: 800;
   color: #8a8072;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.job-insight-dir-count {
+.ji-hotcard .jh-num {
   font-family: $font-num;
-  font-size: 26rpx;
+  font-size: 44rpx;
   font-weight: 900;
   color: $accent-strong;
+  margin-top: 4rpx;
+  line-height: 1;
 }
 
-.job-insight-dir-trend {
-  margin-left: 4rpx;
-  font-size: 20rpx;
+.ji-hotcard .jh-num .jh-up {
+  font-size: 26rpx;
+  color: $accent;
+  font-weight: 900;
 }
 
-.job-insight-dir-trend.up { color: $green; }
-.job-insight-dir-trend.down { color: $red; }
-.job-insight-dir-trend.flat { color: $muted; }
-
-/* 技能标签云 */
-.job-insight-skills {
-  margin-top: 20rpx;
+/* 技能标签云：high 蜜橘实心 / mid 蜜橘描边 / low 灰描边 */
+.ji-cloud {
   display: flex;
-  flex-wrap: wrap;
   gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 24rpx;
 }
 
 .job-skill {
@@ -98,111 +181,243 @@
 .job-skill.mid {
   background: $accent-soft;
   color: $accent-strong;
-  border: 1rpx solid #ffb28f;
+  border: 2rpx solid #ffb28f;
 }
 
 .job-skill.low {
   background: $card;
   color: $muted;
-  border: 1rpx solid $line-strong;
+  border: 2rpx solid $line-strong;
 }
 
-/* 方向筛选 */
-.job-dirs {
+/* 一句话总结（米色底卡片） */
+.ji-summary {
+  margin-top: 24rpx;
+  background: #fbf4e8;
+  border-radius: 28rpx;
+  padding: 20rpx 24rpx;
+  font-size: 21rpx;
+  font-weight: 700;
+  color: #9a7b5c;
+  line-height: 1.7;
+}
+
+/* 筛选条：方向 + 经验 */
+.job-filters {
+  padding-top: 32rpx;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 16rpx;
-  margin: 28rpx 0 10rpx;
 }
 
-.job-dir-chip {
+.job-f-row {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.job-chip {
+  flex: 0 0 auto;
+  font-size: 21rpx;
+  font-weight: 800;
+  color: #8a8072;
+  background: $card;
   padding: 16rpx 30rpx;
   border-radius: $radius-full;
-  background: $card;
-  font-size: 21rpx;
-  color: #8a8072;
-  font-weight: 800;
   box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
 }
 
-.job-dir-chip.on {
+.job-chip.on {
   background: $accent;
   color: #fff;
   box-shadow: 0 8rpx 28rpx rgba(255, 138, 92, 0.4);
 }
 
-.job-count {
-  font-size: 21rpx;
-  color: $muted;
-  padding: 20rpx 0 12rpx;
-  font-weight: 800;
+/* 岗位卡列表 */
+.job-list {
+  padding-top: 28rpx;
 }
 
-/* 岗位卡 */
+.job-count {
+  font-size: 21rpx;
+  font-weight: 800;
+  color: $muted;
+  margin-bottom: 20rpx;
+}
+
 .job-card {
+  position: relative;
   padding: 32rpx 36rpx;
   margin-bottom: 20rpx;
-  background: $card;
-  border-radius: $radius;
-  box-shadow: $shadow;
+  overflow: hidden;
+}
+
+.job-card.match-card {
+  border: 3rpx solid #7bc69b;
+  background: linear-gradient(180deg, #fbfffd, #f3fbf6);
+}
+
+.job-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: $green;
+  color: #fff;
+  font-size: 17rpx;
+  font-weight: 900;
+  padding: 8rpx 24rpx;
+  border-radius: 0 40rpx 0 24rpx;
 }
 
 .job-top {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 20rpx;
 }
 
-.job-title {
-  flex: 1;
+.job-co {
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+  min-width: 0;
+}
+
+.job-logo {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(145deg, #ffd9c7, #ff8a5c);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 28rpx;
   font-weight: 900;
-  color: $ink;
-  line-height: 1.4;
+  flex-shrink: 0;
+  font-family: $font-num;
+}
+
+.job-card.match-card .job-logo {
+  background: linear-gradient(145deg, #bee7ce, #4caf7d);
+}
+
+.job-co-t {
+  min-width: 0;
 }
 
 .job-company {
   font-size: 22rpx;
-  color: $muted;
   font-weight: 800;
-  margin-top: 8rpx;
+  color: $muted;
+}
+
+.job-title-txt {
+  font-size: 28rpx;
+  font-weight: 900;
+  color: $ink;
+  margin-top: 6rpx;
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.job-go {
+  font-size: 30rpx;
+  font-weight: 900;
+  color: $muted-2;
+  flex-shrink: 0;
 }
 
 .job-meta {
-  margin-top: 20rpx;
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
   gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+  align-items: center;
 }
 
-.job-meta .tag {
-  margin-right: 0;
+.job-tag {
+  font-size: 18rpx;
+  font-weight: 800;
+  padding: 6rpx 18rpx;
+  border-radius: $radius-full;
+  background: #f5f1ea;
+  color: #8a8072;
 }
 
-.job-city {
-  font-size: 20rpx;
-  color: $muted-2;
-  margin-right: 8rpx;
+.job-tag.dir {
+  background: $accent-soft;
+  color: $accent-strong;
+}
+
+.job-tag.exp {
+  background: #fff3e0;
+  color: $orange-warn;
+}
+
+.job-req {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.job-rq {
+  font-size: 17rpx;
   font-weight: 700;
+  background: #f5f1ea;
+  color: #8a8072;
+  padding: 6rpx 18rpx;
+  border-radius: $radius-full;
+}
+
+.job-card.match-card .job-rq {
+  background: #e8f6ee;
+  color: $green;
 }
 
 .job-foot {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 20rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid $line;
+  border-top: 2rpx solid $line;
+  gap: 16rpx;
 }
 
-.job-source,
-.job-posted {
+.job-time {
   font-size: 18rpx;
   color: $muted-2;
   font-weight: 700;
 }
 
+.job-match {
+  font-size: 20rpx;
+  font-weight: 900;
+  color: $green;
+}
+
+.job-src {
+  font-size: 17rpx;
+  color: $muted-2;
+  margin-left: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.job-empty-hint {
+  font-size: 20rpx;
+  color: $muted-2;
+  margin-top: 8rpx;
+}
+
+/* 加载更多（分页，小程序扩展） */
 .job-more {
   text-align: center;
   color: $accent-strong;
@@ -211,9 +426,7 @@
   padding: 40rpx 0 8rpx;
 }
 
-.job-insight-error {
-  font-size: 22rpx;
-  color: $muted;
-  text-align: center;
-  padding: 16rpx 0;
+/* 岗位骨架屏 */
+.job-sk {
+  padding: 40rpx;
 }

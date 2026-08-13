@@ -1,22 +1,32 @@
-/* ---------- 复盘页（对齐 H5 ReviewPage） ---------- */
+/* ---------- 复盘页（对齐 H5 ReviewPage 07 复盘报告页） ---------- */
 @import '../../styles/tokens';
+@import '../../components/Feedback';
 
-.review {
-  padding-top: 0;
-}
-
-/* 总分卡（橙渐变） */
-.rv-score {
-  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+/* 分数环 + 四维能力评估卡（橙渐变） */
+.rev-score {
+  margin-top: 32rpx;
   border-radius: 56rpx;
-  padding: 44rpx 48rpx;
+  padding: 44rpx;
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
   box-shadow: 0 24rpx 80rpx rgba(255, 138, 92, 0.18);
   display: flex;
-  flex-direction: column;
+  gap: 40rpx;
   align-items: center;
 }
 
-.rv-score-num {
+.rev-score .ring {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.rev-score .ring .c {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rev-score .ring .c .v {
   font-family: $font-num;
   font-size: 64rpx;
   font-weight: 900;
@@ -24,211 +34,381 @@
   line-height: 1;
 }
 
-.rv-score-label {
+.rev-score .ring .c .v text {
+  font-size: 26rpx;
+}
+
+.rev-score .ring .c .t {
   font-size: 18rpx;
   color: #c9a48c;
   font-weight: 700;
   margin-top: 4rpx;
 }
 
-.rv-score-grade {
-  font-size: 26rpx;
-  font-weight: 900;
-  color: $ink;
-  margin-top: 28rpx;
-}
-
-.rv-score-expr {
-  display: flex;
-  gap: 48rpx;
-  margin-top: 28rpx;
-  padding-top: 28rpx;
-  border-top: 1rpx solid rgba(255, 138, 92, 0.2);
-  width: 100%;
-  justify-content: center;
-}
-
-.rv-expr-item {
-  text-align: center;
-}
-
-.rv-expr-k {
-  font-size: 20rpx;
-  color: #b08d74;
-}
-
-.rv-expr-v {
-  font-size: 28rpx;
-  font-weight: 800;
-  color: $accent-strong;
-  margin-top: 6rpx;
-}
-
-/* 能力维度 */
-.rv-dims {
-  padding: 36rpx 40rpx;
-  background: $card;
-  border-radius: $radius;
-  box-shadow: $shadow;
-}
-
-.rv-dim {
-  padding: 20rpx 0;
-}
-
-.rv-dim + .rv-dim {
-  border-top: 1rpx dashed $line-strong;
-}
-
-.rv-dim-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14rpx;
-}
-
-.rv-dim-name {
-  font-size: 26rpx;
+.rev-score .ring .c .cmp {
+  font-size: 16rpx;
+  color: #8a8072;
   font-weight: 700;
-  color: $ink;
+  margin-top: 6rpx;
+  white-space: nowrap;
 }
 
-.rv-dim-score {
-  font-family: $font-num;
+/* 四维能力评估 */
+.rev-dims {
+  flex: 1;
+  min-width: 0;
+}
+
+.rev-dims .dt {
   font-size: 26rpx;
   font-weight: 900;
-  color: $accent-strong;
+  margin-bottom: 20rpx;
 }
 
-.rv-dim-bar {
+.rev-dims .dim {
+  margin-bottom: 18rpx;
+}
+
+.rev-dims .dim:last-child {
+  margin-bottom: 0;
+}
+
+.rev-dims .d-row {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.rev-dims .d-ico {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 12rpx rgba(93, 66, 42, 0.08);
+}
+
+.rev-dims .d-ico image {
+  width: 100%;
+  height: 100%;
+  padding: 8rpx;
+}
+
+.rev-dims .d-n {
+  font-size: 19rpx;
+  font-weight: 700;
+  color: #6b635a;
+  width: 116rpx;
+  flex-shrink: 0;
+}
+
+.rev-dims .d-bar {
+  flex: 1;
   height: 12rpx;
   background: #f5f1ea;
   border-radius: 10rpx;
   overflow: hidden;
 }
 
-.rv-dim-fill {
+.rev-dims .d-bar view {
+  display: block;
   height: 100%;
   border-radius: 10rpx;
   background: linear-gradient(90deg, #ffb28f, #ff8a5c);
 }
 
-/* 逐题点评 */
-.rv-q {
+.rev-dims .d-p {
+  font-family: $font-num;
+  font-size: 20rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  width: 60rpx;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* 逐题点评卡片 */
+.rev-item {
   padding: 28rpx 32rpx;
   margin-bottom: 20rpx;
+}
+
+.rev-item .qrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+}
+
+.rev-item .qico {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.rev-item .qico image {
+  width: 100%;
+  height: 100%;
+  padding: 8rpx;
+}
+
+.rev-item .qico.good {
+  background: $green-soft;
+}
+
+.rev-item .qico.mid {
+  background: $orange-soft;
+}
+
+.rev-item .qt {
+  flex: 1;
+  min-width: 0;
+}
+
+.rev-item .qt .q {
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.rev-item .qt .q .qnum {
+  font-size: 20rpx;
+  color: $muted-2;
+  font-weight: 700;
+  margin-right: 10rpx;
+}
+
+.rev-item .qt .q .status {
+  float: right;
+  font-size: 18rpx;
+  font-weight: 800;
+  padding: 5rpx 18rpx;
+  border-radius: $radius-full;
+  margin-left: 16rpx;
+  white-space: nowrap;
+}
+
+.rev-item .qt .q .status.good {
+  background: $green-soft;
+  color: $green;
+}
+
+.rev-item .qt .q .status.mid {
+  background: $orange-soft;
+  color: $orange-warn;
+}
+
+.rev-item .c {
+  font-size: 22rpx;
+  color: #8a8072;
+  margin-top: 16rpx;
+  line-height: 1.7;
+}
+
+.rev-item .f {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 2rpx dashed $line-strong;
+}
+
+.rev-item .f .score {
+  font-size: 22rpx;
+  color: #8a8072;
+  font-weight: 600;
+}
+
+.rev-item .f .score .b {
+  font-family: $font-num;
+  font-size: 26rpx;
+  color: $accent-strong;
+}
+
+.rev-item .f .more {
+  font-size: 20rpx;
+  color: $muted-2;
+  font-weight: 700;
+}
+
+/* 表达分析卡 */
+.exp-card {
+  padding: 36rpx;
   background: $card;
   border-radius: $radius;
   box-shadow: $shadow;
 }
 
-.rv-q-head {
+.exp-card .e-row {
   display: flex;
-  align-items: flex-start;
-  gap: 16rpx;
+  align-items: center;
+  gap: 24rpx;
+  padding: 18rpx 0;
+  border-bottom: 2rpx dashed $line-strong;
 }
 
-.rv-q-idx {
-  font-size: 20rpx;
-  font-weight: 900;
-  color: $accent-strong;
-  background: $accent-soft;
-  border-radius: 16rpx;
-  padding: 6rpx 20rpx;
+.exp-card .e-row:last-child {
+  border-bottom: none;
+}
+
+.exp-card .e-ico {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
-.rv-q-text {
+.exp-card .e-ico image {
+  width: 100%;
+  height: 100%;
+  padding: 8rpx;
+}
+
+.exp-card .e-ico.green {
+  background: $green-soft;
+}
+
+.exp-card .e-ico.orange {
+  background: $orange-soft;
+}
+
+.exp-card .e-ico.yellow {
+  background: #fff9e8;
+}
+
+.exp-card .e-b {
   flex: 1;
-  font-size: 25rpx;
-  font-weight: 800;
-  line-height: 1.5;
-  color: $ink;
+  min-width: 0;
 }
 
-.rv-q-score {
+.exp-card .e-b .k {
+  font-size: 23rpx;
+  font-weight: 700;
+  color: $ink-sub;
+}
+
+.exp-card .e-b .s {
+  font-size: 19rpx;
+  color: $muted-2;
+  margin-top: 4rpx;
+  font-weight: 600;
+}
+
+.exp-card .e-v {
   font-family: $font-num;
   font-size: 30rpx;
   font-weight: 900;
-  margin-left: 12rpx;
   flex-shrink: 0;
 }
 
-.rv-q-score.low { color: $orange-warn; }
-.rv-q-score.mid { color: $accent-strong; }
-.rv-q-score.high { color: $green; }
-
-.rv-q-status {
-  display: inline-block;
-  margin-top: 14rpx;
-  font-size: 20rpx;
-  font-weight: 800;
-  color: $accent-strong;
-  background: $accent-soft;
-  border-radius: $radius-full;
-  padding: 8rpx 22rpx;
+.exp-card .e-v.green {
+  color: $green;
 }
 
-.rv-q-comment {
-  font-size: 22rpx;
-  color: #8a8072;
-  line-height: 1.7;
-  margin-top: 16rpx;
+.exp-card .e-v.orange {
+  color: $orange-warn;
+}
+
+.exp-card .e-v.yellow {
+  color: #ffb26b;
 }
 
 /* 改进建议（米色卡） */
-.rv-advice {
-  padding: 36rpx 40rpx;
+.adv-card {
+  padding: 36rpx;
   background: linear-gradient(145deg, #fff9f2, #ffefe3);
   border-radius: $radius;
   box-shadow: 0 16rpx 48rpx rgba(255, 138, 92, 0.12);
 }
 
-.rv-advice-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16rpx;
-  padding: 12rpx 0;
-}
-
-.rv-advice-num {
-  width: 40rpx;
-  height: 40rpx;
-  border-radius: 50%;
-  background: $accent;
-  color: #fff;
-  font-size: 20rpx;
-  font-weight: 800;
+.adv-card .q {
+  font-size: 26rpx;
+  font-weight: 900;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 4rpx;
+  gap: 12rpx;
 }
 
-.rv-advice-text {
-  flex: 1;
+.adv-card .q image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.adv-card .c {
   font-size: 23rpx;
   color: #8a8072;
+  margin-top: 18rpx;
   line-height: 1.9;
 }
 
-.rv-empty {
-  text-align: center;
-  color: $muted;
-  font-size: 22rpx;
-  padding: 40rpx 0;
+.adv-card .c .adv {
+  display: flex;
+  gap: 16rpx;
 }
 
-/* 底部操作 */
-.rv-back {
-  margin: 60rpx 0 40rpx;
+.adv-card .c .adv .b {
+  color: $accent-strong;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+/* 复盘页底部操作：再来一次 / 返回首页 */
+.rev-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 40rpx 0 0;
+}
+
+.rev-actions .primary {
+  flex: 1;
+  padding: 24rpx 0;
+  border-radius: $radius-full;
+  font-size: 25rpx;
+  font-weight: 800;
   background: $accent;
   color: #fff;
-  font-size: 26rpx;
-  font-weight: 800;
   text-align: center;
-  border-radius: $radius-full;
-  padding: 28rpx 0;
   box-shadow: $shadow-orange-soft;
+}
+
+.rev-actions .ghost {
+  flex: 1;
+  padding: 24rpx 0;
+  border-radius: $radius-full;
+  font-size: 25rpx;
+  font-weight: 800;
+  background: $card;
+  color: #8a8072;
+  text-align: center;
+  box-shadow: $shadow;
+}
+
+/* 复盘骨架屏 */
+.rev-score-sk {
+  padding: 44rpx;
+  display: flex;
+  gap: 40rpx;
+  align-items: center;
+}
+
+.rev-score-sk .sk-ring {
+  width: 216rpx;
+  height: 216rpx;
+  border-radius: 50%;
+  background: #f5f1ea;
+  flex-shrink: 0;
+  animation: sk-shimmer 1.4s infinite;
 }

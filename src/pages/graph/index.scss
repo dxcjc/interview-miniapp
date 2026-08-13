@@ -1,122 +1,254 @@
-/* ---------- 知识图谱页（对齐 H5 GraphPage 视觉语言） ---------- */
+/* ---------- 知识图谱页（对齐 H5 GraphPage #page-graph，1px = 2rpx） ---------- */
 @import '../../styles/tokens';
 
-.graph {
-  padding-top: 0;
-}
-
-/* 中心岗位卡（橙渐变薄弱点卡） */
-.graph-center {
-  background: linear-gradient(145deg, #fff9f2, #ffefe3);
+/* 薄弱点卡（橙渐变，左图标 + 掌握度 + 进度条 + 右下装饰） */
+.weak-card {
+  margin-top: 32rpx;
   border-radius: 44rpx;
   padding: 36rpx 40rpx;
+  background: linear-gradient(145deg, #fff9f2, #ffefe3);
   box-shadow: 0 16rpx 48rpx rgba(255, 138, 92, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 28rpx;
   position: relative;
   overflow: hidden;
 }
 
-.graph-center-name {
-  font-size: 28rpx;
+.weak-card .ico {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 28rpx;
+  background: $accent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.weak-card .ico image {
+  width: 100%;
+  height: 100%;
+  padding: 10rpx;
+}
+
+.weak-card .body {
+  flex: 1;
+  min-width: 0;
+}
+
+.weak-card .t {
+  font-size: 24rpx;
   font-weight: 900;
-  color: $ink;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.graph-center-mastery {
-  font-size: 21rpx;
+.weak-card .t .lv {
+  font-family: $font-num;
+  font-size: 52rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  margin-left: 8rpx;
+}
+
+.weak-card .t .lvt {
+  font-size: 18rpx;
   color: #b08d74;
-  margin-top: 8rpx;
   font-weight: 700;
+  margin-left: 4rpx;
 }
 
-.graph-center-bar {
+.weak-card .bar {
   height: 12rpx;
   background: #ffe3d3;
   border-radius: 10rpx;
   overflow: hidden;
-  margin-top: 20rpx;
+  margin-top: 16rpx;
 }
 
-.graph-center-fill {
+.weak-card .bar > view {
+  display: block;
   height: 100%;
-  border-radius: 10rpx;
   background: linear-gradient(90deg, #ffb28f, #ff8a5c);
+  border-radius: 10rpx;
 }
 
-/* 掌握度列表 */
-.graph-nodes {
-  padding: 8rpx 32rpx;
+.weak-card .s {
+  font-size: 20rpx;
+  color: #b08d74;
+  margin-top: 12rpx;
+  font-weight: 600;
+}
+
+.weak-card .deco {
+  position: absolute;
+  right: -24rpx;
+  bottom: -28rpx;
+  width: 140rpx;
+  height: 140rpx;
+  opacity: 0.15;
+  transform: rotate(-10deg);
+}
+
+.weak-card .deco image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 图谱卡：主题节点列表（小程序无 echarts，以掌握度着色节点替代放射图） */
+.graph-card {
+  margin-top: 32rpx;
+  border-radius: 48rpx;
   background: $card;
-  border-radius: $radius;
+  padding: 24rpx;
   box-shadow: $shadow;
 }
 
-.graph-node {
-  padding: 36rpx 8rpx;
-  border-bottom: 1rpx dashed $line-strong;
-}
-
-.graph-node:last-child {
-  border-bottom: none;
-}
-
-.graph-node-top {
+.graph-card .chart {
+  width: 100%;
+  min-height: 680rpx;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 20rpx;
 }
 
-.graph-node-name {
-  font-size: 28rpx;
+/* 主题节点：按掌握度着色（≥75 橙 / 45-74 黄 / <45 粉），颜色由内联样式给定 */
+.graph-card .graph-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 14rpx 26rpx;
+  border-radius: $radius-full;
+  font-size: 22rpx;
   font-weight: 800;
-  color: $ink;
+  line-height: 1.2;
 }
 
-.graph-node-pct {
+.graph-card .graph-node .gn-name {
+  max-width: 240rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.graph-card .graph-node .gn-pct {
   font-family: $font-num;
-  font-size: 26rpx;
+  font-size: 24rpx;
+  font-weight: 900;
+}
+
+/* 图例：掌握好 / 一般 / 薄弱 */
+.graph-legend {
+  display: flex;
+  justify-content: center;
+  gap: 36rpx;
+  padding-top: 28rpx;
+  padding-bottom: 8rpx;
+  font-size: 20rpx;
+  color: #8a8072;
+  font-weight: 600;
+}
+
+.graph-legend .lg {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.graph-legend .sw {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 6rpx;
+  display: inline-block;
+}
+
+/* 节点信息只读浮层（覆盖全屏，置于 Tab 之上；掌握度由面试表现自动更新，前端只读） */
+.graph-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(45, 42, 38, 0.45);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+}
+
+.graph-dialog {
+  width: 100%;
+  max-width: 560rpx;
+  background: $card;
+  border-radius: 44rpx;
+  padding: 44rpx 40rpx 36rpx;
+  text-align: center;
+  box-shadow: $shadow-lg;
+}
+
+.graph-dialog .gd-name {
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.graph-dialog .gd-mastery {
+  font-family: $font-num;
+  font-size: 80rpx;
   font-weight: 900;
   color: $accent-strong;
+  line-height: 1.1;
+  margin-top: 12rpx;
 }
 
-.graph-node-bar {
-  height: 12rpx;
+.graph-dialog .gd-bar {
+  height: 16rpx;
   background: #f5f1ea;
   border-radius: 12rpx;
   overflow: hidden;
-  margin-top: 16rpx;
+  margin-top: 28rpx;
 }
 
-.graph-node-fill {
+.graph-dialog .gd-bar > view {
+  display: block;
   height: 100%;
   border-radius: 12rpx;
 }
 
-.graph-node-fill.low {
-  background: linear-gradient(90deg, #ff8a7a, #ff5d5d);
-}
-
-.graph-node-fill.mid {
-  background: linear-gradient(90deg, #ffb28f, #ff9f43);
-}
-
-.graph-node-fill.high {
-  background: linear-gradient(90deg, #7bc69b, #4caf7d);
-}
-
-.graph-node-level {
-  display: inline-block;
-  font-size: 22rpx;
-  margin-top: 16rpx;
-  font-weight: 700;
-}
-
-.graph-node-level.low { color: $orange-warn; }
-.graph-node-level.mid { color: $accent-strong; }
-.graph-node-level.high { color: $green; }
-
-.graph-empty {
-  text-align: center;
+.graph-dialog .gd-hint {
+  font-size: 19rpx;
   color: $muted;
-  font-size: 22rpx;
-  padding: 40rpx 0;
+  margin-top: 20rpx;
+  line-height: 1.6;
+}
+
+.graph-dialog .gd-actions {
+  margin-top: 32rpx;
+}
+
+.graph-dialog .gd-actions .primary {
+  display: block;
+  width: 100%;
+  padding: 20rpx 0;
+  border-radius: $radius-full;
+  font-size: 24rpx;
+  font-weight: 800;
+  background: $accent;
+  color: #fff;
+  box-shadow: $shadow-orange-soft;
+}
+
+/* 图谱页骨架屏 */
+.weak-sk {
+  padding: 44rpx;
+}
+
+.graph-sk {
+  padding: 28rpx;
 }

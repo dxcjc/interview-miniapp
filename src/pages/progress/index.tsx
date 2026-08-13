@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
-import Taro from '@tarojs/taro'
-import { Text, View } from '@tarojs/components'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Image, Text, View } from '@tarojs/components'
 import { getReviews } from '../../api/review'
 import type { ReviewSummary } from '../../api/types'
-import { Empty, ErrorRetry, Skeleton } from '../../components/Feedback'
+import iconProgress from '../../assets/h5/icon-progress.png'
 import './index.scss'
 
 function fmtDate(s: string): string {
@@ -27,9 +26,18 @@ export default function Progress() {
     setLoading(true)
     setError(false)
     try {
-      setReviews(await getReviews())
+      const list = await getReviews()
+      // 按发生顺序（created_at + id 升序）排成第 1 次…第 N 次
+      setReviews(
+        [...list].sort(
+          (a, b) =>
+            new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime() ||
+            (a.id ?? 0) - (b.id ?? 0)
+        )
+      )
     } catch {
       setError(true)
+      setReviews([])
     } finally {
       setLoading(false)
     }
@@ -39,10 +47,39 @@ export default function Progress() {
     load()
   }, [load])
 
+  const stat = useMemo(() => {
+    if (!reviews.length) return null
+    const vals = reviews.map((r) => Number(r.total_score ?? 0))
+    return {
+      avg: Math.round(vals.reduce((s, v) => s + v, 0) / vals.length),
+      max: Math.max(...vals),
+      min: Math.min(...vals),
+      count: vals.length,
+    }
+  }, [reviews])
+
+  const showChart = !loading && !error && reviews.length >= 2
+  const chartCols = reviews.slice(-10)
+
+  const head = (
+    <View className='page-head'>
+      <View>
+        <View className='page-title'>进步曲线</View>
+        <View className='page-sub'>多次模拟面试 · 分数趋势</View>
+      </View>
+      <View className='head-icon-btn deco'>
+        <Image src={iconProgress} />
+      </View>
+    </View>
+  )
+
   if (loading) {
     return (
       <View className='page'>
-        <Skeleton rows={3} />
+        {head}
+        <View className='skeleton pg-sk'>
+          <View className='sk-line' style={{ height: '480rpx' }} />
+        </View>
       </View>
     )
   }
@@ -50,88 +87,82 @@ export default function Progress() {
   if (error) {
     return (
       <View className='page'>
-        <ErrorRetry text='进步数据加载失败' onRetry={load} />
+        {head}
+        <View className='sec'>
+          <View className='state-box'>
+            <Text>进步曲线加载失败，请检查后端服务是否已启动（端口 8900）</Text>
+            <View className='retry-btn' onClick={load}>
+              重试
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
 
-  const list = [...reviews].reverse()
-  const avg = list.length
-    ? Math.round(list.reduce((s, r) => s + r.total_score, 0) / list.length)
-    : 0
-  const best = list.length ? Math.max(...list.map((r) => r.total_score)) : 0
-
   return (
-    <View className='page progress'>
-      {/* 统计 */}
-      <View className='pg-stats card'>
-        <View className='pg-stat'>
-          <View className='pg-v'>{list.length}</View>
-          <View className='pg-k'>场面试</View>
-        </View>
-        <View className='pg-stat'>
-          <View className='pg-v'>{avg}</View>
-          <View className='pg-k'>平均分</View>
-        </View>
-        <View className='pg-stat'>
-          <View className='pg-v'>{best}</View>
-          <View className='pg-k'>最高分</View>
-        </View>
-      </View>
+    <View className='page'>
+      {head}
 
-      {/* 曲线（纯 CSS 条形） */}
-      <View className='sec-head'>
-        <Text className='label'>成绩曲线</Text>
-        <Text className='more'>最近 {list.length} 场</Text>
-      </View>
-      {list.length === 0 ? (
-        <Empty icon='📈' text='完成一次模拟面试后，这里会显示进步曲线' />
-      ) : (
-        <View className='pg-chart card'>
-          {list.slice(-10).map((r) => (
-            <View className='pg-col' key={r.session_id}>
-              <View className='pg-col-v'>{r.total_score}</View>
-              <View className='pg-col-bar-wrap'>
-                <View
-                  className={`pg-col-bar ${scoreClass(r.total_score)}`}
-                  style={{ height: `${Math.max(6, r.total_score)}%` }}
-                />
-              </View>
-              <View className='pg-col-date'>{fmtDate(r.created_at)}</View>
-            </View>
-          ))}
-        </View>
-      )}
-
-      {/* 历史记录 */}
-      <View className='sec-head'>
-        <Text className='label'>历史复盘</Text>
-      </View>
-      {list.length === 0 ? null : (
-        list
-          .slice()
-          .reverse()
-          .slice(0, 20)
-          .map((r) => (
-            <View
-              className='pg-item card'
-              key={r.session_id}
-              onClick={() =>
-                Taro.navigateTo({ url: `/pages/review/index?session_id=${r.session_id}` })
-              }
-            >
-              <View className='pg-item-left'>
-                <View className='pg-item-type'>
-                  {r.session_type} {r.direction ? `· ${r.direction}` : ''}
+      {/* 曲线卡：echarts 折线 → 小程序纯 CSS 条形图 */}
+      <View className='sec'>
+        <View className='pg-card'>
+          {showChart ? (
+            <View className='pg-chart'>
+              {chartCols.map((r) => (
+                <View className='pg-col' key={r.session_id}>
+                  <View className='pg-col-v'>{r.total_score}</View>
+                  <View className='pg-col-bar-wrap'>
+                    <View
+                      className={`pg-col-bar ${scoreClass(r.total_score)}`}
+                      style={{ height: `${Math.max(6, r.total_score)}%` }}
+                    />
+                  </View>
+                  <View className='pg-col-date'>{fmtDate(r.created_at)}</View>
                 </View>
-                <View className='pg-item-date'>{r.created_at?.slice(0, 16) || ''}</View>
-              </View>
-              <View className={`pg-item-score ${scoreClass(r.total_score)}`}>
-                {r.total_score}
-              </View>
+              ))}
             </View>
-          ))
-      )}
+          ) : (
+            <View className='state-box'>
+              <Text>再完成 {2 - reviews.length} 场模拟面试即可生成进步曲线</Text>
+            </View>
+          )}
+        </View>
+      </View>
+
+      {/* 统计：平均分大数字 + 最高/最低 + 总场次 */}
+      <View className='sec'>
+        <View className='pg-stats'>
+          <View className='pg-stat'>
+            <View className='v'>
+              {stat?.avg ?? '--'}
+              <Text className='small'>分</Text>
+            </View>
+            <View className='k'>平均分</View>
+          </View>
+          <View className='pg-stat'>
+            <View className='v sub'>
+              {stat?.max ?? '--'}
+              <Text className='small'>分</Text>
+            </View>
+            <View className='k'>最高分</View>
+          </View>
+          <View className='pg-stat'>
+            <View className='v sub'>
+              {stat?.min ?? '--'}
+              <Text className='small'>分</Text>
+            </View>
+            <View className='k'>最低分</View>
+          </View>
+          <View className='pg-stat'>
+            <View className='v sub'>
+              {stat?.count ?? 0}
+              <Text className='small'>场</Text>
+            </View>
+            <View className='k'>总场次</View>
+          </View>
+        </View>
+      </View>
     </View>
   )
 }

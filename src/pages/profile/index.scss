@@ -1,22 +1,37 @@
-/* ---------- 简历画像页（对齐 H5 ProfilePage/KpMap 视觉语言） ---------- */
+/* ---------- 简历画像页（对齐 H5 ProfilePage） ---------- */
 @import '../../styles/tokens';
 
-.profile {
-  padding-top: 0;
+/* 技能画像标签云（H5 .pf-cloud/.pf-skill） */
+.pf-cloud {
+  display: flex;
+  gap: 14rpx;
+  flex-wrap: wrap;
 }
 
+.pf-skill {
+  font-size: 20rpx;
+  font-weight: 800;
+  padding: 10rpx 26rpx;
+  border-radius: $radius-full;
+  background: $card;
+  color: #8a8072;
+  border: 2rpx solid $line-strong;
+  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
+}
+
+.pf-skill.hot {
+  background: $accent-soft;
+  color: $accent-strong;
+  border-color: #ffb28f;
+}
+
+/* 项目画像卡（H5 .pf-card/.pf-name/.pf-tags/.pf-desc） */
 .pf-card {
   padding: 32rpx 36rpx;
   margin-bottom: 20rpx;
   background: $card;
   border-radius: $radius;
   box-shadow: $shadow;
-}
-
-.pf-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .pf-name {
@@ -26,67 +41,22 @@
   line-height: 1.5;
 }
 
-.pf-toggle {
-  font-size: 30rpx;
-  color: $muted-2;
-  flex-shrink: 0;
+.pf-tags {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
 }
 
-.pf-tech {
-  margin-top: 14rpx;
+/* 共享 .tag 默认 12rpx 右边距，flex gap 已接管间距（H5 .tag 无右边距） */
+.pf-tags .tag {
+  margin-right: 0;
 }
 
-.pf-tech .tag {
-  margin-right: 12rpx;
-}
-
-.pf-body {
-  margin-top: 24rpx;
-  padding-top: 24rpx;
-  border-top: 1rpx dashed $line-strong;
-}
-
-.pf-story {
+.pf-desc {
   font-size: 22rpx;
   color: #8a8072;
   line-height: 1.8;
-}
-
-.pf-block {
-  margin-top: 28rpx;
-}
-
-.pf-block-title {
-  font-size: 26rpx;
-  font-weight: 800;
-  color: $ink;
-  margin-bottom: 14rpx;
-}
-
-.pf-pain {
-  font-size: 22rpx;
-  color: #8a8072;
-  line-height: 1.7;
-  margin-top: 6rpx;
-}
-
-.pf-kp {
-  background: $bg;
-  border-radius: 28rpx;
-  padding: 24rpx 28rpx;
-  margin-top: 16rpx;
-}
-
-.pf-kp-k {
-  font-size: 26rpx;
-  font-weight: 900;
-  color: $accent-strong;
-}
-
-.pf-kp-q {
-  font-size: 24rpx;
-  color: #8a8072;
-  line-height: 1.7;
-  margin-top: 10rpx;
-  font-weight: 700;
+  margin-top: 20rpx;
+  font-weight: 500;
 }

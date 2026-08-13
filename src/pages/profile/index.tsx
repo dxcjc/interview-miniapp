@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Text, View } from '@tarojs/components'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Image, Text, View } from '@tarojs/components'
 import { fetchProfile } from '../../api/profile'
 import type { ProfileProject } from '../../api/types'
-import { Empty, ErrorRetry, Skeleton } from '../../components/Feedback'
+import iconResume from '../../assets/h5/icon-resume.png'
 import './index.scss'
 
+/** 11 简历画像：个人项目卡（名称/技术栈/描述）+ 技能画像标签云 */
 export default function Profile() {
   const [projects, setProjects] = useState<ProfileProject[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [open, setOpen] = useState<number | null>(null)
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -19,6 +19,7 @@ export default function Profile() {
       setProjects(Array.isArray(res) ? res : [])
     } catch {
       setError(true)
+      setProjects([])
     } finally {
       setLoading(false)
     }
@@ -28,69 +29,115 @@ export default function Profile() {
     load()
   }, [load])
 
+  // 技能画像标签云 = 所有项目技术栈去重聚合
+  const skills = useMemo(() => {
+    const map = new Map<string, number>()
+    projects.forEach((p) => {
+      ;(p?.tech_stack || []).forEach((s) => map.set(s, (map.get(s) || 0) + 1))
+    })
+    return [...map.entries()].map(([name, count]) => ({ name, count }))
+  }, [projects])
+
+  const head = (
+    <View className='page-head'>
+      <View>
+        <View className='page-title'>简历画像</View>
+        <View className='page-sub'>个人简历与技能画像</View>
+      </View>
+      <View className='head-icon-btn'>
+        <Image src={iconResume} />
+      </View>
+    </View>
+  )
+
+  // 骨架屏
   if (loading) {
     return (
       <View className='page'>
-        <Skeleton rows={3} />
+        {head}
+        {[0, 1, 2].map((i) => (
+          <View className='skeleton' key={i}>
+            <View className='sk-line' style={{ width: '70%' }} />
+            <View className='sk-row'>
+              <View className='sk-tag' />
+              <View className='sk-tag' />
+              <View className='sk-tag' />
+            </View>
+            <View className='sk-line short' style={{ marginTop: 24 }} />
+          </View>
+        ))}
       </View>
     )
   }
 
+  // 错误态
   if (error) {
     return (
       <View className='page'>
-        <ErrorRetry text='画像加载失败，请检查后端服务' onRetry={load} />
+        {head}
+        <View className='sec'>
+          <View className='state-box'>
+            <Text>简历画像加载失败，请检查后端服务是否已启动（端口 8900）</Text>
+            <View className='retry-btn' onClick={load}>
+              重试
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
 
   return (
-    <View className='page profile'>
-      {projects.length === 0 ? (
-        <Empty icon='📄' text='暂无简历项目数据' />
-      ) : (
-        projects.map((p) => (
-          <View className='pf-card card' key={p.id}>
-            <View className='pf-head' onClick={() => setOpen(open === p.id ? null : p.id)}>
-              <View className='pf-name'>{p.name}</View>
-              <View className='pf-toggle'>{open === p.id ? '▾' : '▸'}</View>
-            </View>
-            <View className='pf-tech'>
-              {(p.tech_stack || []).map((t) => (
-                <Text className='tag kp' key={t}>
-                  {t}
-                </Text>
-              ))}
-            </View>
-            {open === p.id && (
-              <View className='pf-body'>
-                {p.story && <View className='pf-story'>{p.story}</View>}
-                {(p.pain_points || []).length > 0 && (
-                  <View className='pf-block'>
-                    <View className='pf-block-title'>💡 痛点</View>
-                    {p.pain_points.map((pp, i) => (
-                      <View className='pf-pain' key={i}>
-                        · {pp}
-                      </View>
-                    ))}
-                  </View>
-                )}
-                {(p.kp_map || []).length > 0 && (
-                  <View className='pf-block'>
-                    <View className='pf-block-title'>🎯 考点映射</View>
-                    {p.kp_map.map((k, i) => (
-                      <View className='pf-kp' key={i}>
-                        <View className='pf-kp-k'>{k.kp}</View>
-                        <View className='pf-kp-q'>{k.question}</View>
-                      </View>
-                    ))}
-                  </View>
-                )}
-              </View>
-            )}
+    <View className='page'>
+      {head}
+
+      {/* 技能画像标签云 */}
+      <View className='sec'>
+        <View className='sec-head'>
+          <Text className='bar' />
+          <Text className='label'>技能画像</Text>
+        </View>
+        {skills.length === 0 ? (
+          <View className='state-box'>
+            <Text>暂无技能画像数据</Text>
           </View>
-        ))
-      )}
+        ) : (
+          <View className='pf-cloud'>
+            {skills.map((s) => (
+              <Text className={`pf-skill ${s.count >= 2 ? 'hot' : ''}`} key={s.name}>
+                {s.name}
+              </Text>
+            ))}
+          </View>
+        )}
+      </View>
+
+      {/* 项目画像 */}
+      <View className='sec'>
+        <View className='sec-head'>
+          <Text className='bar' />
+          <Text className='label'>项目画像</Text>
+        </View>
+        {projects.length === 0 ? (
+          <View className='state-box'>
+            <Text>暂无项目画像数据</Text>
+          </View>
+        ) : (
+          projects.map((p) => (
+            <View className='pf-card' key={p.id}>
+              <View className='pf-name'>{p.name}</View>
+              <View className='pf-tags'>
+                {(p?.tech_stack || []).map((t) => (
+                  <Text className='tag kp' key={t}>
+                    {t}
+                  </Text>
+                ))}
+              </View>
+              {p?.story && <View className='pf-desc'>{p.story}</View>}
+            </View>
+          ))
+        )}
+      </View>
     </View>
   )
 }

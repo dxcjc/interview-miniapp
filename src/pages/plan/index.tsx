@@ -1,26 +1,66 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import Taro from '@tarojs/taro'
-import { Text, View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import { getPlan, getProgress, patchDay } from '../../api/plan'
 import type { Plan, PlanDay, PlanProgress } from '../../api/types'
-import { Empty, ErrorRetry, Skeleton } from '../../components/Feedback'
 import './index.scss'
 
-const SESSION_ICONS: Record<string, string> = {
-  study: '📖',
-  review: '📚',
-  mock: '🎙️',
-  quiz: '🧩',
+// 4 周框架：周名（与后端任务书一致）
+const WEEK_META = [
+  { name: '基础巩固' },
+  { name: 'RAG 与 Agent 专项' },
+  { name: '项目深挖' },
+  { name: '冲刺模拟' },
+]
+
+// 由 start_date 推算第 n 天的日期（第 1 天 = start_date）
+function addDays(dateStr: string, n: number): Date {
+  const d = new Date(dateStr)
+  d.setDate(d.getDate() + n)
+  return d
 }
 
+// 日期格式化：8.4 / 8.10
+function fmtMD(d: Date): string {
+  return `${d.getMonth() + 1}.${d.getDate()}`
+}
+
+// 今日 = 计划第几天（start + n-1 天推算），超出计划范围返回 null
+function computeTodayDay(p: Plan | null): number | null {
+  if (!p?.start_date || !p?.total_days) return null
+  const start = new Date(p.start_date)
+  const today = new Date()
+  start.setHours(0, 0, 0, 0)
+  today.setHours(0, 0, 0, 0)
+  const n = Math.round((today.getTime() - start.getTime()) / 86400000) + 1
+  return n >= 1 && n <= p.total_days ? n : null
+}
+
+interface WeekInfo {
+  n: number
+  name: string
+  days: PlanDay[]
+  range: string
+  state: 'done' | 'cur' | 'wait'
+}
+
+/** 04 辅导计划页：整体进度卡 + 4 周时间轴 + 7 天横滑网格（对照 H5 PlanPage #page-plan） */
 export default function Plan() {
   const [plan, setPlan] = useState<Plan | null>(null)
+  const [todayDay, setTodayDay] = useState<number | null>(null)
   const [progress, setProgress] = useState<PlanProgress | null>(null)
-  const [week, setWeek] = useState(1)
-  const [selected, setSelected] = useState<PlanDay | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [flash, setFlash] = useState('')
 
+  // 由计划 days 重算进度（勾选后立即联动进度卡）
+  const recomputeProgress = (p: Plan | null): PlanProgress | null => {
+    if (!p?.days?.length) return null
+    const done = p.days.filter((d) => d.done).length
+    const total = p.total_days || p.days.length
+    return { percent: Math.round((done / total) * 100), done_count: done, total_days: total }
+  }
+
+  // 首次加载：拉最新计划 + 整体进度
   const load = useCallback(async () => {
     setLoading(true)
     setError(false)
@@ -28,7 +68,7 @@ export default function Plan() {
       const [p, pg] = await Promise.all([getPlan(), getProgress()])
       setPlan(p)
       setProgress(pg)
-      if (p?.days?.length) setSelected(p.days[0])
+      setTodayDay(computeTodayDay(p))
     } catch {
       setError(true)
     } finally {
@@ -40,140 +80,166 @@ export default function Plan() {
     load()
   }, [load])
 
-  const weeks = useMemo(() => {
-    if (!plan) return []
-    const map = new Map<number, PlanDay[]>()
-    plan.days.forEach((d) => {
-      if (!map.has(d.week)) map.set(d.week, [])
-      map.get(d.week)!.push(d)
-    })
-    return Array.from(map.entries()).sort((a, b) => a[0] - b[0])
-  }, [plan])
-
-  const toggle = useCallback(
-    async (d: PlanDay) => {
-      const next = !d.done
-      setPlan((prev) =>
-        prev
-          ? {
-              ...prev,
-              days: prev.days.map((x) => (x.id === d.id ? { ...x, done: next } : x)),
-            }
-          : prev
-      )
-      if (selected?.id === d.id) setSelected((s) => (s ? { ...s, done: next } : s))
-      try {
-        const res = await patchDay(d.id, next)
-        if (res.done !== next) {
-          setPlan((prev) =>
-            prev
-              ? {
-                  ...prev,
-                  days: prev.days.map((x) => (x.id === d.id ? { ...x, done: res.done } : x)),
-                }
-              : prev
-          )
-        }
-      } catch {
-        // 失败回滚
-        setPlan((prev) =>
-          prev
-            ? { ...prev, days: prev.days.map((x) => (x.id === d.id ? { ...x, done: !next } : x)) }
-            : prev
-        )
-        if (selected?.id === d.id) setSelected((s) => (s ? { ...s, done: !next } : s))
-        Taro.showToast({ title: '更新失败，请重试', icon: 'none' })
+  // 勾选/取消某天完成（乐观更新 → PATCH 同步，失败回滚 + 轻提示）
+  const toggleDay = async (day: PlanDay) => {
+    const nextDone = !day.done
+    const prev = plan
+    setPlan((p) => {
+      if (!p) return p
+      const next = {
+        ...p,
+        days: p.days.map((x) => (x.id === day.id ? { ...x, done: nextDone } : x)),
       }
-    },
-    [selected]
+      setProgress(recomputeProgress(next))
+      return next
+    })
+    setFlash('')
+    try {
+      await patchDay(day.id, nextDone)
+    } catch {
+      setPlan(prev)
+      setFlash('同步失败，请检查后端服务后重试')
+    }
+  }
+
+  // 进度卡展示：优先后端 /api/plan/progress，缺失时本地按 days 计算
+  const doneCount = progress?.done_count ?? plan?.days?.filter((d) => d.done).length ?? 0
+  const totalDays = progress?.total_days || plan?.total_days || plan?.days?.length || 0
+  const percent = progress?.percent ?? (totalDays ? Math.round((doneCount / totalDays) * 100) : 0)
+
+  // 4 周时间轴：按周分组 + 周状态（完成/进行中/未来）
+  const weeks = useMemo<WeekInfo[]>(() => {
+    if (!plan?.days || !plan.start_date) return []
+    const startDateStr = plan.start_date
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    return WEEK_META.map((meta, idx) => {
+      const n = idx + 1
+      const days = plan.days.filter((d) => d.week === n).sort((a, b) => a.day - b.day)
+      const startDate = addDays(startDateStr, (n - 1) * 7)
+      const endDate = addDays(startDateStr, n * 7 - 1)
+      const allDone = days.length > 0 && days.every((d) => d.done)
+      const weekStartPassed = startDate <= today // 按日历判断周是否已开始
+      const isCurrent = todayDay != null && todayDay >= (n - 1) * 7 + 1 && todayDay <= n * 7
+      // 节点状态：全完成=绿✓ / 已开始未完成=橙数字 / 未开始=灰数字
+      const state = allDone ? 'done' : isCurrent || weekStartPassed ? 'cur' : 'wait'
+      return { n, name: meta.name, days, range: `${fmtMD(startDate)} - ${fmtMD(endDate)}`, state }
+    })
+  }, [plan, todayDay])
+
+  // 页头
+  const head = (
+    <View className='page-head'>
+      <View>
+        <View className='page-title'>4 周学习计划</View>
+        <View className='page-sub'>系统学习 · 稳步进阶 · 冲刺突破</View>
+      </View>
+      <View className='head-icon-btn deco'>
+        <Image src={require('../../assets/h5/icon-progress.png')} />
+      </View>
+    </View>
   )
 
+  // 首次加载骨架屏
   if (loading) {
     return (
       <View className='page'>
-        <Skeleton rows={3} />
-      </View>
-    )
-  }
-
-  if (error || !plan) {
-    return (
-      <View className='page'>
-        <ErrorRetry text='计划加载失败，请检查后端服务' onRetry={load} />
-      </View>
-    )
-  }
-
-  const doneCount = plan.days.filter((d) => d.done).length
-  const percent = progress?.percent ?? (plan.total_days ? Math.round((doneCount / plan.total_days) * 100) : 0)
-  const currentWeek = weeks.find(([w]) => w === week) || weeks[0]
-
-  return (
-    <View className='page plan'>
-      {/* 进度卡 */}
-      <View className='plan-prog card'>
-        <View className='plan-prog-top'>
-          <Text className='plan-prog-title'>{plan.title || '28 天冲刺计划'}</Text>
-          <Text className='plan-prog-dir'>{plan.direction}</Text>
+        {head}
+        <View className='skeleton plan-top-sk'>
+          <View className='sk-line' style={{ width: '70%' }} />
+          <View className='sk-line short' style={{ marginTop: '20rpx' }} />
         </View>
-        <View className='plan-prog-mid'>
-          <View className='plan-prog-bar'>
-            <View className='plan-prog-fill' style={{ width: `${percent}%` }} />
-          </View>
-          <Text className='plan-prog-num'>
-            {doneCount}/{plan.total_days} 天 · {percent}%
-          </Text>
-        </View>
-        {plan.end_date && (
-          <Text className='plan-prog-date'>截止 {plan.end_date}</Text>
-        )}
-      </View>
-
-      {/* 周切换 */}
-      <View className='plan-weeks'>
-        {weeks.map(([w]) => (
-          <View
-            key={w}
-            className={`plan-week-tab ${week === w ? 'on' : ''}`}
-            onClick={() => setWeek(w)}
-          >
-            第 {w} 周
+        {[0, 1, 2, 3].map((i) => (
+          <View className='skeleton week-sk' key={i}>
+            <View className='sk-line' style={{ width: '45%' }} />
+            <View className='sk-row'>
+              <View className='sk-tag' style={{ width: '120rpx' }} />
+              <View className='sk-tag' style={{ width: '120rpx' }} />
+              <View className='sk-tag' style={{ width: '120rpx' }} />
+            </View>
           </View>
         ))}
       </View>
+    )
+  }
 
-      {/* 周网格 */}
-      {currentWeek ? (
-        <View className='plan-grid card'>
-          {currentWeek[1].map((d) => (
-            <View
-              key={d.id}
-              className={`plan-cell ${d.done ? 'done' : ''}`}
-              onClick={() => setSelected(d)}
-            >
-              <View className='plan-cell-day'>{d.day}</View>
-              <View className='plan-cell-topic'>{SESSION_ICONS[d.session_type] || '📖'}</View>
-              <View className='plan-cell-check'>{d.done ? '✓' : ''}</View>
+  // 加载失败 / 无计划：错误态 + 重试
+  if (error || !plan) {
+    return (
+      <View className='page'>
+        {head}
+        <View className='sec'>
+          <View className='state-box'>
+            <View className='state-icon'>
+              <Image src={require('../../assets/h5/icon-progress.png')} />
             </View>
-          ))}
-        </View>
-      ) : (
-        <Empty icon='🗓️' text='暂无计划数据' />
-      )}
-
-      {/* 选中天详情 */}
-      {selected && (
-        <View className={`plan-detail card ${selected.done ? 'done' : ''}`} onClick={() => toggle(selected)}>
-          <View className='plan-detail-left'>
-            <View className='plan-detail-day'>第 {selected.day} 天</View>
-            <View className='plan-detail-topic'>{selected.topic}</View>
-            <View className='plan-detail-type'>
-              {SESSION_ICONS[selected.session_type]} {selected.session_type}
+            <Text>计划加载失败，请检查后端服务是否已启动（端口 8900）</Text>
+            <View className='retry-btn' onClick={load}>
+              重试
             </View>
           </View>
-          <View className='plan-detail-btn'>{selected.done ? '已完成 ✓' : '标记完成'}</View>
         </View>
-      )}
+      </View>
+    )
+  }
+
+  return (
+    <View className='page'>
+      {head}
+
+      {/* 同步失败轻提示 */}
+      {flash && <View className='plan-flash'>{flash}</View>}
+
+      {/* 整体进度卡（橙渐变，大数字 Nunito 观感 900 字重） */}
+      <View className='plan-top'>
+        <View className='row'>
+          <Text className='p'>整体进度</Text>
+          <View>
+            <Text className='num'>{percent}%</Text>{' '}
+            <Text className='sub'>已完成 {doneCount} / {totalDays} 天</Text>
+          </View>
+        </View>
+        <View className='bar'>
+          <View style={{ width: `${percent}%` }} />
+        </View>
+        <View className='desc'>坚持就是胜利，继续加油！</View>
+      </View>
+
+      {/* 周时间轴：左侧圆点 + 右侧周卡 */}
+      <View className='plan-timeline'>
+        {weeks.map((w) => (
+          <View className='week-row' key={w.n}>
+            <View className='week-node'>
+              <View className={`dot ${w.state === 'done' ? 'done' : w.state === 'wait' ? 'wait' : ''}`}>
+                {w.state === 'done' ? '✓' : w.n}
+              </View>
+            </View>
+            <View className={`week-card ${w.state === 'cur' ? 'cur' : ''}`}>
+              <View className='w-head'>
+                <Text className='w-name'>{w.name}</Text>
+                <Text className='w-date'>
+                  {w.range} <Text className='arr'>⌄</Text>
+                </Text>
+              </View>
+              {/* 7 天网格：每格固定宽，横向滚动 */}
+              <View className='week-grid'>
+                {w.days.map((d) => (
+                  <View
+                    key={d.id}
+                    className={`week-day ${d.done ? 'done' : ''} ${d.day === todayDay ? 'today' : ''}`}
+                    onClick={() => toggleDay(d)}
+                  >
+                    {d.day === todayDay && <View className='today-tag'>今日</View>}
+                    <Text className='d'>D{d.day}</Text>
+                    <Text className='n'>{d.topic}</Text>
+                    <View className='st'>{d.done ? '✓' : ''}</View>
+                  </View>
+                ))}
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
     </View>
   )
 }

@@ -1,6 +1,7 @@
 /* ============================================
    AI 面试陪练 · 微信小程序全局样式
-   对齐 H5「暖米白 + 蜜橘」设计体系（375px 设计稿 ×2 = 750rpx）
+   对齐 H5「暖米白 + 蜜橘」设计体系（375px 设计稿，1px = 2rpx）
+   共享类与 H5 index.css 一一对应，页面专属类放各自页面 scss
    ============================================ */
 @import './styles/tokens';
 
@@ -10,17 +11,50 @@ page {
   font-family: $font-sans;
   font-size: 28rpx;
   line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* ---------- 原生组件默认样式 reset（H5 全自定义，无默认外观） ---------- */
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  text-align: inherit;
+}
+
+button::after {
+  border: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+}
+
+image {
+  display: block;
+}
+
+/* ---------- 应用容器 ----------
+   H5 .screen（flex:1 滚动区）由小程序原生页面滚动代替；
+   底部留白对齐 H5 .screen padding-bottom:116px（防原生 TabBar 遮挡） */
 .page {
-  padding: 28rpx 48rpx 96rpx;
+  padding: 0 48rpx 232rpx;
+  position: relative;
 }
 
-/* ---------- 通用卡片 ---------- */
-.card {
-  background: $card;
-  border-radius: $radius;
-  box-shadow: $shadow;
+/* ---------- 区块（H5 .sec：20px 24px 0 → 左右 24px 由 .page 承担） ---------- */
+.sec {
+  padding: 40rpx 0 0;
 }
 
 /* ---------- 区块标题（H5 .sec-head） ---------- */
@@ -28,7 +62,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 40rpx 0 24rpx;
+  margin-bottom: 24rpx;
 }
 
 .sec-head .bar {
@@ -53,7 +87,14 @@ page {
   font-weight: 700;
 }
 
-/* ---------- 页头标题（题库等） ---------- */
+/* ---------- 页头标题（H5 .page-head / .page-title / .page-sub） ---------- */
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28rpx;
+}
+
 .page-title {
   font-size: 40rpx;
   font-weight: 900;
@@ -67,7 +108,55 @@ page {
   margin-top: 6rpx;
 }
 
-/* ---------- 标签（H5 .tag） ---------- */
+.head-icon-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: $card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(93, 66, 42, 0.08);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.head-icon-btn image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/* ---------- 通用卡片（H5 .card：20px 圆角 + 暖阴影） ---------- */
+.card {
+  background: $card;
+  border-radius: $radius;
+  box-shadow: $shadow;
+}
+
+/* ---------- 胶囊筛选（H5 .chips / .chip） ---------- */
+.chips {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+  padding: 28rpx 0 0;
+}
+
+.chip {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #8a8072;
+  background: $card;
+  padding: 16rpx 32rpx;
+  border-radius: $radius-full;
+  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
+}
+
+.chip.on {
+  background: $accent;
+  color: #fff;
+}
+
+/* ---------- 标签（H5 .tag：无外边距，间距由 flex gap 接管） ---------- */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -75,7 +164,6 @@ page {
   font-weight: 800;
   padding: 8rpx 20rpx;
   border-radius: $radius-full;
-  margin-right: 12rpx;
 }
 
 .tag.easy {
@@ -103,24 +191,68 @@ page {
   color: $accent-strong;
 }
 
-/* ---------- 胶囊筛选（H5 .chip） ---------- */
-.chips {
+/* ---------- 骨架屏（H5 .skeleton：16px 18px 圆角卡 + shimmer） ---------- */
+.skeleton {
+  border-radius: $radius;
+  margin-bottom: 20rpx;
+  padding: 32rpx 36rpx;
+  background: $card;
+  box-shadow: $shadow;
+}
+
+.skeleton .sk-line {
+  height: 26rpx;
+  border-radius: 12rpx;
+  background: linear-gradient(90deg, #f5f1ea 25%, #fbf8f3 50%, #f5f1ea 75%);
+  background-size: 200% 100%;
+  animation: sk-shimmer 1.4s infinite;
+}
+
+.skeleton .sk-line.short {
+  width: 52%;
+}
+
+.skeleton .sk-row {
   display: flex;
   gap: 16rpx;
-  flex-wrap: wrap;
+  margin-top: 24rpx;
 }
 
-.chip {
-  font-size: 22rpx;
-  font-weight: 700;
-  color: #8a8072;
-  background: $card;
-  padding: 16rpx 32rpx;
+.skeleton .sk-tag {
+  width: 92rpx;
+  height: 32rpx;
   border-radius: $radius-full;
-  box-shadow: 0 4rpx 16rpx rgba(93, 66, 42, 0.05);
+  background: #f5f1ea;
+  animation: sk-shimmer 1.4s infinite;
 }
 
-.chip.on {
-  background: $accent;
+@keyframes sk-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- 空态 / 错误态（H5 .state-box：44px 24px） ---------- */
+.state-box {
+  padding: 88rpx 48rpx;
+  text-align: center;
+  color: $muted;
+  font-size: 24rpx;
+  line-height: 1.9;
+}
+
+.state-box .retry-btn {
+  display: inline-block;
+  margin-top: 28rpx;
+  font-size: 24rpx;
+  font-weight: 700;
   color: #fff;
+  background: $accent;
+  padding: 18rpx 44rpx;
+  border-radius: $radius-full;
+  box-shadow: $shadow-orange-soft;
 }

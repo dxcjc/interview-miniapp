@@ -1,87 +1,189 @@
-/* ---------- 错题本页（对齐 H5 WrongbookPage） ---------- */
+/* ---------- 错题本页（对齐 H5 WrongbookPage，px×2 → rpx） ---------- */
 @import '../../styles/tokens';
+@import '../../components/Feedback.scss';
 
-.wrongbook {
-  padding-top: 0;
-}
-
-.wb-count {
-  font-size: 22rpx;
-  color: $muted;
-  padding: 8rpx 0 24rpx;
-}
-
-.wb-count .b {
-  color: $accent-strong;
-  font-weight: 900;
-  font-size: 30rpx;
-  font-family: $font-num;
+/* 列表 */
+.wb-list {
+  padding-top: 32rpx; /* 16px */
 }
 
 .wb-card {
-  padding: 30rpx 32rpx;
-  margin-bottom: 20rpx;
+  padding: 30rpx 32rpx; /* 15px 16px */
+  margin-bottom: 20rpx; /* 10px */
   background: $card;
   border-radius: $radius;
   box-shadow: $shadow;
 }
 
-.wb-head {
+.wb-top {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16rpx;
+  align-items: center;
+  gap: 16rpx; /* 8px */
+}
+
+.wb-no {
+  font-family: $font-num;
+  font-size: 20rpx; /* 10px */
+  font-weight: 900;
+  color: $muted-2;
+  letter-spacing: 2rpx; /* 1px */
+}
+
+.wb-dir {
+  background: $accent-soft;
+  color: $accent-strong;
 }
 
 .wb-title {
-  flex: 1;
-  font-size: 26rpx;
+  font-size: 26rpx; /* 13px */
   font-weight: 800;
   line-height: 1.55;
+  margin-top: 16rpx; /* 8px */
   color: $ink;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .wb-meta {
   display: flex;
   align-items: center;
-  gap: 12rpx;
-  margin-top: 18rpx;
+  gap: 16rpx; /* 8px */
+  margin-top: 18rpx; /* 9px */
   flex-wrap: wrap;
 }
 
-.wb-meta .tag {
-  margin-right: 0;
+.wb-wrong {
+  font-size: 20rpx; /* 10px */
+  font-weight: 900;
+  color: $accent-strong;
+  background: $accent-soft;
+  padding: 6rpx 20rpx; /* 3px 10px */
+  border-radius: $radius-full;
+}
+
+.wb-time {
+  font-size: 20rpx; /* 10px */
+  color: $muted-2;
+  font-weight: 600;
 }
 
 .wb-foot {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-top: 20rpx;
-  padding-top: 20rpx;
-  border-top: 1rpx solid $line;
-}
-
-.wb-wrong {
-  font-size: 20rpx;
-  font-weight: 900;
-  color: $accent-strong;
-  background: $accent-soft;
-  padding: 8rpx 20rpx;
-  border-radius: $radius-full;
+  align-items: center;
+  margin-top: 20rpx; /* 10px */
+  padding-top: 20rpx; /* 10px */
+  border-top: 2rpx solid $line; /* 1px */
 }
 
 .wb-retest {
-  background: $accent;
-  color: #fff;
-  font-size: 22rpx;
+  font-size: 22rpx; /* 11px */
   font-weight: 800;
-  padding: 16rpx 32rpx;
+  color: #fff;
+  background: $accent;
+  padding: 14rpx 36rpx; /* 7px 18px */
   border-radius: $radius-full;
   box-shadow: $shadow-orange-soft;
 }
 
-.wb-retest.loading {
-  background: #e8e0d6;
-  box-shadow: none;
+.wb-retest.disabled {
+  opacity: 0.6;
+}
+
+/* 复测结果弹层 */
+.wb-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 42, 38, 0.45);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx; /* 24px */
+}
+
+.wb-dialog {
+  width: 100%;
+  max-width: 580rpx; /* 290px */
+  background: $card;
+  border-radius: 44rpx; /* 22px */
+  padding: 44rpx 40rpx 36rpx; /* 22px 20px 18px */
+  box-shadow: $shadow-lg;
+}
+
+.wb-d-head {
+  font-size: 26rpx; /* 13px */
+  font-weight: 900;
+  color: $accent-strong;
+  letter-spacing: 2rpx; /* 1px */
+}
+
+.wb-d-question {
+  font-size: 28rpx; /* 14px */
+  font-weight: 800;
+  line-height: 1.7;
+  margin-top: 20rpx; /* 10px */
+  color: $ink;
+}
+
+.wb-d-tags {
+  display: flex;
+  gap: 12rpx; /* 6px */
+  flex-wrap: wrap;
+  margin-top: 24rpx; /* 12px */
+}
+
+.wb-d-actions {
+  display: flex;
+  gap: 20rpx; /* 10px */
+  margin-top: 36rpx; /* 18px */
+}
+
+.wb-d-actions .ghost,
+.wb-d-actions .primary {
+  flex: 1;
+  padding: 22rpx 0; /* 11px 0 */
+  border-radius: $radius-full;
+  font-size: 24rpx; /* 12px */
+  font-weight: 800;
+  text-align: center;
+}
+
+.wb-d-actions .ghost {
+  background: #f5f1ea;
+  color: #8a8072;
+}
+
+.wb-d-actions .primary {
+  background: $accent;
+  color: #fff;
+  box-shadow: $shadow-orange-soft;
+}
+
+/* 失败轻提示 */
+.wb-toast {
+  position: absolute;
+  left: 50%;
+  bottom: 240rpx; /* 120px */
+  transform: translateX(-50%);
+  z-index: 95;
+  background: rgba(45, 42, 38, 0.85);
+  color: #fff;
+  font-size: 22rpx; /* 11px */
+  font-weight: 700;
+  padding: 20rpx 36rpx; /* 10px 18px */
+  border-radius: $radius-full;
+  white-space: nowrap;
+}
+
+/* 共享 .tag 自带 margin-right，flex 容器内按 H5 用 gap 控距，归零避免多出空隙 */
+.wb-top .tag,
+.wb-foot .tag,
+.wb-d-tags .tag {
+  margin-right: 0;
 }
