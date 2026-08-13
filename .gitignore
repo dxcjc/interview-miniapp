@@ -1,4 +1,4 @@
-dist/
+# dist/ 需入库：微信开发者工具按 project.config.json 的 miniprogramRoot 直接导入 dist
 deploy_versions/
 .temp/
 .rn_temp/
