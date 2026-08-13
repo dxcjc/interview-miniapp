@@ -35,3 +35,21 @@ export function queryQuestions(params: {
     size: params.size ?? 20,
   })
 }
+
+/** 按岗位方向查库（题库页秒开，不做 AI 出题） */
+export async function queryQuestionsByDirection(direction: string, size = 20): Promise<Question[]> {
+  const data = await queryQuestions({ direction, size })
+  return Array.isArray(data?.items) ? data.items : []
+}
+
+export interface AddQuestionData {
+  title: string
+  direction: string
+  difficulty: string
+  tags?: string[]
+}
+
+/** 手动添加面经入库 */
+export function addQuestion(data: AddQuestionData): Promise<Question> {
+  return post<Question>('/questions', { ...data })
+}

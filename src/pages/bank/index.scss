@@ -181,10 +181,144 @@
   border-top: 2rpx solid $line;
 }
 
-.q-card .foot .hot {
-  font-size: 20rpx;
+/* 题目来源标签（面试沉淀/错题归档/面经） */
+.q-card .foot .tag.src {
+  background: $green-soft;
+  color: $green;
+  margin-right: 0;
+}
+
+/* 空态操作按钮组（去模拟面试 / 添加面经） */
+.bank-empty-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+  margin-top: 32rpx;
+}
+
+.bank-empty-ghost {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: $accent-strong;
+  background: $accent-soft;
+  padding: 18rpx 44rpx;
+  border-radius: $radius-full;
+}
+
+/* 添加面经弹层（对齐 H5 .wb-mask / .wb-dialog 的暖卡风格） */
+.bank-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 42, 38, 0.45);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+}
+
+.bank-dialog {
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: $card;
+  border-radius: 44rpx;
+  padding: 44rpx 40rpx 36rpx;
+  box-shadow: $shadow-lg;
+}
+
+.bank-d-head {
+  font-size: 30rpx;
+  font-weight: 900;
+  color: $accent-strong;
+  letter-spacing: 2rpx;
+  margin-bottom: 32rpx;
+}
+
+.bank-d-row {
+  margin-bottom: 28rpx;
+}
+
+.bank-d-label {
+  display: block;
+  font-size: 22rpx;
+  font-weight: 800;
+  color: $muted;
+  margin-bottom: 12rpx;
+}
+
+.bank-d-area {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 140rpx;
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: $ink;
+  background: #faf7f2;
+  border-radius: 24rpx;
+  padding: 22rpx 26rpx;
+}
+
+.bank-d-static {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: $ink;
+  background: #faf7f2;
+  border-radius: 24rpx;
+  padding: 22rpx 26rpx;
+}
+
+.bank-d-static .bank-d-chev {
   color: $muted-2;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.bank-d-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 26rpx;
+  color: $ink;
+  background: #faf7f2;
+  border-radius: 24rpx;
+  padding: 22rpx 26rpx;
+}
+
+.bank-d-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 36rpx;
+}
+
+.bank-d-actions .ghost,
+.bank-d-actions .primary {
+  flex: 1;
+  padding: 22rpx 0;
+  border-radius: $radius-full;
+  font-size: 24rpx;
+  font-weight: 800;
+  text-align: center;
+}
+
+.bank-d-actions .ghost {
+  background: #f5f1ea;
+  color: #8a8072;
+}
+
+.bank-d-actions .primary {
+  background: $accent;
+  color: #fff;
+  box-shadow: $shadow-orange-soft;
+}
+
+.bank-d-actions .primary.disabled {
+  opacity: 0.6;
 }
 
 .q-card .foot .chev {

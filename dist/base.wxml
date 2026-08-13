@@ -57,6 +57,12 @@
   <input value="{{i.p25}}" type="{{i.p24||''}}" password="{{xs.b(i.p12,!1)}}" placeholder="{{i.p13}}" placeholder-style="{{i.p15}}" placeholder-class="{{i.p14||'input-placeholder'}}" disabled="{{i.p8}}" maxlength="{{xs.b(i.p10,140)}}" cursor-spacing="{{xs.b(i.p7,0)}}" confirm-type="{{i.p4||'done'}}" confirm-hold="{{xs.b(i.p3,!1)}}" cursor="{{xs.b(i.p5,-1)}}" selection-start="{{xs.b(i.p23,-1)}}" selection-end="{{xs.b(i.p22,-1)}}" bindinput="eh" bindfocus="eh" bindblur="eh" bindconfirm="eh" name="{{i.p11}}" always-embed="{{xs.b(i.p1,false)}}" adjust-position="{{xs.b(i.p0,true)}}" hold-keyboard="{{xs.b(i.p9,false)}}" safe-password-cert-path="{{i.p16}}" safe-password-length="{{i.p18}}" safe-password-time-stamp="{{i.p21}}" safe-password-nonce="{{i.p19}}" safe-password-salt="{{i.p20}}" safe-password-custom-hash="{{i.p17}}" auto-fill="{{i.p2}}" cursor-color="{{i.p6}}" bindkeyboardheightchange="eh" bindnicknamereview="eh" bindselectionchange="eh" bindkeyboardcompositionstart="eh" bindkeyboardcompositionupdate="eh" bindkeyboardcompositionend="eh" style="{{i.st}}" class="{{i.cl}}" bindtap="eh"  id="{{i.uid||i.sid}}" data-sid="{{i.sid}}"></input>
 </template>
 
+<template name="tmpl_0_56">
+  <picker mode="{{i.p6||'selector'}}" disabled="{{i.p1}}" range="{{i.p8}}" range-key="{{i.p9}}" value="{{i.p11}}" start="{{i.p10}}" end="{{i.p2}}" fields="{{i.p3||'day'}}" custom-item="{{i.p0}}" name="{{i.p7}}" bindcancel="eh" bindchange="eh" bindcolumnchange="eh" header-text="{{i.p4}}" level="{{i.p5||region}}" style="{{i.st}}" class="{{i.cl}}" bindtap="eh"  id="{{i.uid||i.sid}}" data-sid="{{i.sid}}">
+    <template is="{{xs.a(c, item.nn, l)}}" data="{{i:item,c:c+1,l:xs.f(l,item.nn)}}" wx:for="{{i.cn}}" wx:key="sid" />
+  </picker>
+</template>
+
 <template name="tmpl_0_79">
   <template is="{{xs.c(i, 'tmpl_0_')}}" data="{{i:i,c:c}}" />
 </template>

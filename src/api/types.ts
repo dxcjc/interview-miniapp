@@ -41,6 +41,8 @@ export interface Question {
   followup_chain: string[]
   kp: string
   generated_by_ai: boolean
+  /** 题目来源：interview(面试沉淀)/wrongbook(错题归档)/manual(面经) */
+  source?: string
   created_at: string
 }
 
