@@ -62,8 +62,8 @@ TabBar：首页 / 题库 / 面试 / 计划 / 我的（图标在 `src/assets/tab/
   `onChunkReceived` 逐块拼帧；手写增量 UTF-8 解码器处理 chunk 截断多字节字符。
 - **语音**（`src/pages/interview` + `src/utils/voice.ts`）：`wx.getRecorderManager()` 长按录音，
   上传 `POST /api/voice/transcribe` 转写。
-  ⚠️ **后端该接口尚未实现**——前端按真实失败处理并明确提示，无伪造数据。后端任务待派：
-  接收录音文件 → 火山/讯飞 ASR → 返回 `{"text": "..."}`。
+  后端 `POST /api/voice/transcribe` 已实现（faster-whisper 本地 ASR，零 key 零成本），
+  返回 `{"text": "..."}`；如需切换火山引擎等云端 ASR，改后端 `.env` 的 `ASR_PROVIDER` 即可。
 - **请求封装**（`src/utils/request.ts`）：GET 自动剔除 `undefined` 查询参数（避免序列化成
   `"undefined"` 破坏后端过滤），统一超时 60s 与错误 toast。
 
@@ -75,6 +75,6 @@ TabBar：首页 / 题库 / 面试 / 计划 / 我的（图标在 `src/assets/tab/
 - 真机验证：需在装有微信开发者工具 + 微信 App 的设备上打开，勾选"不校验合法域名"，
   对语音、SSE 流式、下拉刷新做真机回归。
 
-## 后端未实现接口（待派）
+## 后端接口
 
-- `POST /api/voice/transcribe`：录音文件 → ASR 转写文本。
+全部接口均已实现（含 `POST /api/voice/transcribe` 语音转写，faster-whisper 本地 ASR）。
