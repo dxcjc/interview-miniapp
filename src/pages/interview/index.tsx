@@ -36,6 +36,39 @@ interface Msg {
 let msgSeq = 0
 const nextMsgId = () => ++msgSeq
 
+/**
+ * 录音权限授权流程：getSetting → authorize → openSetting 引导
+ * 已授权返回 true；用户拒绝后弹窗引导去设置开启，返回 false（由用户手动开启后重试）
+ */
+async function ensureRecordAuth(): Promise<boolean> {
+  try {
+    const setting = await Taro.getSetting()
+    if (setting.authSetting['scope.record']) return true
+  } catch (e) {
+    console.error('获取录音授权状态失败', e)
+  }
+  try {
+    await Taro.authorize({ scope: 'scope.record' })
+    return true
+  } catch (e) {
+    console.error('录音授权被拒绝', e)
+  }
+  try {
+    const res = await Taro.showModal({
+      title: '需要麦克风权限',
+      content: '需要麦克风权限，请在设置中开启',
+      confirmText: '去设置',
+      cancelText: '取消',
+    })
+    if (res.confirm) {
+      await Taro.openSetting()
+    }
+  } catch (e) {
+    console.error('引导开启录音权限失败', e)
+  }
+  return false
+}
+
 export default function Interview() {
   const [stage, setStage] = useState<'setup' | 'chat'>('setup')
   const [picked, setPicked] = useState(MODES[0])
@@ -85,7 +118,8 @@ export default function Interview() {
       }
       if (res.tempFilePath) doTranscribe(res.tempFilePath)
     })
-    rec.onError(() => {
+    rec.onError((e) => {
+      console.error('录音错误', e)
       setRecording(false)
       if (recordTimer.current) {
         clearInterval(recordTimer.current)
@@ -112,11 +146,13 @@ export default function Interview() {
     }
   }, [])
 
-  const startRecord = useCallback(() => {
+  const startRecord = useCallback(async () => {
     if (!voiceSupported) {
       Taro.showToast({ title: '语音仅支持微信小程序', icon: 'none' })
       return
     }
+    const ok = await ensureRecordAuth()
+    if (!ok) return
     if (transcribing || thinking || muted) return
     setRecording(true)
     setRecordSec(0)
