@@ -13,13 +13,9 @@ export default defineAppConfig({
     'pages/progress/index',
     'pages/settings/index',
   ],
-  // 微信同声传译插件（语音识别+合成）：需先在公众平台「设置→第三方设置→插件管理」添加
-  plugins: {
-    WechatSI: {
-      version: '0.3.5',
-      provider: 'wx069ba97219f66d99',
-    },
-  },
+  // 微信同声传译插件已从插件市场下架（2026-08 确认搜不到），语音识别/合成全走后端：
+  //   ASR → POST /api/voice/transcribe（faster-whisper 本地）
+  //   TTS → POST /api/voice/tts（edge-tts 晓晓女声）
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#FBF8F3',

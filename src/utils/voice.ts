@@ -45,43 +45,45 @@ export function transcribeAudio(filePath: string): Promise<TranscribeResult> {
   })
 }
 
-/* ============ 微信同声传译插件 TTS（AI 回复朗读） ============ */
+/* ============ 后端 TTS（AI 回复朗读，edge-tts 免费合成） ============ */
 let audioCtx: Taro.InnerAudioContext | null = null
 
 /**
- * 朗读文本（微信同声传译插件 textToSpeech → InnerAudioContext 播放）。
- * 插件未启用/合成失败时 reject；调用方应静默降级（只显示文字，不打断对话）。
+ * 朗读文本：POST /api/voice/tts → arraybuffer → 写临时文件 → InnerAudioContext 播放。
+ * 不依赖微信插件/额外域名；后端不可用时 reject，调用方应静默降级（只显示文字）。
  */
 export function speak(text: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    let plugin: any
-    try {
-      plugin = Taro.requirePlugin('WechatSI')
-    } catch {
-      reject(new Error('同声传译插件未启用'))
-      return
-    }
-    if (!plugin || typeof plugin.textToSpeech !== 'function') {
-      reject(new Error('同声传译插件未启用'))
-      return
-    }
-    plugin.textToSpeech({
-      lang: 'zh_CN',
-      tts: true,
-      content: text,
-      success: (res: any) => {
-        if (!res || !res.filename) {
+    Taro.request({
+      url: `${API_BASE}/voice/tts`,
+      method: 'POST',
+      data: { text },
+      header: { 'Content-Type': 'application/json' },
+      responseType: 'arraybuffer',
+      timeout: 30000,
+      success: (res) => {
+        if (res.statusCode !== 200 || !res.data) {
           reject(new Error('TTS 合成失败'))
           return
         }
-        if (!audioCtx) audioCtx = Taro.createInnerAudioContext()
-        audioCtx.stop()
-        audioCtx.src = res.filename
-        audioCtx.onEnded(() => resolve())
-        audioCtx.onError(() => reject(new Error('TTS 播放失败')))
-        audioCtx.play()
+        const fs = Taro.getFileSystemManager()
+        const filePath = `${Taro.env.USER_DATA_PATH}/tts_${Date.now()}.mp3`
+        fs.writeFile({
+          filePath,
+          data: res.data as ArrayBuffer,
+          encoding: 'binary',
+          success: () => {
+            if (!audioCtx) audioCtx = Taro.createInnerAudioContext()
+            audioCtx.stop()
+            audioCtx.src = filePath
+            audioCtx.onEnded(() => resolve())
+            audioCtx.onError(() => reject(new Error('TTS 播放失败')))
+            audioCtx.play()
+          },
+          fail: () => reject(new Error('音频写入失败')),
+        })
       },
-      fail: () => reject(new Error('TTS 合成失败')),
+      fail: () => reject(new Error('TTS 请求失败')),
     })
   })
 }
