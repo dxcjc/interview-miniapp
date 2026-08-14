@@ -13,6 +13,13 @@ export default defineAppConfig({
     'pages/progress/index',
     'pages/settings/index',
   ],
+  // 微信同声传译插件（语音识别+合成）：需先在公众平台「设置→第三方设置→插件管理」添加
+  plugins: {
+    WechatSI: {
+      version: '0.3.5',
+      provider: 'wx069ba97219f66d99',
+    },
+  },
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#FBF8F3',

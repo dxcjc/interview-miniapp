@@ -44,3 +44,53 @@ export function transcribeAudio(filePath: string): Promise<TranscribeResult> {
     })
   })
 }
+
+/* ============ 微信同声传译插件 TTS（AI 回复朗读） ============ */
+let audioCtx: Taro.InnerAudioContext | null = null
+
+/**
+ * 朗读文本（微信同声传译插件 textToSpeech → InnerAudioContext 播放）。
+ * 插件未启用/合成失败时 reject；调用方应静默降级（只显示文字，不打断对话）。
+ */
+export function speak(text: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    let plugin: any
+    try {
+      plugin = Taro.requirePlugin('WechatSI')
+    } catch {
+      reject(new Error('同声传译插件未启用'))
+      return
+    }
+    if (!plugin || typeof plugin.textToSpeech !== 'function') {
+      reject(new Error('同声传译插件未启用'))
+      return
+    }
+    plugin.textToSpeech({
+      lang: 'zh_CN',
+      tts: true,
+      content: text,
+      success: (res: any) => {
+        if (!res || !res.filename) {
+          reject(new Error('TTS 合成失败'))
+          return
+        }
+        if (!audioCtx) audioCtx = Taro.createInnerAudioContext()
+        audioCtx.stop()
+        audioCtx.src = res.filename
+        audioCtx.onEnded(() => resolve())
+        audioCtx.onError(() => reject(new Error('TTS 播放失败')))
+        audioCtx.play()
+      },
+      fail: () => reject(new Error('TTS 合成失败')),
+    })
+  })
+}
+
+/** 停止朗读（用户静音/切题时调用） */
+export function stopSpeak() {
+  try {
+    audioCtx?.stop()
+  } catch {
+    // ignore
+  }
+}

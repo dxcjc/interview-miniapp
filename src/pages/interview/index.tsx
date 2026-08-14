@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { Image, ScrollView, Text, Textarea, View } from '@tarojs/components'
 import { createMockSession, endMockSession } from '../../api/mock'
 import { postTurnChunked } from '../../utils/sse'
-import { getRecorder, transcribeAudio } from '../../utils/voice'
+import { getRecorder, transcribeAudio, speak, stopSpeak } from '../../utils/voice'
 // 图标（design/assets 生图 PNG，与 H5 CallPage 一一对应，object-fit:contain 防裁切）
 const iconCheck = require('../../assets/h5/icon-check.png')
 const iconTarget = require('../../assets/h5/icon-target.png')
@@ -83,6 +83,11 @@ export default function Interview() {
   const [muted, setMuted] = useState(false)
   const [ending, setEnding] = useState(false)
   const [confirmEnd, setConfirmEnd] = useState(false)
+  // 同步 muted 到 ref：send 闭包内读取最新静音状态（决定是否朗读 AI 回复）
+  const mutedRef = useRef(false)
+  useEffect(() => {
+    mutedRef.current = muted
+  }, [muted])
   const streamRef = useRef<{ abort: () => void } | null>(null)
   // 语音
   const [recording, setRecording] = useState(false)
@@ -182,6 +187,8 @@ export default function Interview() {
       setStartedAt(Date.now())
       setMessages([{ id: nextMsgId(), role: 'interviewer', text: res.first_question }])
       setStage('chat')
+      // 面试官开口朗读第一问（插件不可用/静音时静默降级）
+      if (res.first_question && !muted) speak(res.first_question).catch(() => {})
     } catch {
       setSessionError(true)
     } finally {
@@ -205,7 +212,10 @@ export default function Interview() {
       ])
       setThinking(true)
 
+      // 累积完整回复，流式结束后朗读
+      let fullText = ''
       const updateStream = (delta: string) => {
+        fullText += delta
         setMessages((prev) =>
           prev.map((m) => (m.id === streamMsgId ? { ...m, text: m.text + delta } : m))
         )
@@ -221,6 +231,8 @@ export default function Interview() {
           )
           setThinking(false)
           streamRef.current = null
+          // AI 面试官朗读回复（静音/插件不可用时静默降级，不打断对话）
+          if (fullText && !mutedRef.current) speak(fullText).catch(() => {})
         },
         onError: () => {
           setMessages((prev) =>
@@ -250,6 +262,7 @@ export default function Interview() {
     const next = !voiceMode
     setVoiceMode(next)
     setMuted(!next)
+    if (!next) stopSpeak() // 关语音时停止朗读
   }
 
   const doEnd = useCallback(async () => {
@@ -266,6 +279,7 @@ export default function Interview() {
 
   const onUnload = () => {
     streamRef.current?.abort()
+    stopSpeak()
   }
   Taro.useUnload(onUnload)
 
