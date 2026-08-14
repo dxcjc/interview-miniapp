@@ -20,6 +20,9 @@ export default defineAppConfig({
     navigationBarTextStyle: 'black',
     backgroundColor: '#FBF8F3',
   },
+  permission: {
+    'scope.record': { desc: '用于语音面试，自动识别你的回答' },
+  },
   tabBar: {
     color: '#B4AA9C',
     selectedColor: '#FF7A45',

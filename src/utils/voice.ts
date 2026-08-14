@@ -15,8 +15,8 @@ export function getRecorder(): Taro.RecorderManager {
 
 /**
  * 上传录音到后端 ASR 转写。
- * 注意：POST /api/voice/transcribe 后端尚未实现，调用失败会返回明确错误；
- * 前端按真实失败处理（提示后端未就绪），不做任何伪造转写。
+ * 后端：POST /api/voice/transcribe（faster-whisper 本地转写，已上线 8900/nginx 80 代理）
+ * 返回 { text: "转写文本" }；失败按真实错误提示，不做任何伪造转写。
  */
 export function transcribeAudio(filePath: string): Promise<TranscribeResult> {
   return new Promise((resolve, reject) => {
